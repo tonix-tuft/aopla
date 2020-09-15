@@ -1,0 +1,7 @@
+*.js
+*/**
+!example/**
+example/dist/**
+!src/**
+src/**/private
+example/webpack.config.js

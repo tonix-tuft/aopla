@@ -1,0 +1,79 @@
+{
+  "name": "aopla",
+  "version": "1.0.0",
+  "description": "Tag/annotation-based Aspect Oriented Programming (AOP) library for JavaScript.",
+  "keywords": [
+    "aop",
+    "aspect-oriented-programming",
+    "aspect",
+    "pointcut",
+    "join-point",
+    "advice",
+    "paradigm"
+  ],
+  "author": "Anton Bagdatyev (Tonix)",
+  "license": "MIT",
+  "main": "dist/aopla.js",
+  "module": "dist/es6/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonix-tuft/aopla.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack-watch": "WEBPACK_ENV=watch webpack --progress --colors --watch",
+    "watch": "npm run build-module && npm run dev-build-example && ./node_modules/.bin/onchange './src/**' -- npm run build-module && npm run dev-build-example",
+    "dev-build-example": "cd example && npm run dev-build",
+    "mkdir-build": "mkdir -p ./dist/es6",
+    "clear-build": "find ./dist ! -name '.gitignore' -type f -exec rm -f {} +",
+    "dev-build": "WEBPACK_ENV=watch webpack --progress --colors",
+    "build": "WEBPACK_ENV=build webpack",
+    "publish-git": "npm publish && git push && git push --tags",
+    "build-all": "npm run mkdir-build && npm run clear-build && npm run build && npm run dev-build && npm run build-module",
+    "publish-patch": "npm run build-all && npm version patch && npm run publish-git",
+    "publish-minor": "npm run build-all && npm version minor && npm run publish-git",
+    "publish-major": "npm run build-all && npm version major && npm run publish-git",
+    "build-module": "cross-env BABEL_ENV=module ./node_modules/.bin/babel ./src --out-dir ./dist/es6 --source-maps --copy-files"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/traverse": "^7.11.5",
+    "@babel/types": "^7.11.5",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "babel-loader": "^8.1.0",
+    "chokidar": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^3.0.4",
+    "minimist": ">=1.2.3",
+    "onchange": "^7.0.2",
+    "serialize-javascript": "^4.0.0",
+    "terser-webpack-plugin": "^3.1.0",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "bugs": {
+    "url": "https://github.com/tonix-tuft/aopla/issues"
+  },
+  "homepage": "https://github.com/tonix-tuft/aopla#readme",
+  "dependencies": {
+    "callable-instance": "^1.0.1",
+    "declarative-factory": "^1.13.0",
+    "immutable-linked-ordered-map": "^1.17.0",
+    "interval-jitter": "^1.8.1",
+    "js-utl": "^4.29.0",
+    "pigretto": "^3.6.1"
+  },
+  "files": [
+    "dist",
+    "src"
+  ]
+}
