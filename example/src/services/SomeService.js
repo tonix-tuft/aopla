@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import {
   ClassTag1,
@@ -18,13 +19,34 @@ import {
 
 // @ClassTag1 // AOPlaTag1
 class SomeService {
+  @Tag1
+  @Tag2({ abc: "abc", def: ["d", "e", "f"] })
+  @Tag3
+  someInstanceMethod1 = (...args) => {
+    console.log("SomeService.someInstanceMethod1()", { thisArg: this, args });
+    return "SomeService.someInstanceMethod1() return value";
+  };
+
+  @Tag1
+  @Tag2({ abc: 123, def: [1, 2, 3] }, 4, 5, 6)
+  @Tag3
+  @Tag4
+  @Tag5
+  @Tag6
+  somePrototypeMethod1(...args) {
+    console.log("SomeService.somePrototypeMethod1()", { thisArg: this, args });
+    return "SomeService.somePrototypeMethod1() return value";
+  }
+
+  @Tag2({ abc: "ABC", def: ["D", "E", "F"] }, 123)
+  static someStaticMethod1(...args) {
+    console.log("SomeService.someStaticMethod1()", { thisArg: this, args });
+    return `"SomeService.someStaticMethod1() return value"`;
+  }
+
   // @StaticPropTag1
   // @StaticPropTag2
   // static staticProp = this.method123();
-
-  static method123() {
-    return `"original staticProp value"`;
-  }
 
   // @StaticPropTag3
   // get anotherStaticProp() {
@@ -43,20 +65,11 @@ class SomeService {
   //   return this.value;
   // }
 
-  set anotherProp(value) {
-    // eslint-disable-next-line no-console
-    console.log(`SomeService - Setting anotherProp value to ${value}`);
-    this.value = value;
-  }
-
-  @Tag1
-  @Tag2({ abc: "abc", def: ["d", "e", "f"] })
-  @Tag3
-  someInstanceMethod = (...args) => {
-    // eslint-disable-next-line no-console
-    console.log("SomeService.someInstanceMethod()", this, args);
-    return "SomeService.someInstanceMethod() returnValue";
-  };
+  // set anotherProp(value) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(`SomeService - Setting anotherProp value to ${value}`);
+  //   this.value = value;
+  // }
 
   // @Tag1 // AOPlaTag2
   // @Tag2({ abc: 123, def: [1, 2, 3] }) // tag(withParams) // AOPlaTag3

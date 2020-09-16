@@ -7,9 +7,23 @@
   <body>
     <script src="../dist/aopla-example.js"></script>
     <script>
-      var someService = new SomeService();
-      var returnValue = someService.someInstanceMethod("a", "b", "c");
+      console.log("==========================================================");
+
+      var returnValue = someService.someInstanceMethod1("a", "b", "c");
       console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = someService.somePrototypeMethod1("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod1("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = anotherService.somePrototypeMethod1(1, 2, 3, 4, 5);
+      console.log(returnValue);
+      console.log("==========================================================");
     </script>
   </body>
 </html>
