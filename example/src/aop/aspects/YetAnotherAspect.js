@@ -6,6 +6,7 @@ import {
   afterFulfillment,
   afterGet,
   afterRejection,
+  afterSet,
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -20,6 +21,7 @@ import {
   Tag7,
   Tag8,
   Tag11,
+  StaticPropTag2,
 } from "../tags";
 
 console.log("importing YetAnotherAspect");
@@ -135,6 +137,15 @@ class YetAnotherAspect {
   afterRejectingPromiseReturnedByAMethodWithTag11(paramsObj) {
     console.warn(
       "YetAnotherAspect.afterRejectingPromiseReturnedByAMethodWithTag11()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterSet(StaticPropTag2)
+  afterSettingPropertyWithStaticPropTag2(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterSettingPropertyWithStaticPropTag2()",
       paramsObj
     );
     // ...

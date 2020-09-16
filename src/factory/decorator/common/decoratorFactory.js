@@ -30,7 +30,7 @@ import {
   AOPLA_ASPECT_DATA_PROP,
   AOPLA_ASPECT_ID_PREFIX,
 } from "../../../constants";
-import { lazyPropGet, lazyPropSet } from "./helpers";
+import { lazyPropGet, lazyPropSet, getFinalKey } from "./helpers";
 import { throwUnknownDecoratorTypeError } from "../utils";
 import { applyPigretto } from "./applyPigretto";
 import IntervalJitter from "interval-jitter";
@@ -269,6 +269,10 @@ export const decoratorFactory = (decoratorArgs) => ({
         tag,
         tagParams,
         property,
+
+        annotationContext: ({ applyContext }) => ({
+          previousPropertyValue: applyContext.thisArg[getFinalKey(property)],
+        }),
 
         beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeSet,
         beforeAdviceAnnotationContext: setAdviceContextFn,

@@ -41,6 +41,8 @@ export const applyPigretto = ({
   tagParams,
   property,
 
+  annotationContext = () => ({}),
+
   beforeAdviceAnnotationKey,
   beforeAdviceAnnotationContext = () => ({}),
 
@@ -57,6 +59,7 @@ export const applyPigretto = ({
   thisArgFn = void 0,
   returnValueFn = ({ returnValue }) => returnValue,
 } = {}) => {
+  let contextMerge = {};
   return pigretto(target, {
     [applyRule]: apply()
       .before(function (...argumentsList) {
@@ -74,7 +77,11 @@ export const applyPigretto = ({
         //    set(): target, property, value, originalValue, receiver, rule
         //    apply(): target, thisArg, rule
         //
+        contextMerge = annotationContext({
+          applyContext: this,
+        });
         const context = {
+          ...contextMerge,
           ...beforeAdviceAnnotationContext({
             argumentsList,
             applyContext: this,
@@ -144,6 +151,7 @@ export const applyPigretto = ({
                 //    set(): target, property, value, originalValue, receiver, rule, flat
                 //    apply(): target, thisArg, rule, flat + argumentsList, effectiveArgumentsList, hasPerformedUnderlyingOperation, hasEffectivelyPerformedUnderlyingOperation
                 //
+                ...contextMerge,
                 ...aroundAdviceAnnotationContext({
                   argumentsList,
                 }),
@@ -215,6 +223,7 @@ export const applyPigretto = ({
             AOPla.mapAdvices({ tag, annotationKey })((advice) => {
               isThereAnAfterThrowAdvice = true;
               const context = {
+                ...contextMerge,
                 ...afterThrowAdviceAnnotationContext(objectParam),
                 ...partialContext,
               };
@@ -251,6 +260,7 @@ export const applyPigretto = ({
             AOPla.mapAdvices({ tag, annotationKey })((advice) => {
               isThereAnAlwaysFinallyAdvice = true;
               const context = {
+                ...contextMerge,
                 ...alwaysFinallyAdviceAnnotationContext(objectParam),
                 ...partialContext,
               };
@@ -285,6 +295,7 @@ export const applyPigretto = ({
           //    apply(): target, thisArg, rule, effectiveArgumentsList, hasPerformedUnderlyingOperation, hasEffectivelyPerformedUnderlyingOperation
           //
           const context = {
+            ...contextMerge,
             ...afterAdviceAnnotationContext({
               argumentsList,
               returnValue, // For @afterCall

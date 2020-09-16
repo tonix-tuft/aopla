@@ -38,7 +38,7 @@ export const getDescriptorKeysMap = (descriptor) => {
 /**
  * @type {Function}
  */
-const getFinalKey = (key) =>
+export const getFinalKey = (key) =>
   `${AOPLA_ACCESSOR_DESCRIPTOR_PROPERTY_NAME}-${key}`;
 
 /**
@@ -56,7 +56,7 @@ const commonPropertyDescriptorKeys = {
 export const lazyPropGet = (key, initializer) => {
   const finalKey = getFinalKey(key);
   return function lazyPropGet() {
-    if (!Object.prototype.hasOwnProperty.call(this)) {
+    if (!Object.prototype.hasOwnProperty.call(this, finalKey)) {
       defineProperty(this, finalKey, {
         ...commonPropertyDescriptorKeys,
         value: initializer ? initializer.call(this) : void 0,

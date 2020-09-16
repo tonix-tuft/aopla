@@ -31,6 +31,8 @@ import {
   Tag7,
   Tag8,
   Tag9,
+  StaticPropTag1,
+  PropTag3,
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -97,6 +99,27 @@ class SomeAspect {
       "SomeAspect.afterRejectingPromiseReturnedByAMethodWithTag9()",
       paramsObj
     );
+    // ...
+  }
+
+  @afterSet(StaticPropTag1)
+  afterSettingPropertyWithStaticPropTag1(paramsObj) {
+    console.warn(
+      "SomeAspect.afterSettingPropertyWithStaticPropTag1()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterSet(PropTag2)
+  afterSettingPropertyWithPropTag2(paramsObj) {
+    console.warn("SomeAspect.afterSettingPropertyWithPropTag2()", paramsObj);
+    // ...
+  }
+
+  @afterSet(PropTag3)
+  afterSettingPropertyWithPropTag3(paramsObj) {
+    console.warn("SomeAspect.afterSettingPropertyWithPropTag3()", paramsObj);
     // ...
   }
 }
