@@ -47,13 +47,13 @@ var config = {
                 "@babel/plugin-proposal-object-rest-spread",
                 // ["@babel/plugin-proposal-class-properties", { loose: true }], // if using @babel/plugin-proposal-decorators with "legacy": true.
                 "@babel/plugin-proposal-class-properties",
-                // [
-                //   "@babel/plugin-transform-runtime",
-                //   {
-                //     "corejs": false,
-                //     "regenerator": true
-                //   }
-                // ]
+                [
+                  "@babel/plugin-transform-runtime",
+                  {
+                    corejs: false,
+                    regenerator: true,
+                  },
+                ],
               ],
             },
           ],

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import { beforeGet, afterCall } from "aopla";
+import { beforeGet, afterCall, afterFulfillment } from "aopla";
 import SomeService from "../../services/SomeService";
-import { PropTag1, Tag2, Tag3, Tag4, Tag5, Tag6 } from "../tags";
+import { PropTag1, Tag2, Tag3, Tag4, Tag5, Tag6, Tag7, Tag8 } from "../tags";
 
 console.log("importing YetAnotherAspect");
 
@@ -56,6 +56,24 @@ class YetAnotherAspect {
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
       argumentsList,
     });
+    // ...
+  }
+
+  @afterFulfillment(Tag7)
+  afterFulfillmentOfAPromiseReturnedByAMethodWithTag7(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag7()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterFulfillment(Tag8)
+  afterFulfillmentOfAPromiseReturnedByAMethodWithTag8(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag8()",
+      paramsObj
+    );
     // ...
   }
 }

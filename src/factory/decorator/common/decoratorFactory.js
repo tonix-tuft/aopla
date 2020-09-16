@@ -206,7 +206,8 @@ export const decoratorFactory = (decoratorArgs) => ({
                       jitter.run();
                     }
                   );
-                  const stopJitters = jitters.map((jitter) => jitter.stop());
+                  const stopJitters = () =>
+                    jitters.map((jitter) => jitter.stop());
                   returnValue
                     .then((value) => {
                       stopJitters();

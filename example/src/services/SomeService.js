@@ -44,6 +44,43 @@ class SomeService {
     return `"SomeService.someStaticMethod1() return value"`;
   }
 
+  @Tag7
+  someInstanceMethodReturningAPromise1 = async (...args) => {
+    console.log("SomeService.someInstanceMethodReturningAPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const value = {
+      "SomeService.someInstanceMethodReturningAPromise1()": args,
+    };
+    return value;
+  };
+
+  @Tag7
+  @Tag8
+  async somePrototypeMethodReturningAPromise1(...args) {
+    console.log("SomeService.somePrototypeMethodReturningAPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const value = {
+      "SomeService.somePrototypeMethodReturningAPromise1()": args,
+    };
+    return value;
+  }
+
+  @Tag7
+  static async someStaticMethodReturningAPromise1(...args) {
+    console.log("SomeService.someStaticMethodReturningAPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const value = {
+      "SomeService.someStaticMethodReturningAPromise1()": args,
+    };
+    return value;
+  }
+
   // @StaticPropTag1
   // @StaticPropTag2
   // static staticProp = this.method123();

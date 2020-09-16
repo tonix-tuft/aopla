@@ -28,6 +28,7 @@ import {
   ClassTag1,
   PropTag1,
   PropTag2,
+  Tag7,
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -63,6 +64,15 @@ class SomeAspect {
         "thisArg instanceof SomeService": thisArg instanceof SomeService,
         argumentsList,
       }
+    );
+    // ...
+  }
+
+  @afterFulfillment(Tag7)
+  afterFulfillmentOfAPromiseReturnedByAMethodWithTag7(paramsObj) {
+    console.warn(
+      "SomeAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag7()",
+      paramsObj
     );
     // ...
   }
