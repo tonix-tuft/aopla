@@ -229,8 +229,8 @@ export const decoratorFactory = (decoratorArgs) => ({
                           value,
                         };
                         advice(context);
-                        return value;
                       });
+                      return value;
                     })
                     .catch((reason) => {
                       stopJitters();
@@ -252,8 +252,8 @@ export const decoratorFactory = (decoratorArgs) => ({
                           reason,
                         };
                         advice(context);
-                        throw reason;
                       });
+                      throw reason;
                     });
                 }
                 return returnValue;

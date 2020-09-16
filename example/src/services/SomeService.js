@@ -67,7 +67,7 @@ class SomeService {
   @Tag2({ abc: "ABC", def: ["D", "E", "F"] }, 123)
   static someStaticMethod1(...args) {
     console.log("SomeService.someStaticMethod1()", { thisArg: this, args });
-    return `"SomeService.someStaticMethod1() return value"`;
+    return "SomeService.someStaticMethod1() return value";
   }
 
   @Tag7
