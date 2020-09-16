@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const outputFilename = "aopla-example";
 let outputFile;
-const library = "AOPla";
+const library = "AOPlaExample";
 const srcEntryPoint = "index.js";
 const path = require("path");
 
@@ -38,15 +38,15 @@ var config = {
             "@babel/preset-env",
             {
               plugins: [
-                ["@babel/plugin-proposal-decorators", { legacy: true }],
-                // [
-                //   "@babel/plugin-proposal-decorators",
-                //   { decoratorsBeforeExport: false },
-                //   // { decoratorsBeforeExport: true },
-                // ],
+                // ["@babel/plugin-proposal-decorators", { legacy: true }],
+                [
+                  "@babel/plugin-proposal-decorators",
+                  { decoratorsBeforeExport: false },
+                  // { decoratorsBeforeExport: true },
+                ],
                 "@babel/plugin-proposal-object-rest-spread",
-                ["@babel/plugin-proposal-class-properties", { loose: true }], // if using @babel/plugin-proposal-decorators with "legacy": true.
-                // "@babel/plugin-proposal-class-properties",
+                // ["@babel/plugin-proposal-class-properties", { loose: true }], // if using @babel/plugin-proposal-decorators with "legacy": true.
+                "@babel/plugin-proposal-class-properties",
                 // [
                 //   "@babel/plugin-transform-runtime",
                 //   {
