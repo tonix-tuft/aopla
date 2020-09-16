@@ -1,8 +1,19 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import { beforeGet, afterCall, afterFulfillment } from "aopla";
+import { beforeGet, afterCall, afterFulfillment, afterGet } from "aopla";
 import SomeService from "../../services/SomeService";
-import { PropTag1, Tag2, Tag3, Tag4, Tag5, Tag6, Tag7, Tag8 } from "../tags";
+import {
+  PropTag1,
+  PropTag2,
+  StaticPropTag1,
+  Tag2,
+  Tag3,
+  Tag4,
+  Tag5,
+  Tag6,
+  Tag7,
+  Tag8,
+} from "../tags";
 
 console.log("importing YetAnotherAspect");
 
@@ -60,18 +71,54 @@ class YetAnotherAspect {
   }
 
   @afterFulfillment(Tag7)
-  afterFulfillmentOfAPromiseReturnedByAMethodWithTag7(paramsObj) {
+  afterFulfillingPromiseReturnedByAMethodWithTag7(paramsObj) {
     console.warn(
-      "YetAnotherAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag7()",
+      "YetAnotherAspect.afterFulfillingPromiseReturnedByAMethodWithTag7()",
       paramsObj
     );
     // ...
   }
 
   @afterFulfillment(Tag8)
-  afterFulfillmentOfAPromiseReturnedByAMethodWithTag8(paramsObj) {
+  afterFulfillingPromiseReturnedByAMethodWithTag8(paramsObj) {
     console.warn(
-      "YetAnotherAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag8()",
+      "YetAnotherAspect.afterFulfillingPromiseReturnedByAMethodWithTag8()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterGet(PropTag1)
+  afterGettingPropertyWithTagPropTag1(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterGettingPropertyWithPropTag1()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterGet(PropTag1)
+  anotherAfterGettingPropertyWithTagPropTag1(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.anotherAfterGettingPropertyWithTagPropTag1()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterGet(StaticPropTag1)
+  afterGettingPropertyWithStaticPropTag1(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterGettingPropertyWithStaticPropTag1()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterGet(PropTag2)
+  afterGettingPropertyWithTagPropTag2(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterGettingPropertyWithPropTag2()",
       paramsObj
     );
     // ...

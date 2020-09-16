@@ -69,11 +69,23 @@ class SomeAspect {
   }
 
   @afterFulfillment(Tag7)
-  afterFulfillmentOfAPromiseReturnedByAMethodWithTag7(paramsObj) {
+  afterFulfillingPromiseReturnedByAMethodWithTag7(paramsObj) {
     console.warn(
-      "SomeAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag7()",
+      "SomeAspect.afterFulfillingPromiseReturnedByAMethodWithTag7()",
       paramsObj
     );
+    // ...
+  }
+
+  @afterGet(PropTag1)
+  afterGettingPropertyWithTagPropTag1(paramsObj) {
+    console.warn("SomeAspect.afterGettingPropertyWithPropTag1()", paramsObj);
+    // ...
+  }
+
+  @afterGet(PropTag2)
+  afterGettingPropertyWithTagPropTag2(paramsObj) {
+    console.warn("SomeAspect.afterGettingPropertyWithPropTag2()", paramsObj);
     // ...
   }
 }

@@ -4,6 +4,7 @@ import {
   ClassTag1,
   PropTag1,
   PropTag2,
+  PropTag3,
   Tag1,
   Tag2,
   Tag3,
@@ -17,8 +18,30 @@ import {
   StaticPropTag3,
 } from "../aop/tags";
 
-// @ClassTag1 // AOPlaTag1
+// @ClassTag1
 class SomeService {
+  @PropTag1
+  prop1 = 123;
+
+  @StaticPropTag1
+  @StaticPropTag2
+  static staticProp1 = this.someStaticMethod123();
+  static someStaticMethod123() {
+    return "Initial value";
+  }
+
+  // These tags apply both to the getter and setter function (decorators on a property apply to the property itself).
+  @PropTag2
+  @PropTag3
+  get anotherProp1() {
+    console.log(`get SomeService.anotherProp1`);
+    return this.anotherProp1Value || "Default value";
+  }
+  set anotherProp1(value) {
+    console.log(`set SomeService.anotherProp1 = ${value}`);
+    this.anotherProp1Value = value;
+  }
+
   @Tag1
   @Tag2({ abc: "abc", def: ["d", "e", "f"] })
   @Tag3
@@ -81,10 +104,6 @@ class SomeService {
     return value;
   }
 
-  // @StaticPropTag1
-  // @StaticPropTag2
-  // static staticProp = this.method123();
-
   // @StaticPropTag3
   // get anotherStaticProp() {
   //   return this.anotherStaticPropValue;
@@ -92,20 +111,6 @@ class SomeService {
 
   // set anotherStaticProp(value) {
   //   this.anotherStaticPropValue = value;
-  // }
-
-  // @PropTag1 // AOPlaTag8
-  // prop = 123;
-
-  // @PropTag2 // Applies both to getter and setter (decorators on a property apply to the property itself). // AOPlaTag9
-  // get anotherProp() {
-  //   return this.value;
-  // }
-
-  // set anotherProp(value) {
-  //   // eslint-disable-next-line no-console
-  //   console.log(`SomeService - Setting anotherProp value to ${value}`);
-  //   this.value = value;
   // }
 
   // @Tag1 // AOPlaTag2

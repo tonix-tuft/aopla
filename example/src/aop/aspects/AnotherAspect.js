@@ -1,8 +1,16 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import { beforeGet, afterCall, afterFulfillment } from "aopla";
+import { beforeGet, afterCall, afterFulfillment, afterGet } from "aopla";
 import SomeService from "../../services/SomeService";
-import { PropTag1, Tag2, Tag3, Tag7 } from "../tags";
+import {
+  PropTag1,
+  PropTag2,
+  PropTag3,
+  StaticPropTag2,
+  Tag2,
+  Tag3,
+  Tag7,
+} from "../tags";
 
 console.log("importing AnotherAspect");
 
@@ -40,11 +48,32 @@ class AnotherAspect {
   }
 
   @afterFulfillment(Tag7)
-  afterFulfillmentOfAPromiseReturnedByAMethodWithTag7(paramsObj) {
+  afterFulfillingPromiseReturnedByAMethodWithTag7(paramsObj) {
     console.warn(
-      "AnotherAspect.afterFulfillmentOfAPromiseReturnedByAMethodWithTag7()",
+      "AnotherAspect.afterFulfillingPromiseReturnedByAMethodWithTag7()",
       paramsObj
     );
+    // ...
+  }
+
+  @afterGet(PropTag1)
+  afterGettingPropertyWithTagPropTag1(paramsObj) {
+    console.warn("AnotherAspect.afterGettingPropertyWithPropTag1()", paramsObj);
+    // ...
+  }
+
+  @afterGet(StaticPropTag2)
+  afterGettingPropertyWithStaticPropTag2(paramsObj) {
+    console.warn(
+      "AnotherAspect.afterGettingPropertyWithStaticPropTag2()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterGet(PropTag3)
+  afterGettingPropertyWithTagPropTag3(paramsObj) {
+    console.warn("AnotherAspect.afterGettingPropertyWithPropTag3()", paramsObj);
     // ...
   }
 }

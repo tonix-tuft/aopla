@@ -11,6 +11,7 @@ export const Tag7 = tag("Tag7");
 export const Tag8 = tag("Tag8");
 export const PropTag1 = tag("PropTag1");
 export const PropTag2 = tag("PropTag2");
+export const PropTag3 = tag("PropTag3");
 export const StaticPropTag1 = tag("StaticPropTag1");
 export const StaticPropTag2 = tag("StaticPropTag2");
 export const StaticPropTag3 = tag("StaticPropTag3");
