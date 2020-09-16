@@ -29,6 +29,8 @@ import {
   PropTag1,
   PropTag2,
   Tag7,
+  Tag8,
+  Tag9,
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -86,6 +88,15 @@ class SomeAspect {
   @afterGet(PropTag2)
   afterGettingPropertyWithTagPropTag2(paramsObj) {
     console.warn("SomeAspect.afterGettingPropertyWithPropTag2()", paramsObj);
+    // ...
+  }
+
+  @afterRejection(Tag9)
+  afterRejectingPromiseReturnedByAMethodWithTag9(paramsObj) {
+    console.warn(
+      "SomeAspect.afterRejectingPromiseReturnedByAMethodWithTag9()",
+      paramsObj
+    );
     // ...
   }
 }

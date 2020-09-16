@@ -5,11 +5,14 @@ import {
   PropTag1,
   PropTag2,
   Tag1,
+  Tag10,
+  Tag11,
   Tag2,
   Tag3,
   Tag4,
   Tag5,
   Tag6,
+  Tag9,
 } from "../aop/tags";
 
 @ClassTag1
@@ -26,6 +29,20 @@ class AnotherService {
       args,
     });
     return "AnotherService.somePrototypeMethod1() return value";
+  }
+
+  @Tag9
+  @Tag10
+  @Tag11
+  static async someStaticMethodReturningARejectedPromise1(...args) {
+    console.log("AnotherService.someStaticMethodReturningARejectedPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const reason = {
+      "AnotherService.someStaticMethodReturningARejectedPromise1()": args,
+    };
+    throw reason;
   }
 
   // @PropTag1

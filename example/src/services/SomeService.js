@@ -13,9 +13,12 @@ import {
   Tag6,
   Tag7,
   Tag8,
+  Tag9,
   StaticPropTag1,
   StaticPropTag2,
   StaticPropTag3,
+  Tag11,
+  Tag10,
 } from "../aop/tags";
 
 // @ClassTag1
@@ -102,6 +105,43 @@ class SomeService {
       "SomeService.someStaticMethodReturningAPromise1()": args,
     };
     return value;
+  }
+
+  @Tag9
+  someInstanceMethodReturningARejectedPromise1 = async (...args) => {
+    console.log("SomeService.someInstanceMethodReturningARejectedPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const reason = {
+      "SomeService.someInstanceMethodReturningARejectedPromise1()": args,
+    };
+    throw reason;
+  };
+
+  @Tag9
+  @Tag10
+  async somePrototypeMethodReturningARejectedPromise1(...args) {
+    console.log("SomeService.somePrototypeMethodReturningARejectedPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const reason = {
+      "SomeService.somePrototypeMethodReturningARejectedPromise1()": args,
+    };
+    throw reason;
+  }
+
+  @Tag11
+  static async someStaticMethodReturningARejectedPromise1(...args) {
+    console.log("SomeService.someStaticMethodReturningARejectedPromise1()", {
+      thisArg: this,
+      args,
+    });
+    const reason = {
+      "SomeService.someStaticMethodReturningARejectedPromise1()": args,
+    };
+    throw reason;
   }
 
   // @StaticPropTag3

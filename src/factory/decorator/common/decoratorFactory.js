@@ -208,7 +208,7 @@ export const decoratorFactory = (decoratorArgs) => ({
                   );
                   const stopJitters = () =>
                     jitters.map((jitter) => jitter.stop());
-                  returnValue
+                  returnValue = returnValue
                     .then((value) => {
                       stopJitters();
                       const annotationKey =
@@ -229,6 +229,7 @@ export const decoratorFactory = (decoratorArgs) => ({
                           value,
                         };
                         advice(context);
+                        return value;
                       });
                     })
                     .catch((reason) => {
@@ -251,6 +252,7 @@ export const decoratorFactory = (decoratorArgs) => ({
                           reason,
                         };
                         advice(context);
+                        throw reason;
                       });
                     });
                 }

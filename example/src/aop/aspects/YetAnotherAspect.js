@@ -1,6 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import { beforeGet, afterCall, afterFulfillment, afterGet } from "aopla";
+import {
+  beforeGet,
+  afterCall,
+  afterFulfillment,
+  afterGet,
+  afterRejection,
+} from "aopla";
 import SomeService from "../../services/SomeService";
 import {
   PropTag1,
@@ -13,6 +19,7 @@ import {
   Tag6,
   Tag7,
   Tag8,
+  Tag11,
 } from "../tags";
 
 console.log("importing YetAnotherAspect");
@@ -119,6 +126,15 @@ class YetAnotherAspect {
   afterGettingPropertyWithTagPropTag2(paramsObj) {
     console.warn(
       "YetAnotherAspect.afterGettingPropertyWithPropTag2()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @afterRejection(Tag11)
+  afterRejectingPromiseReturnedByAMethodWithTag11(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.afterRejectingPromiseReturnedByAMethodWithTag11()",
       paramsObj
     );
     // ...
