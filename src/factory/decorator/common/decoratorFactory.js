@@ -30,13 +30,13 @@ import {
   AOPLA_ASPECT_DATA_PROP,
   AOPLA_ASPECT_ID_PREFIX,
 } from "../../../constants";
-import { lazyPropGet, lazyPropSet, getFinalKey } from "./helpers";
+import { lazyPropGet, lazyPropSet } from "./helpers";
 import { throwUnknownDecoratorTypeError } from "../utils";
 import { applyPigretto } from "./applyPigretto";
 import IntervalJitter from "interval-jitter";
-import { uniqueId, isEmpty } from "js-utl";
+import { uniqueId, isEmpty, defineProperty } from "js-utl";
 import AOPla from "../../../AOPla";
-import { defineProperty } from "../../../utils";
+import { PIGRETTO_EFFECTIVE_TARGET_PROP } from "pigretto";
 
 /**
  * Generic factory for an object implementing the generic logic for a decorator.
@@ -67,6 +67,10 @@ export const decoratorFactory = (decoratorArgs) => ({
     const decoratorFactoryAPI = this.decoratorFactoryAPI;
     const property = key;
 
+    const callAdviceContextFn = ({ argumentsList }) => ({
+      argumentsList,
+    });
+
     const setAdviceContextFn = ({ argumentsList }) => {
       const [value] = argumentsList;
       return {
@@ -74,14 +78,10 @@ export const decoratorFactory = (decoratorArgs) => ({
       };
     };
 
-    const callAdviceContextFn = ({ argumentsList }) => ({
-      argumentsList,
-    });
-
     const getAdviceTryCatchFinallyContextFn = (objectParam) =>
       Object.prototype.hasOwnProperty.call(objectParam, "returnValue")
         ? {
-            propertyValue: objectParam.returnValue,
+            value: objectParam.returnValue,
           }
         : {};
     const callAdviceTryCatchFinallyContextFn = ({
@@ -114,187 +114,210 @@ export const decoratorFactory = (decoratorArgs) => ({
       return returnObj;
     };
 
-    return {
-      ...descriptor,
-      get: applyPigretto({
-        target: descriptorGet,
-        decoratorFactoryAPI,
-        tag,
-        tagParams,
-        property,
+    const getAppliedPigretto = applyPigretto({
+      target: descriptorGet,
+      decoratorFactoryAPI,
+      tag,
+      tagParams,
+      property,
 
-        beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeGet,
+      annotationContext: ({ applyContext }) => ({
+        get effectiveValue() {
+          // effectiveTarget is the innermost getter function.
+          const thisArg = applyContext.thisArg;
+          const effectiveValue = applyContext.effectiveTarget.call(thisArg);
+          return effectiveValue;
+        },
+      }),
 
-        aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundGet,
+      beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeGet,
 
-        afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterGet,
-        afterAdviceAnnotationContext: ({ returnValue }) => ({
-          propertyValue: returnValue,
-        }),
+      aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundGet,
 
-        afterThrowAdviceAnnotationContext: getAdviceTryCatchFinallyContextFn,
-        alwaysFinallyAdviceAnnotationContext: getAdviceTryCatchFinallyContextFn,
+      afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterGet,
+      afterAdviceAnnotationContext: ({ returnValue }) => ({
+        value: returnValue,
+      }),
 
-        decoratorArgs,
-        returnValueFn: ({ returnValue, applyContext }) => {
-          if (typeof returnValue === "function") {
-            returnValue = applyPigretto({
-              target: returnValue,
-              decoratorFactoryAPI,
-              tag,
-              tagParams,
-              property,
-              beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeCall,
-              beforeAdviceAnnotationContext: callAdviceContextFn,
+      onCatchAdviceAnnotationContext: getAdviceTryCatchFinallyContextFn,
+      onFinallyAdviceAnnotationContext: getAdviceTryCatchFinallyContextFn,
 
-              aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundCall,
-              aroundAdviceAnnotationContext: callAdviceContextFn,
+      decoratorArgs,
+      returnValueFn: ({ returnValue, applyContext }) => {
+        if (typeof returnValue === "function") {
+          returnValue = applyPigretto({
+            target: returnValue,
+            decoratorFactoryAPI,
+            tag,
+            tagParams,
+            property,
+            beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeCall,
+            beforeAdviceAnnotationContext: callAdviceContextFn,
 
-              afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterCall,
-              afterAdviceAnnotationContext: ({
-                argumentsList,
-                applyContext,
-                returnValue,
-              }) => ({
-                argumentsList,
-                effectiveArgumentsList: applyContext.effectiveArgumentsList,
-                returnValue,
-              }),
+            aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundCall,
+            aroundAdviceAnnotationContext: callAdviceContextFn,
 
-              afterThrowAdviceAnnotationContext: callAdviceTryCatchFinallyContextFn,
-              alwaysFinallyAdviceAnnotationContext: callAdviceTryCatchFinallyContextFn,
+            afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterCall,
+            afterAdviceAnnotationContext: ({
+              argumentsList,
+              applyContext,
+              returnValue,
+            }) => ({
+              argumentsList,
+              effectiveArgumentsList: applyContext.effectiveArgumentsList,
+              returnValue,
+            }),
 
-              decoratorArgs,
-              thisArgFn: () => applyContext.thisArg,
-              returnValueFn: ({ returnValue, applyContext, argumentsList }) => {
-                if (returnValue instanceof Promise) {
-                  // @whilePending, @afterFulfillment, @afterRejection
-                  const jitters = [];
-                  const annotationKey = AOPLA_ANNOTATION_KEY_MAP.whilePending;
-                  AOPla.mapAdvices({ tag, annotationKey })(
-                    (advice, annotationParamsObj) => {
-                      const {
+            onCatchAdviceAnnotationContext: callAdviceTryCatchFinallyContextFn,
+            onFinallyAdviceAnnotationContext: callAdviceTryCatchFinallyContextFn,
+
+            decoratorArgs,
+            thisArgFn: () => applyContext.thisArg,
+            returnValueFn: ({ returnValue, applyContext, argumentsList }) => {
+              if (returnValue instanceof Promise) {
+                // @whilePending, @afterFulfillment, @afterRejection
+                const jitters = [];
+                const annotationKey = AOPLA_ANNOTATION_KEY_MAP.whilePending;
+                AOPla.mapAdvices({ tag, annotationKey })(
+                  (advice, annotationParamsObj) => {
+                    const {
+                      minInterval,
+                      maxInterval,
+                      interval,
+                    } = annotationParamsObj;
+                    const jitter = new IntervalJitter(
+                      () => {
+                        const context = {
+                          tag,
+                          tagParams,
+                          thisArg: applyContext.thisArg,
+                          property,
+                          argumentsList,
+                          hasPerformedUnderlyingOperation:
+                            applyContext.hasPerformedUnderlyingOperation,
+                          hasEffectivelyPerformedUnderlyingOperation:
+                            applyContext.hasEffectivelyPerformedUnderlyingOperation,
+                          effectiveArgumentsList:
+                            applyContext.effectiveArgumentsList,
+                          promise: returnValue,
+                        };
+                        advice(context);
+                      },
+                      {
                         minInterval,
                         maxInterval,
                         interval,
-                      } = annotationParamsObj;
-                      const jitter = new IntervalJitter(
-                        () => {
-                          const context = {
-                            tag,
-                            tagParams,
-                            thisArg: applyContext.thisArg,
-                            property,
-                            argumentsList,
-                            hasPerformedUnderlyingOperation:
-                              applyContext.hasPerformedUnderlyingOperation,
-                            hasEffectivelyPerformedUnderlyingOperation:
-                              applyContext.hasEffectivelyPerformedUnderlyingOperation,
-                            effectiveArgumentsList:
-                              applyContext.effectiveArgumentsList,
-                            promise: returnValue,
-                          };
-                          advice(context);
-                        },
-                        {
-                          minInterval,
-                          maxInterval,
-                          interval,
-                        }
-                      );
-                      jitters.push(jitter);
-                      jitter.run();
-                    }
-                  );
-                  const stopJitters = () =>
-                    jitters.map((jitter) => jitter.stop());
-                  returnValue = returnValue
-                    .then((value) => {
-                      stopJitters();
-                      const annotationKey =
-                        AOPLA_ANNOTATION_KEY_MAP.afterFulfillment;
-                      AOPla.mapAdvices({ tag, annotationKey })((advice) => {
-                        const context = {
-                          tag,
-                          tagParams,
-                          thisArg: applyContext.thisArg,
-                          property,
-                          argumentsList,
-                          hasPerformedUnderlyingOperation:
-                            applyContext.hasPerformedUnderlyingOperation,
-                          hasEffectivelyPerformedUnderlyingOperation:
-                            applyContext.hasEffectivelyPerformedUnderlyingOperation,
-                          effectiveArgumentsList:
-                            applyContext.effectiveArgumentsList,
-                          value,
-                        };
-                        advice(context);
-                      });
-                      return value;
-                    })
-                    .catch((reason) => {
-                      stopJitters();
-                      const annotationKey =
-                        AOPLA_ANNOTATION_KEY_MAP.afterRejection;
-                      AOPla.mapAdvices({ tag, annotationKey })((advice) => {
-                        const context = {
-                          tag,
-                          tagParams,
-                          thisArg: applyContext.thisArg,
-                          property,
-                          argumentsList,
-                          hasPerformedUnderlyingOperation:
-                            applyContext.hasPerformedUnderlyingOperation,
-                          hasEffectivelyPerformedUnderlyingOperation:
-                            applyContext.hasEffectivelyPerformedUnderlyingOperation,
-                          effectiveArgumentsList:
-                            applyContext.effectiveArgumentsList,
-                          reason,
-                        };
-                        advice(context);
-                      });
-                      throw reason;
+                      }
+                    );
+                    jitters.push(jitter);
+                    jitter.run();
+                  }
+                );
+                const stopJitters = () =>
+                  jitters.map((jitter) => jitter.stop());
+                returnValue = returnValue
+                  .then((value) => {
+                    stopJitters();
+                    const annotationKey =
+                      AOPLA_ANNOTATION_KEY_MAP.afterFulfillment;
+                    AOPla.mapAdvices({ tag, annotationKey })((advice) => {
+                      const context = {
+                        tag,
+                        tagParams,
+                        thisArg: applyContext.thisArg,
+                        property,
+                        argumentsList,
+                        hasPerformedUnderlyingOperation:
+                          applyContext.hasPerformedUnderlyingOperation,
+                        hasEffectivelyPerformedUnderlyingOperation:
+                          applyContext.hasEffectivelyPerformedUnderlyingOperation,
+                        effectiveArgumentsList:
+                          applyContext.effectiveArgumentsList,
+                        value,
+                      };
+                      advice(context);
                     });
-                }
-                return returnValue;
-              },
-            });
-          }
-          return returnValue;
-        },
-      }),
-      set: applyPigretto({
-        target: descriptorSet,
-        decoratorFactoryAPI,
-        tag,
-        tagParams,
-        property,
+                    return value;
+                  })
+                  .catch((reason) => {
+                    stopJitters();
+                    const annotationKey =
+                      AOPLA_ANNOTATION_KEY_MAP.afterRejection;
+                    AOPla.mapAdvices({ tag, annotationKey })((advice) => {
+                      const context = {
+                        tag,
+                        tagParams,
+                        thisArg: applyContext.thisArg,
+                        property,
+                        argumentsList,
+                        hasPerformedUnderlyingOperation:
+                          applyContext.hasPerformedUnderlyingOperation,
+                        hasEffectivelyPerformedUnderlyingOperation:
+                          applyContext.hasEffectivelyPerformedUnderlyingOperation,
+                        effectiveArgumentsList:
+                          applyContext.effectiveArgumentsList,
+                        reason,
+                      };
+                      advice(context);
+                    });
+                    throw reason;
+                  });
+              }
+              return returnValue;
+            },
+          });
+        }
+        return returnValue;
+      },
+    });
 
-        annotationContext: ({ applyContext }) => ({
-          previousPropertyValue: applyContext.thisArg[getFinalKey(property)],
-        }),
+    const setAppliedPigretto = applyPigretto({
+      target: descriptorSet,
+      decoratorFactoryAPI,
+      tag,
+      tagParams,
+      property,
 
-        beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeSet,
-        beforeAdviceAnnotationContext: setAdviceContextFn,
+      annotationContext: ({ applyContext, argumentsList }) => {
+        const [value] = argumentsList;
+        return {
+          get previousValue() {
+            const thisArg = applyContext.thisArg;
+            const previousValue = getAppliedPigretto[
+              PIGRETTO_EFFECTIVE_TARGET_PROP
+            ].call(thisArg);
+            return previousValue;
+          },
+          originalValue: value,
+        };
+      },
 
-        aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundSet,
-        aroundAdviceAnnotationContext: setAdviceContextFn,
+      beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeSet,
+      beforeAdviceAnnotationContext: setAdviceContextFn,
 
-        afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterSet,
-        afterAdviceAnnotationContext: ({ argumentsList, applyContext }) => {
-          const [originalValue] = argumentsList;
-          const [value] = applyContext.effectiveArgumentsList;
-          return {
-            originalValue,
-            value,
-          };
-        },
+      aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundSet,
+      aroundAdviceAnnotationContext: setAdviceContextFn,
+      aroundAfterAnnotationContextDeletePropsMap: { previousValue: true },
 
-        afterThrowAdviceAnnotationContext: setAdviceTryCatchFinallyContextFn,
-        alwaysFinallyAdviceAnnotationContext: setAdviceTryCatchFinallyContextFn,
+      afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterSet,
+      afterAdviceAnnotationContext: ({ applyContext }) => {
+        const [value] = applyContext.effectiveArgumentsList;
+        return {
+          value,
+        };
+      },
+      afterAnnotationContextDeleteProps: ["previousValue"],
 
-        decoratorArgs,
-      }),
+      onCatchAdviceAnnotationContext: setAdviceTryCatchFinallyContextFn,
+      onFinallyAdviceAnnotationContext: setAdviceTryCatchFinallyContextFn,
+
+      decoratorArgs,
+    });
+
+    return {
+      ...descriptor,
+      get: getAppliedPigretto,
+      set: setAppliedPigretto,
     };
   },
 

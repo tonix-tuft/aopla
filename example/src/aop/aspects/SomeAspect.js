@@ -13,6 +13,7 @@ import {
   beforeSet,
   afterSet,
   aroundSet,
+  onCatch,
   meta,
   targetClass,
   AOPLA_TAG_DATA_PROP,
@@ -33,6 +34,8 @@ import {
   Tag9,
   StaticPropTag1,
   PropTag3,
+  Tag13,
+  Tag14,
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -40,35 +43,22 @@ console.log("importing SomeAspect");
 
 class SomeAspect {
   @afterCall(Tag1)
-  afterCallingMethodWithTag1({ tag, tagParams, thisArg, argumentsList }) {
-    console.warn("SomeAspect.afterCallingMethodWithTag1()", this, {
-      tag,
-      tagParams,
-      thisArg,
+  afterCallingMethodWithTag1(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("SomeAspect.afterCallingMethodWithTag1()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
-      argumentsList,
     });
     // ...
   }
 
   @afterCall(Tag2)
-  afterCallingMethodWithTag2({ tag, tagParams, thisArg, argumentsList }) {
-    const [{ abc, def }, ...rest] = tagParams;
-    console.warn(
-      "SomeAspect.afterCallingMethodWithTag2()",
-      this,
-      { abc, def },
-      rest,
-      {
-        tag,
-        tagParams,
-        thisArg,
-        "thisArg === SomeService": thisArg === SomeService,
-        "thisArg instanceof SomeService": thisArg instanceof SomeService,
-        argumentsList,
-      }
-    );
+  afterCallingMethodWithTag2(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("SomeAspect.afterCallingMethodWithTag2()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+    });
     // ...
   }
 
@@ -121,6 +111,21 @@ class SomeAspect {
   afterSettingPropertyWithPropTag3(paramsObj) {
     console.warn("SomeAspect.afterSettingPropertyWithPropTag3()", paramsObj);
     // ...
+  }
+
+  @onCatch(Tag13)
+  onCatchingFromMethodWithTag13(paramsObj) {
+    console.warn("SomeAspect.onCatchingFromMethodWithTag13()", paramsObj);
+    // ...
+    throw paramsObj.e;
+  }
+
+  @Tag13()
+  @afterCall(Tag14)
+  afterCallingMethodWithTag14(paramsObj) {
+    console.warn("SomeAspect.afterCallingMethodWithTag14()", paramsObj);
+    // ...
+    throw new Error("SomeAspect.afterCallingMethodWithTag14() error");
   }
 }
 

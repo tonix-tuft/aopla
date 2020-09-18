@@ -57,7 +57,7 @@
     "serialize-javascript": "^4.0.0",
     "terser-webpack-plugin": "^3.1.0",
     "typescript": "^3.9.7",
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
   "bugs": {
@@ -69,8 +69,8 @@
     "declarative-factory": "^1.13.0",
     "immutable-linked-ordered-map": "^1.17.0",
     "interval-jitter": "^1.8.1",
-    "js-utl": "^4.29.0",
-    "pigretto": "^3.6.1"
+    "js-utl": "^4.31.0",
+    "pigretto": "^3.8.0"
   },
   "files": [
     "dist",

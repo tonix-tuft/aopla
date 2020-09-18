@@ -7,6 +7,7 @@ import {
   afterGet,
   afterRejection,
   afterSet,
+  onCatch,
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -16,6 +17,9 @@ import {
   StaticPropTag2,
   Tag1,
   Tag10,
+  Tag12,
+  Tag13,
+  Tag15,
   Tag2,
   Tag3,
   Tag7,
@@ -26,33 +30,21 @@ console.log("importing AnotherAspect");
 
 class AnotherAspect {
   @afterCall(Tag2)
-  afterCallingMethodWithTag2({ tag, tagParams, thisArg, argumentsList }) {
-    const [{ abc, def }, ...rest] = tagParams;
-    console.warn(
-      "AnotherAspect.afterCallingMethodWithTag2()",
-      this,
-      { abc, def },
-      rest,
-      {
-        tag,
-        tagParams,
-        thisArg,
-        "thisArg === SomeService": thisArg === SomeService,
-        "thisArg instanceof SomeService": thisArg instanceof SomeService,
-        argumentsList,
-      }
-    );
+  afterCallingMethodWithTag2(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("AnotherAspect.afterCallingMethodWithTag2()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+    });
     // ...
   }
 
   @afterCall(Tag3)
-  afterCallingMethodWithTag3({ tag, tagParams, thisArg, argumentsList }) {
-    console.warn("AnotherAspect.afterCallingMethodWithTag3()", this, {
-      tag,
-      tagParams,
+  afterCallingMethodWithTag3(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("AnotherAspect.afterCallingMethodWithTag3()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
-      argumentsList,
     });
     // ...
   }
@@ -115,6 +107,21 @@ class AnotherAspect {
   afterSettingPropertyWithPropTag2(paramsObj) {
     console.warn("AnotherAspect.afterSettingPropertyWithPropTag2()", paramsObj);
     // ...
+  }
+
+  @onCatch(Tag12)
+  onCatchingFromMethodWithTag12(paramsObj) {
+    console.warn("AnotherAspect.onCatchingFromMethodWithTag12()", paramsObj);
+    // ...
+    throw new Error("AnotherAspect.onCatchingFromMethodWithTag12() error");
+  }
+
+  @afterCall(Tag15)
+  @Tag13({ shouldReturnFromAspect: true })
+  afterCallingMethodWithTag15(paramsObj) {
+    console.warn("AnotherAspect.afterCallingMethodWithTag15()", paramsObj);
+    // ...
+    throw new Error("AnotherAspect.afterCallingMethodWithTag15() error");
   }
 }
 

@@ -19,6 +19,8 @@ import {
   StaticPropTag3,
   Tag11,
   Tag10,
+  Tag12,
+  Tag13,
 } from "../aop/tags";
 
 // @ClassTag1
@@ -142,6 +144,49 @@ class SomeService {
       "SomeService.someStaticMethodReturningARejectedPromise1()": args,
     };
     throw reason;
+  }
+
+  @Tag12
+  @Tag13()
+  someInstanceMethodThrowingAnError1 = (...args) => {
+    console.log("SomeService.someInstanceMethodThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    throw new Error("SomeService.someInstanceMethodThrowingAnError1() error");
+  };
+
+  @Tag12
+  @Tag13({ shouldReturnFromAspect: true })
+  anotherInstanceMethodThrowingAnError1 = (...args) => {
+    console.log("SomeService.anotherInstanceMethodThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    throw new Error(
+      "SomeService.anotherInstanceMethodThrowingAnError1() error"
+    );
+  };
+
+  @Tag12
+  @Tag13({ shouldThrowFromAspect: true })
+  yetAnotherInstanceMethodThrowingAnError1 = (...args) => {
+    console.log("SomeService.yetAnotherInstanceMethodThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    throw new Error(
+      "SomeService.yetAnotherInstanceMethodThrowingAnError1() error"
+    );
+  };
+
+  @Tag12
+  somePrototypeMethodThrowingAnError1(...args) {
+    console.log("SomeService.somePrototypeMethodThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    throw new Error("SomeService.somePrototypeMethodThrowingAnError1() error");
   }
 
   // @StaticPropTag3

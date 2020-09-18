@@ -7,6 +7,7 @@ import {
   afterGet,
   afterRejection,
   afterSet,
+  onCatch,
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -22,59 +23,51 @@ import {
   Tag8,
   Tag11,
   StaticPropTag2,
+  Tag13,
+  Tag16,
+  Tag12,
 } from "../tags";
+import { isEmpty } from "js-utl";
 
 console.log("importing YetAnotherAspect");
 
 class YetAnotherAspect {
   @afterCall(Tag3)
-  afterCallingMethodWithTag3({ tag, tagParams, thisArg, argumentsList }) {
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag3()", this, {
-      tag,
-      tagParams,
-      thisArg,
+  afterCallingMethodWithTag3(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag3()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
-      argumentsList,
     });
     // ...
   }
 
   @afterCall(Tag4)
-  afterCallingMethodWithTag4({ tag, tagParams, thisArg, argumentsList }) {
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag4()", this, {
-      tag,
-      tagParams,
-      thisArg,
+  afterCallingMethodWithTag4(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag4()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
-      argumentsList,
     });
     // ...
   }
 
   @afterCall(Tag5)
-  afterCallingMethodWithTag5({ tag, tagParams, thisArg, argumentsList }) {
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag5()", this, {
-      tag,
-      tagParams,
-      thisArg,
+  afterCallingMethodWithTag5(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag5()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
-      argumentsList,
     });
     // ...
   }
 
   @afterCall(Tag6)
-  afterCallingMethodWithTag6({ tag, tagParams, thisArg, argumentsList }) {
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag6()", this, {
-      tag,
-      tagParams,
-      thisArg,
+  afterCallingMethodWithTag6(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag6()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService,
-      argumentsList,
     });
     // ...
   }
@@ -149,6 +142,33 @@ class YetAnotherAspect {
       paramsObj
     );
     // ...
+  }
+
+  @onCatch(Tag13)
+  onCatchingFromMethodWithTag13(paramsObj) {
+    console.warn("YetAnotherAspect.onCatchingFromMethodWithTag13()", paramsObj);
+    const { tagParams } = paramsObj;
+    if (!isEmpty(tagParams)) {
+      const [obj] = tagParams;
+      if (obj.shouldReturnFromAspect) {
+        return "obj.shouldReturnFromAspect && YetAnotherAspect.onCatchingFromMethodWithTag13() return value";
+      }
+      if (obj.shouldThrowFromAspect) {
+        throw new Error(
+          "YetAnotherAspect.onCatchingFromMethodWithTag13() error"
+        );
+      }
+    }
+    // ...
+    throw paramsObj.e;
+  }
+
+  @Tag12
+  @afterCall(Tag16)
+  afterCallingMethodWithTag16(paramsObj) {
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag16()", paramsObj);
+    // ...
+    throw new Error("YetAnotherAspect.afterCallingMethodWithTag16() error");
   }
 }
 

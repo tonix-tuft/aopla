@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>AOPla @onCatch Example</title>
+  </head>
+  <body>
+    <script src="../dist/aopla-example.js"></script>
+    <script>
+      console.log("==========================================================");
+
+      try {
+        var returnValue = someService.someInstanceMethodThrowingAnError1(
+          "a",
+          "b",
+          "c"
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      var returnValue = someService.anotherInstanceMethodThrowingAnError1(
+        "d",
+        "e",
+        "f"
+      );
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      try {
+        var returnValue = someService.yetAnotherInstanceMethodThrowingAnError1(
+          "g",
+          "h",
+          "i"
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = someService.somePrototypeMethodThrowingAnError1(
+          1,
+          2,
+          3
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = AnotherService.someStaticMethodThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = anotherService.someInstanceMethodNotThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = anotherService.somePrototypeMethodNotThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = AnotherService.someStaticMethodNotThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+    </script>
+  </body>
+</html>

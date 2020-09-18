@@ -24,7 +24,7 @@
  */
 
 import { AOPLA_ACCESSOR_DESCRIPTOR_PROPERTY_NAME } from "../../../constants";
-import { defineProperty } from "../../../utils";
+import { defineProperty } from "js-utl";
 
 /**
  * @type {Function}
@@ -38,7 +38,7 @@ export const getDescriptorKeysMap = (descriptor) => {
 /**
  * @type {Function}
  */
-export const getFinalKey = (key) =>
+const getFinalKey = (key) =>
   `${AOPLA_ACCESSOR_DESCRIPTOR_PROPERTY_NAME}-${key}`;
 
 /**

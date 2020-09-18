@@ -23,19 +23,21 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import preregister from "./helpers/preregister";
+import { AOPLA_ANNOTATION_KEY_MAP } from "../constants";
+// eslint-disable-next-line no-unused-vars
+import Tag from "../tag/Tag";
+
 /**
- * Defines a property on an object.
+ * Annotation for advices to execute always regardless of whether an exception was thrown or caught
+ * by a method tagged with the given tag or by a getter or a setter of a property tagged with the given tag.
  *
- * @param {Object} o An object.
- * @param {string} p The property to define.
- * @param {Object} descriptor Optional object containing the descriptor's properties to use to override the default properties.
- * @return {Object} The object that was passed to the function.
+ * @param {Tag} tag A tag for which to execute the advice annotated with this annotation.
+ * @return {Function} The decorator function for the preregistration.
  */
-export function defineProperty(o, p, descriptor = {}) {
-  return Object.defineProperty(o, p, {
-    configurable: false,
-    enumerable: false,
-    writable: true,
-    ...descriptor,
+export default function onFinally(tag) {
+  return preregister({
+    tag,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.onCatch,
   });
 }

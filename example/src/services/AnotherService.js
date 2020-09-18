@@ -7,6 +7,10 @@ import {
   Tag1,
   Tag10,
   Tag11,
+  Tag13,
+  Tag14,
+  Tag15,
+  Tag16,
   Tag2,
   Tag3,
   Tag4,
@@ -43,6 +47,42 @@ class AnotherService {
       "AnotherService.someStaticMethodReturningARejectedPromise1()": args,
     };
     throw reason;
+  }
+
+  @Tag13({ shouldReturnFromAspect: false, shouldThrowFromAspect: false })
+  static someStaticMethodThrowingAnError1(...args) {
+    console.log("AnotherService.someStaticMethodThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    throw new Error("AnotherService.someStaticMethodThrowingAnError1() error");
+  }
+
+  @Tag14
+  someInstanceMethodNotThrowingAnError1 = (...args) => {
+    console.log("AnotherService.someInstanceMethodNotThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    return "AnotherService.someInstanceMethodNotThrowingAnError1() return value";
+  };
+
+  @Tag15
+  somePrototypeMethodNotThrowingAnError1(...args) {
+    console.log("AnotherService.somePrototypeMethodNotThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    return "AnotherService.somePrototypeMethodNotThrowingAnError1() return value";
+  }
+
+  @Tag16
+  static someStaticMethodNotThrowingAnError1(...args) {
+    console.log("AnotherService.someStaticMethodNotThrowingAnError1()", {
+      thisArg: this,
+      args,
+    });
+    return "AnotherService.someStaticMethodNotThrowingAnError1() return value";
   }
 
   // @PropTag1

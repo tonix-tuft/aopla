@@ -38,6 +38,8 @@ import beforeSet from "./annotation/beforeSet";
 import whilePending from "./annotation/whilePending";
 import afterFulfillment from "./annotation/afterFulfillment";
 import afterRejection from "./annotation/afterRejection";
+import onCatch from "./annotation/onCatch";
+import onFinally from "./annotation/onFinally";
 import meta from "./annotation/meta";
 import targetClass from "./annotation/targetClass";
 import { AOPLA_TAG_DATA_PROP } from "./constants";
@@ -57,6 +59,8 @@ import { AOPLA_TAG_DATA_PROP } from "./constants";
   ["whilePending", whilePending],
   ["afterFulfillment", afterFulfillment],
   ["afterRejection", afterRejection],
+  ["onCatch", onCatch],
+  ["onFinally", onFinally],
   ["meta", meta],
   ["targetClass", targetClass],
   ["AOPLA_TAG_DATA_PROP", AOPLA_TAG_DATA_PROP],
@@ -74,10 +78,12 @@ export {
   beforeCall,
   beforeGet,
   beforeSet,
-  meta,
   whilePending,
   afterFulfillment,
   afterRejection,
+  onCatch,
+  onFinally,
+  meta,
   targetClass,
   AOPLA_TAG_DATA_PROP,
 };

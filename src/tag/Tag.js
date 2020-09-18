@@ -24,13 +24,12 @@
  */
 
 import CallableInstance from "callable-instance";
-import { uniqueId } from "js-utl";
+import { uniqueId, defineProperty } from "js-utl";
 import {
   AOPLA_TAG_ID_PREFIX,
   AOPLA_TAG_DATA_PROP,
   AOPLA_TAG_INNER_FN,
 } from "../constants";
-import { defineProperty } from "../utils";
 
 /**
  * The tag class for AOPla tags.

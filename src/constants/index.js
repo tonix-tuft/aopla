@@ -56,8 +56,8 @@ export const AOPLA_ANNOTATION_KEY_MAP = {
   aroundCall: "@aroundCall",
   aroundSet: "@aroundSet",
 
-  afterThrow: "@afterThrow",
-  alwaysFinally: "@alwaysFinally",
+  onCatch: "@onCatch",
+  onFinally: "@onFinally",
 
   afterGet: "@afterGet",
   afterCall: "@afterCall",

@@ -29,15 +29,15 @@ import { AOPLA_ANNOTATION_KEY_MAP } from "../constants";
 import Tag from "../tag/Tag";
 
 /**
- * Annotation for advices to execute always regardless of whether an exception was thrown or caught
- * by a method tagged with the given tag or by a getter or a setter of a property tagged with the given tag.
+ * Annotation for advices to execute after a method tagged with the given tag has thrown
+ * or a getter or a setter of a property tagged with the given tag has thrown.
  *
  * @param {Tag} tag A tag for which to execute the advice annotated with this annotation.
  * @return {Function} The decorator function for the preregistration.
  */
-export default function alwaysFinally(tag) {
+export default function onCatch(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterThrow,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.onCatch,
   });
 }
