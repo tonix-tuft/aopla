@@ -8,6 +8,7 @@ import {
   afterRejection,
   afterSet,
   onCatch,
+  onFinally,
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -26,6 +27,7 @@ import {
   Tag13,
   Tag16,
   Tag12,
+  Tag17,
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -169,6 +171,20 @@ class YetAnotherAspect {
     console.warn("YetAnotherAspect.afterCallingMethodWithTag16()", paramsObj);
     // ...
     throw new Error("YetAnotherAspect.afterCallingMethodWithTag16() error");
+  }
+
+  @onFinally(Tag17, { afterCall })
+  anotherOnFinallyFromMethodWithTag17(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.anotherOnFinallyFromMethodWithTag17()",
+      paramsObj
+    );
+    // ...
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "YetAnotherAspect.anotherOnFinallyFromMethodWithTag17() default return value"
+    );
   }
 }
 

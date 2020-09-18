@@ -21,6 +21,8 @@ import {
   Tag10,
   Tag12,
   Tag13,
+  Tag17,
+  Tag18,
 } from "../aop/tags";
 
 // @ClassTag1
@@ -188,6 +190,13 @@ class SomeService {
     });
     throw new Error("SomeService.somePrototypeMethodThrowingAnError1() error");
   }
+
+  @Tag17
+  @Tag18
+  someInstanceMethod2 = (...args) => {
+    console.log("SomeService.someInstanceMethod2()", { thisArg: this, args });
+    return "SomeService.someInstanceMethod2() return value";
+  };
 
   // @StaticPropTag3
   // get anotherStaticProp() {

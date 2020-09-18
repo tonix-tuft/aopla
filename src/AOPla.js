@@ -207,9 +207,11 @@ class AOPla {
    * @param {Object} params An object with parameters.
    * @param {Tag} params.tag A tag.
    * @param {string} params.annotationKey An annotation key (a value of the "AOPLA_ANNOTATION_KEY_MAP" map).
+   * @param {({ adviceName: string, annotationParamsObj: Object }) => boolean} [params.isValidAdviceFn] An optional validator function which must return a truthy value
+   *                                                                                                    if the current advice the given tag and annotation key should be mapped.
    * @return {((advice: Function, annotationParamsObj: Object) => *) => Array} A function returing the array which represents the mapping of the advices.
    */
-  mapAdvices({ tag, annotationKey }) {
+  mapAdvices({ tag, annotationKey, isValidAdviceFn = void 0 }) {
     return (adviceFn) => {
       const resultArray = [];
       const tagId = tag[AOPLA_TAG_DATA_PROP].id;
@@ -226,6 +228,12 @@ class AOPla {
             if (!isEmpty(advicesMetadata)) {
               advicesMetadata.map((adviceMetadata) => {
                 const { adviceName, annotationParamsObj } = adviceMetadata;
+                if (
+                  isValidAdviceFn &&
+                  !isValidAdviceFn({ adviceName, annotationParamsObj })
+                ) {
+                  return;
+                }
                 const advice = (adviceParamsObj) =>
                   this.executeAspectAdvice({
                     aspectMetadata,

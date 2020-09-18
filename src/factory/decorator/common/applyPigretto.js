@@ -128,7 +128,19 @@ const beforeAfterCatchBlockFn = ({ eRef, baseContext, tag }) => (exception) => {
 /**
  * @type {Function}
  */
-const beforeAfterFinallyBlockFn = ({ eRef, baseContext, tag }) => () => {
+const isValidOnFinallyAdviceFn = (adviceAnnotationKey) => ({
+  annotationParamsObj: { annotationKeyMap },
+}) => !!annotationKeyMap[adviceAnnotationKey];
+
+/**
+ * @type {Function}
+ */
+const beforeAfterFinallyBlockFn = ({
+  eRef,
+  baseContext,
+  tag,
+  adviceAnnotationKey,
+}) => () => {
   const { e } = eRef;
   let context = baseContext;
   if (e !== noObject) {
@@ -138,7 +150,11 @@ const beforeAfterFinallyBlockFn = ({ eRef, baseContext, tag }) => () => {
   }
   let atLeastOneAdviceHasReturned = false;
   const annotationKey = AOPLA_ANNOTATION_KEY_MAP.onFinally;
-  AOPla.mapAdvices({ tag, annotationKey })((advice) => {
+  AOPla.mapAdvices({
+    tag,
+    annotationKey,
+    isValidAdviceFn: isValidOnFinallyAdviceFn(adviceAnnotationKey),
+  })((advice) => {
     const returnValue = advice(context);
     if (!isUndefined(returnValue)) {
       atLeastOneAdviceHasReturned = true;
@@ -229,7 +245,12 @@ export const applyPigretto = ({
             );
           },
           catchBlock: beforeAfterCatchBlockFn({ eRef, baseContext, tag }),
-          finallyBlock: beforeAfterFinallyBlockFn({ eRef, baseContext, tag }),
+          finallyBlock: beforeAfterFinallyBlockFn({
+            eRef,
+            baseContext,
+            tag,
+            adviceAnnotationKey: beforeAdviceAnnotationKey,
+          }),
         });
       })
       .flatAround(function (proceed) {
@@ -388,7 +409,13 @@ export const applyPigretto = ({
               }
               let atLeastOneAdviceHasReturned = false;
               const annotationKey = AOPLA_ANNOTATION_KEY_MAP.onFinally;
-              AOPla.mapAdvices({ tag, annotationKey })((advice) => {
+              AOPla.mapAdvices({
+                tag,
+                annotationKey,
+                isValidAdviceFn: isValidOnFinallyAdviceFn(
+                  aroundAdviceAnnotationKey
+                ),
+              })((advice) => {
                 const shadowObj = completeObjectAssign(
                   {},
                   contextMerge,
@@ -466,7 +493,12 @@ export const applyPigretto = ({
               );
             },
             catchBlock: beforeAfterCatchBlockFn({ eRef, baseContext, tag }),
-            finallyBlock: beforeAfterFinallyBlockFn({ eRef, baseContext, tag }),
+            finallyBlock: beforeAfterFinallyBlockFn({
+              eRef,
+              baseContext,
+              tag,
+              adviceAnnotationKey: afterAdviceAnnotationKey,
+            }),
           });
         };
       }),

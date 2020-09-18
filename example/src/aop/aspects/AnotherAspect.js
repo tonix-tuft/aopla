@@ -8,6 +8,8 @@ import {
   afterRejection,
   afterSet,
   onCatch,
+  onFinally,
+  beforeCall,
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -20,6 +22,8 @@ import {
   Tag12,
   Tag13,
   Tag15,
+  Tag17,
+  Tag18,
   Tag2,
   Tag3,
   Tag7,
@@ -122,6 +126,31 @@ class AnotherAspect {
     console.warn("AnotherAspect.afterCallingMethodWithTag15()", paramsObj);
     // ...
     throw new Error("AnotherAspect.afterCallingMethodWithTag15() error");
+  }
+
+  @onFinally(Tag17, { afterCall })
+  anotherOnFinallyFromMethodWithTag17(paramsObj) {
+    console.warn(
+      "AnotherAspect.anotherOnFinallyFromMethodWithTag17()",
+      paramsObj
+    );
+    // ...
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "AnotherAspect.anotherOnFinallyFromMethodWithTag17() default return value"
+    );
+  }
+
+  @onFinally(Tag18, { afterCall })
+  onFinallyFromMethodWithTag18(paramsObj) {
+    console.warn("AnotherAspect.onFinallyFromMethodWithTag18()", paramsObj);
+    // ...
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "AnotherAspect.onFinallyFromMethodWithTag18() default return value"
+    );
   }
 }
 

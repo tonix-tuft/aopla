@@ -27,17 +27,129 @@ import preregister from "./helpers/preregister";
 import { AOPLA_ANNOTATION_KEY_MAP } from "../constants";
 // eslint-disable-next-line no-unused-vars
 import Tag from "../tag/Tag";
+import beforeGet from "./beforeGet";
+import afterGet from "./afterGet";
+import aroundGet from "./aroundGet";
+import beforeCall from "./beforeCall";
+import afterCall from "./afterCall";
+import aroundCall from "./aroundCall";
+import beforeSet from "./beforeSet";
+import afterSet from "./afterSet";
+import aroundSet from "./aroundSet";
+
+/**
+ * @type {boolean}
+ */
+export const get = true;
+
+/**
+ * @type {boolean}
+ */
+export const call = true;
+
+/**
+ * @type {boolean}
+ */
+export const set = true;
+
+/**
+ * @type {boolean}
+ */
+export const before = true;
+
+/**
+ * @type {boolean}
+ */
+export const around = true;
+
+/**
+ * @type {boolean}
+ */
+export const after = true;
 
 /**
  * Annotation for advices to execute always regardless of whether an exception was thrown or caught
  * by a method tagged with the given tag or by a getter or a setter of a property tagged with the given tag.
  *
  * @param {Tag} tag A tag for which to execute the advice annotated with this annotation.
+ * @param {Object} [adviceAnnotationsMap] A map specifying for which advice annotations to execute this advice in finally block.
  * @return {Function} The decorator function for the preregistration.
  */
-export default function onFinally(tag) {
+export default function onFinally(tag, adviceAnnotationsMap = void 0) {
+  if (!adviceAnnotationsMap) {
+    adviceAnnotationsMap = {
+      beforeGet,
+      aroundGet,
+      afterGet,
+
+      beforeCall,
+      aroundCall,
+      afterCall,
+
+      beforeSet,
+      aroundSet,
+      afterSet,
+    };
+  }
+  if (adviceAnnotationsMap.get) {
+    adviceAnnotationsMap = {
+      ...adviceAnnotationsMap,
+      beforeGet,
+      aroundGet,
+      afterGet,
+    };
+  }
+  if (adviceAnnotationsMap.call) {
+    adviceAnnotationsMap = {
+      ...adviceAnnotationsMap,
+      beforeCall,
+      aroundCall,
+      afterCall,
+    };
+  }
+  if (adviceAnnotationsMap.set) {
+    adviceAnnotationsMap = {
+      ...adviceAnnotationsMap,
+      beforeSet,
+      aroundSet,
+      afterSet,
+    };
+  }
+  if (adviceAnnotationsMap.before) {
+    adviceAnnotationsMap = {
+      ...adviceAnnotationsMap,
+      beforeGet,
+      beforeCall,
+      beforeSet,
+    };
+  }
+  if (adviceAnnotationsMap.around) {
+    adviceAnnotationsMap = {
+      ...adviceAnnotationsMap,
+      aroundGet,
+      aroundCall,
+      aroundSet,
+    };
+  }
+  if (adviceAnnotationsMap.after) {
+    adviceAnnotationsMap = {
+      ...adviceAnnotationsMap,
+      afterGet,
+      afterCall,
+      afterSet,
+    };
+  }
+  const map = {};
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.onCatch,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.onFinally,
+    annotationParamsObj: {
+      annotationKeyMap: Object.keys(adviceAnnotationsMap)
+        .map((key) => AOPLA_ANNOTATION_KEY_MAP[key])
+        .reduce((acc, key) => {
+          acc[key] = true;
+          return acc;
+        }, map),
+    },
   });
 }

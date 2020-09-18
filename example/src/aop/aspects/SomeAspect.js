@@ -16,6 +16,7 @@ import {
   onCatch,
   meta,
   targetClass,
+  onFinally,
   AOPLA_TAG_DATA_PROP,
 } from "aopla";
 import SomeService from "../../services/SomeService";
@@ -36,6 +37,8 @@ import {
   PropTag3,
   Tag13,
   Tag14,
+  Tag17,
+  Tag18,
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -126,6 +129,39 @@ class SomeAspect {
     console.warn("SomeAspect.afterCallingMethodWithTag14()", paramsObj);
     // ...
     throw new Error("SomeAspect.afterCallingMethodWithTag14() error");
+  }
+
+  @onFinally(Tag17, { afterCall })
+  onFinallyFromMethodWithTag17(paramsObj) {
+    console.warn("SomeAspect.onFinallyFromMethodWithTag17()", paramsObj);
+    // ...
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "SomeAspect.onFinallyFromMethodWithTag17() default return value"
+    );
+  }
+
+  @onFinally(Tag17, { afterCall })
+  anotherOnFinallyFromMethodWithTag17(paramsObj) {
+    console.warn("SomeAspect.anotherOnFinallyFromMethodWithTag17()", paramsObj);
+    // ...
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "SomeAspect.anotherOnFinallyFromMethodWithTag17() default return value"
+    );
+  }
+
+  @onFinally(Tag18, { afterCall })
+  onFinallyFromMethodWithTag18(paramsObj) {
+    console.warn("SomeAspect.onFinallyFromMethodWithTag18()", paramsObj);
+    // ...
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "SomeAspect.onFinallyFromMethodWithTag18() default return value"
+    );
   }
 }
 

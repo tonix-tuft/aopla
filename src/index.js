@@ -39,7 +39,14 @@ import whilePending from "./annotation/whilePending";
 import afterFulfillment from "./annotation/afterFulfillment";
 import afterRejection from "./annotation/afterRejection";
 import onCatch from "./annotation/onCatch";
-import onFinally from "./annotation/onFinally";
+import onFinally, {
+  after,
+  around,
+  before,
+  call,
+  get,
+  set,
+} from "./annotation/onFinally";
 import meta from "./annotation/meta";
 import targetClass from "./annotation/targetClass";
 import { AOPLA_TAG_DATA_PROP } from "./constants";
@@ -59,10 +66,16 @@ import { AOPLA_TAG_DATA_PROP } from "./constants";
   ["whilePending", whilePending],
   ["afterFulfillment", afterFulfillment],
   ["afterRejection", afterRejection],
-  ["onCatch", onCatch],
-  ["onFinally", onFinally],
   ["meta", meta],
   ["targetClass", targetClass],
+  ["onCatch", onCatch],
+  ["onFinally", onFinally],
+  ["after", after],
+  ["around", around],
+  ["before", before],
+  ["call", call],
+  ["get", get],
+  ["set", set],
   ["AOPLA_TAG_DATA_PROP", AOPLA_TAG_DATA_PROP],
 ].map(([prop, value]) => (AOPla[prop] = value));
 export default AOPla;
@@ -81,9 +94,15 @@ export {
   whilePending,
   afterFulfillment,
   afterRejection,
-  onCatch,
-  onFinally,
   meta,
   targetClass,
+  onCatch,
+  onFinally,
+  after,
+  around,
+  before,
+  call,
+  get,
+  set,
   AOPLA_TAG_DATA_PROP,
 };

@@ -61,7 +61,7 @@ export default function whilePending(tag, annotationParamsObj = {}) {
   } = annotationParamsObj;
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.targetClass,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.whilePending,
     annotationParamsObj: { interval, minInterval, maxInterval },
   });
 }
