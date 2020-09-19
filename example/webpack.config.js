@@ -25,7 +25,7 @@ var config = {
     globalObject:
       "(typeof self !== 'undefined' ? self : (typeof global !== 'undefined' ? global : this))",
     umdNamedDefine: true,
-    libraryExport: "default",
+    libraryExport: "default"
   },
   module: {
     rules: [
@@ -38,37 +38,37 @@ var config = {
             "@babel/preset-env",
             {
               plugins: [
-                // ["@babel/plugin-proposal-decorators", { legacy: true }],
-                [
-                  "@babel/plugin-proposal-decorators",
-                  { decoratorsBeforeExport: false },
-                  // { decoratorsBeforeExport: true },
-                ],
+                ["@babel/plugin-proposal-decorators", { legacy: true }],
+                // [
+                //   "@babel/plugin-proposal-decorators",
+                //   { decoratorsBeforeExport: false }
+                //   // { decoratorsBeforeExport: true },
+                // ],
                 "@babel/plugin-proposal-object-rest-spread",
-                // ["@babel/plugin-proposal-class-properties", { loose: true }], // if using @babel/plugin-proposal-decorators with "legacy": true.
-                "@babel/plugin-proposal-class-properties",
+                ["@babel/plugin-proposal-class-properties", { loose: true }], // if using @babel/plugin-proposal-decorators with "legacy": true.
+                // "@babel/plugin-proposal-class-properties",
                 [
                   "@babel/plugin-transform-runtime",
                   {
                     corejs: false,
-                    regenerator: true,
-                  },
-                ],
-              ],
-            },
-          ],
-        },
+                    regenerator: true
+                  }
+                ]
+              ]
+            }
+          ]
+        }
       },
       {
         test: /(\.jsx|\.js)$/,
         loader: "eslint-loader",
-        exclude: /node_modules/,
-      },
-    ],
+        exclude: /node_modules/
+      }
+    ]
   },
   resolve: {
-    extensions: [".js"],
-  },
+    extensions: [".js"]
+  }
 };
 
 if (env === "build") {
@@ -79,11 +79,11 @@ if (env === "build") {
         parallel: true,
         terserOptions: {
           output: {
-            comments: false,
-          },
-        },
-      }),
-    ],
+            comments: false
+          }
+        }
+      })
+    ]
   };
   config.mode = "production";
   config.devtool = false;

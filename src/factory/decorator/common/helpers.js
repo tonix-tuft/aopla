@@ -31,7 +31,9 @@ import { defineProperty } from "js-utl";
  */
 export const getDescriptorKeysMap = (descriptor) => {
   const descriptorKeysMap = {};
-  Object.keys(descriptor).map((key) => (descriptorKeysMap[key] = true));
+  Object.keys(descriptor).map(
+    (key) => (descriptorKeysMap[key] = !!descriptor[key])
+  );
   return descriptorKeysMap;
 };
 
