@@ -37,6 +37,6 @@ import preregister from "./helpers/preregister";
 export default function beforeGet(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeGet,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeGet
   });
 }

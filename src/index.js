@@ -45,7 +45,7 @@ import onFinally, {
   before,
   call,
   get,
-  set,
+  set
 } from "./annotation/onFinally";
 import meta from "./annotation/meta";
 import targetClass from "./annotation/targetClass";
@@ -76,7 +76,7 @@ import { AOPLA_TAG_DATA_PROP } from "./constants";
   ["call", call],
   ["get", get],
   ["set", set],
-  ["AOPLA_TAG_DATA_PROP", AOPLA_TAG_DATA_PROP],
+  ["AOPLA_TAG_DATA_PROP", AOPLA_TAG_DATA_PROP]
 ].map(([prop, value]) => (AOPla[prop] = value));
 export default AOPla;
 export {
@@ -104,5 +104,5 @@ export {
   call,
   get,
   set,
-  AOPLA_TAG_DATA_PROP,
+  AOPLA_TAG_DATA_PROP
 };

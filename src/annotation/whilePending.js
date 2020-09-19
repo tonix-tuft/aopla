@@ -57,11 +57,11 @@ export default function whilePending(tag, annotationParamsObj = {}) {
   const {
     interval = void 0,
     minInterval = void 0,
-    maxInterval = void 0,
+    maxInterval = void 0
   } = annotationParamsObj;
   return preregister({
     tag,
     annotationKey: AOPLA_ANNOTATION_KEY_MAP.whilePending,
-    annotationParamsObj: { interval, minInterval, maxInterval },
+    annotationParamsObj: { interval, minInterval, maxInterval }
   });
 }

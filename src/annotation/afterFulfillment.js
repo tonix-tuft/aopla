@@ -37,6 +37,6 @@ import Tag from "../tag/Tag";
 export default function afterFulfillment(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterFulfillment,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterFulfillment
   });
 }

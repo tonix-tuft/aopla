@@ -27,7 +27,7 @@ import decoratorTypeEnum from "../common/enums";
 import {
   getDescriptorKeysMap,
   lazyPropGet,
-  lazyPropSet,
+  lazyPropSet
 } from "../common/helpers";
 
 export const stage2NonLegacyDecoratorFactory = () => ({
@@ -61,7 +61,7 @@ export const stage2NonLegacyDecoratorFactory = () => ({
     const [descriptorObj] = decoratorArgs;
     return {
       ...descriptorObj,
-      finisher: (Class) => targetClassCallback(Class),
+      finisher: (Class) => targetClassCallback(Class)
     };
   },
 
@@ -86,7 +86,7 @@ export const stage2NonLegacyDecoratorFactory = () => ({
     descriptor,
     descriptorKeysMap,
     key,
-    tagDecoratorReturnValue,
+    tagDecoratorReturnValue
   }) {
     const descriptorObj = tagDecoratorReturnValue;
     const {
@@ -95,7 +95,7 @@ export const stage2NonLegacyDecoratorFactory = () => ({
     } = descriptorObj;
     const { value, writable, ...allButValueAndWritable } = descriptor;
     const newDescriptor = {
-      ...allButValueAndWritable,
+      ...allButValueAndWritable
     };
     let initializer = void 0;
     if (descriptorKeysMap.value) {
@@ -110,28 +110,28 @@ export const stage2NonLegacyDecoratorFactory = () => ({
     const newDescriptorObj = {
       ...allButInitializer,
       kind: "method",
-      descriptor: newDescriptor,
+      descriptor: newDescriptor
     };
     return {
       descriptor: newDescriptor,
-      tagDecoratorReturnValue: newDescriptorObj,
+      tagDecoratorReturnValue: newDescriptorObj
     };
   },
 
   getFinalTagDecoratorReturnValue: function ({
     descriptor,
-    tagDecoratorReturnValue,
+    tagDecoratorReturnValue
   }) {
     return {
       ...tagDecoratorReturnValue,
       descriptor: {
         ...tagDecoratorReturnValue.descriptor,
-        ...descriptor,
-      },
+        ...descriptor
+      }
     };
   },
 
   preregisterAnnotationReturnValue: function ({ targetClassResultValue }) {
     return targetClassResultValue;
-  },
+  }
 });

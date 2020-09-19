@@ -38,6 +38,6 @@ import Tag from "../tag/Tag";
 export default function targetClass(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.targetClass,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.targetClass
   });
 }

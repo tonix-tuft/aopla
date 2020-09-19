@@ -91,7 +91,7 @@ class AOPla {
     tag,
     annotationKey,
     adviceName,
-    annotationParamsObj = {},
+    annotationParamsObj = {}
   }) {
     const tagId = tag[AOPLA_TAG_DATA_PROP].id;
 
@@ -136,15 +136,15 @@ class AOPla {
             Aspect,
             factory,
             aspectInstance,
-            subtree: this.preregistrationAspectsMap[aspectId],
-          },
+            subtree: this.preregistrationAspectsMap[aspectId]
+          }
         });
         const aspectMetadata = this.aspectsMap.get(aspectId);
         const tagIds = Object.keys(aspectMetadata.subtree);
         tagIds.map((tagId) => {
           this.tagsMap[tagId] = this.tagsMap[tagId] || newMap();
           this.tagsMap[tagId] = this.tagsMap[tagId].set({
-            [aspectId]: aspectId,
+            [aspectId]: aspectId
           });
         });
       });
@@ -166,7 +166,7 @@ class AOPla {
           const tagIds = Object.keys(aspectMetadata.subtree);
           tagIds.map((tagId) => {
             this.tagsMap[tagId] = this.tagsMap[tagId].set({
-              [aspectId]: void 0,
+              [aspectId]: void 0
             });
           });
           this.aspectsMap = this.aspectsMap.set({ [aspectId]: void 0 });
@@ -238,7 +238,7 @@ class AOPla {
                   this.executeAspectAdvice({
                     aspectMetadata,
                     adviceName,
-                    adviceParamsObj,
+                    adviceParamsObj
                   });
                 resultArray[resultArray.length] = adviceFn(
                   advice,

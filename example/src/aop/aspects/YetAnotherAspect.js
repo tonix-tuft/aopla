@@ -9,7 +9,7 @@ import {
   afterSet,
   onCatch,
   onFinally,
-  aroundCall,
+  aroundCall
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -29,7 +29,7 @@ import {
   Tag16,
   Tag12,
   Tag17,
-  Tag19,
+  Tag19
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -41,7 +41,7 @@ class YetAnotherAspect {
     const { thisArg } = paramsObj;
     console.warn("YetAnotherAspect.afterCallingMethodWithTag3()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }
@@ -51,7 +51,7 @@ class YetAnotherAspect {
     const { thisArg } = paramsObj;
     console.warn("YetAnotherAspect.afterCallingMethodWithTag4()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }
@@ -61,7 +61,7 @@ class YetAnotherAspect {
     const { thisArg } = paramsObj;
     console.warn("YetAnotherAspect.afterCallingMethodWithTag5()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }
@@ -71,7 +71,7 @@ class YetAnotherAspect {
     const { thisArg } = paramsObj;
     console.warn("YetAnotherAspect.afterCallingMethodWithTag6()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }

@@ -38,6 +38,6 @@ import Tag from "../tag/Tag";
 export default function onCatch(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.onCatch,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.onCatch
   });
 }

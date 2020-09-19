@@ -55,12 +55,12 @@ export default function factory(decoratorArgs) {
         }
         return isStage2NonLegacyDecorator;
       },
-      stage2NonLegacyDecoratorFactory,
+      stage2NonLegacyDecoratorFactory
     ],
-    stage1LegacyDecoratorFactory,
+    stage1LegacyDecoratorFactory
   ]);
   return {
     ...decoratorFactory(decoratorArgs),
-    ...factory(decoratorArgs),
+    ...factory(decoratorArgs)
   };
 }

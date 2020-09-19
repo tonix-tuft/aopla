@@ -37,6 +37,6 @@ import Tag from "../tag/Tag";
 export default function beforeCall(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeCall,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeCall
   });
 }

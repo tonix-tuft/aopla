@@ -88,7 +88,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
 
       beforeSet,
       aroundSet,
-      afterSet,
+      afterSet
     };
   }
   if (adviceAnnotationsMap.get) {
@@ -96,7 +96,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
       ...adviceAnnotationsMap,
       beforeGet,
       aroundGet,
-      afterGet,
+      afterGet
     };
   }
   if (adviceAnnotationsMap.call) {
@@ -104,7 +104,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
       ...adviceAnnotationsMap,
       beforeCall,
       aroundCall,
-      afterCall,
+      afterCall
     };
   }
   if (adviceAnnotationsMap.set) {
@@ -112,7 +112,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
       ...adviceAnnotationsMap,
       beforeSet,
       aroundSet,
-      afterSet,
+      afterSet
     };
   }
   if (adviceAnnotationsMap.before) {
@@ -120,7 +120,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
       ...adviceAnnotationsMap,
       beforeGet,
       beforeCall,
-      beforeSet,
+      beforeSet
     };
   }
   if (adviceAnnotationsMap.around) {
@@ -128,7 +128,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
       ...adviceAnnotationsMap,
       aroundGet,
       aroundCall,
-      aroundSet,
+      aroundSet
     };
   }
   if (adviceAnnotationsMap.after) {
@@ -136,7 +136,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
       ...adviceAnnotationsMap,
       afterGet,
       afterCall,
-      afterSet,
+      afterSet
     };
   }
   const map = {};
@@ -149,7 +149,7 @@ export default function onFinally(tag, adviceAnnotationsMap = void 0) {
         .reduce((acc, key) => {
           acc[key] = true;
           return acc;
-        }, map),
-    },
+        }, map)
+    }
   });
 }

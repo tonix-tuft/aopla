@@ -47,7 +47,7 @@ export default function tag(...tagParamsReducers) {
   }
   const tagFactory = declarativeFactory([
     [tagParamsReducers.length, () => tagWithParamsFactory(tagParamsReducers)],
-    () => tagWithoutParamsFactory,
+    () => tagWithoutParamsFactory
   ])();
   const tag = tagFactory({ label });
   return tag;

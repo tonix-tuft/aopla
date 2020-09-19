@@ -29,6 +29,6 @@
 const decoratorTypeEnum = {
   CLASS: 1,
   PROPERTY_OR_METHOD: 2,
-  METHOD: 3,
+  METHOD: 3
 };
 export default decoratorTypeEnum;

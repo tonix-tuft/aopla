@@ -17,7 +17,7 @@ import {
   meta,
   targetClass,
   onFinally,
-  AOPLA_TAG_DATA_PROP,
+  AOPLA_TAG_DATA_PROP
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -39,7 +39,7 @@ import {
   Tag14,
   Tag17,
   Tag18,
-  Tag20,
+  Tag20
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -51,7 +51,7 @@ class SomeAspect {
     const { thisArg } = paramsObj;
     console.warn("SomeAspect.afterCallingMethodWithTag1()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }
@@ -61,7 +61,7 @@ class SomeAspect {
     const { thisArg } = paramsObj;
     console.warn("SomeAspect.afterCallingMethodWithTag2()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }

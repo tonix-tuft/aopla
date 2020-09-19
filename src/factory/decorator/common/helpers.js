@@ -47,7 +47,7 @@ const getFinalKey = (key) =>
 const commonPropertyDescriptorKeys = {
   configurable: false,
   enumerable: false,
-  writable: true,
+  writable: true
 };
 
 /**
@@ -59,7 +59,7 @@ export const lazyPropGet = (key, initializer) => {
     if (!Object.prototype.hasOwnProperty.call(this, finalKey)) {
       defineProperty(this, finalKey, {
         ...commonPropertyDescriptorKeys,
-        value: initializer ? initializer.call(this) : void 0,
+        value: initializer ? initializer.call(this) : void 0
       });
     }
     return this[finalKey];
@@ -74,7 +74,7 @@ export const lazyPropSet = (key) => {
   return function lazyPropSet(value) {
     if (!Object.prototype.hasOwnProperty.call(this, finalKey)) {
       defineProperty(this, finalKey, {
-        ...commonPropertyDescriptorKeys,
+        ...commonPropertyDescriptorKeys
       });
     }
     this[finalKey] = value;

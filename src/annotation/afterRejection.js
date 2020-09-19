@@ -37,6 +37,6 @@ import Tag from "../tag/Tag";
 export default function afterRejection(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterRejection,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterRejection
   });
 }

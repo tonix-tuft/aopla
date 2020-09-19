@@ -29,7 +29,7 @@ import {
   Tag23,
   Tag24,
   Tag25,
-  Tag26,
+  Tag26
 } from "../aop/tags";
 
 // @ClassTag1
@@ -85,10 +85,10 @@ class SomeService {
   someInstanceMethodReturningAPromise1 = async (...args) => {
     console.log("SomeService.someInstanceMethodReturningAPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const value = {
-      "SomeService.someInstanceMethodReturningAPromise1()": args,
+      "SomeService.someInstanceMethodReturningAPromise1()": args
     };
     return value;
   };
@@ -98,10 +98,10 @@ class SomeService {
   async somePrototypeMethodReturningAPromise1(...args) {
     console.log("SomeService.somePrototypeMethodReturningAPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const value = {
-      "SomeService.somePrototypeMethodReturningAPromise1()": args,
+      "SomeService.somePrototypeMethodReturningAPromise1()": args
     };
     return value;
   }
@@ -110,10 +110,10 @@ class SomeService {
   static async someStaticMethodReturningAPromise1(...args) {
     console.log("SomeService.someStaticMethodReturningAPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const value = {
-      "SomeService.someStaticMethodReturningAPromise1()": args,
+      "SomeService.someStaticMethodReturningAPromise1()": args
     };
     return value;
   }
@@ -122,10 +122,10 @@ class SomeService {
   someInstanceMethodReturningARejectedPromise1 = async (...args) => {
     console.log("SomeService.someInstanceMethodReturningARejectedPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const reason = {
-      "SomeService.someInstanceMethodReturningARejectedPromise1()": args,
+      "SomeService.someInstanceMethodReturningARejectedPromise1()": args
     };
     throw reason;
   };
@@ -135,10 +135,10 @@ class SomeService {
   async somePrototypeMethodReturningARejectedPromise1(...args) {
     console.log("SomeService.somePrototypeMethodReturningARejectedPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const reason = {
-      "SomeService.somePrototypeMethodReturningARejectedPromise1()": args,
+      "SomeService.somePrototypeMethodReturningARejectedPromise1()": args
     };
     throw reason;
   }
@@ -147,10 +147,10 @@ class SomeService {
   static async someStaticMethodReturningARejectedPromise1(...args) {
     console.log("SomeService.someStaticMethodReturningARejectedPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const reason = {
-      "SomeService.someStaticMethodReturningARejectedPromise1()": args,
+      "SomeService.someStaticMethodReturningARejectedPromise1()": args
     };
     throw reason;
   }
@@ -160,7 +160,7 @@ class SomeService {
   someInstanceMethodThrowingAnError1 = (...args) => {
     console.log("SomeService.someInstanceMethodThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     throw new Error("SomeService.someInstanceMethodThrowingAnError1() error");
   };
@@ -170,7 +170,7 @@ class SomeService {
   anotherInstanceMethodThrowingAnError1 = (...args) => {
     console.log("SomeService.anotherInstanceMethodThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     throw new Error(
       "SomeService.anotherInstanceMethodThrowingAnError1() error"
@@ -182,7 +182,7 @@ class SomeService {
   yetAnotherInstanceMethodThrowingAnError1 = (...args) => {
     console.log("SomeService.yetAnotherInstanceMethodThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     throw new Error(
       "SomeService.yetAnotherInstanceMethodThrowingAnError1() error"
@@ -193,7 +193,7 @@ class SomeService {
   somePrototypeMethodThrowingAnError1(...args) {
     console.log("SomeService.somePrototypeMethodThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     throw new Error("SomeService.somePrototypeMethodThrowingAnError1() error");
   }

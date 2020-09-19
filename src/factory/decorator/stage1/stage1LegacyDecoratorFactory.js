@@ -27,7 +27,7 @@ import decoratorTypeEnum from "../common/enums";
 import {
   getDescriptorKeysMap,
   lazyPropGet,
-  lazyPropSet,
+  lazyPropSet
 } from "../common/helpers";
 import { noOpFn } from "js-utl";
 
@@ -84,11 +84,11 @@ export const stage1LegacyDecoratorFactory = () => ({
   getAccessorDescriptorFromNonAccessorDescriptor: function ({
     descriptor,
     descriptorKeysMap,
-    key,
+    key
   }) {
     // `{ value, writable }` or `{ initializer, writable }`.
     const newDescriptor = {
-      ...descriptor,
+      ...descriptor
     };
     delete newDescriptor.writable;
     delete newDescriptor.value;
@@ -110,5 +110,5 @@ export const stage1LegacyDecoratorFactory = () => ({
     return descriptor;
   },
 
-  preregisterAnnotationReturnValue: noOpFn,
+  preregisterAnnotationReturnValue: noOpFn
 });

@@ -38,6 +38,6 @@ import Tag from "../tag/Tag";
 export default function meta(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.meta,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.meta
   });
 }

@@ -37,6 +37,6 @@ import Tag from "../tag/Tag";
 export default function afterSet(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterSet,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.afterSet
   });
 }

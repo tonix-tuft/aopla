@@ -37,6 +37,6 @@ import Tag from "../tag/Tag";
 export default function aroundSet(tag) {
   return preregister({
     tag,
-    annotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundSet,
+    annotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundSet
   });
 }

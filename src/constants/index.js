@@ -69,7 +69,7 @@ export const AOPLA_ANNOTATION_KEY_MAP = {
 
   meta: "@meta",
 
-  targetClass: "@targetClass",
+  targetClass: "@targetClass"
 };
 
 /**

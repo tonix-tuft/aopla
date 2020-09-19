@@ -28,7 +28,7 @@ import {
   AOPLA_TAG_DATA_PROP,
   AOPLA_ANNOTATION_KEY_MAP,
   AOPLA_ASPECT_DATA_PROP,
-  AOPLA_ASPECT_ID_PREFIX,
+  AOPLA_ASPECT_ID_PREFIX
 } from "../../../constants";
 import { lazyPropGet, lazyPropSet } from "./helpers";
 import { throwUnknownDecoratorTypeError } from "../utils";
@@ -68,20 +68,20 @@ export const decoratorFactory = (decoratorArgs) => ({
     const property = key;
 
     const callAdviceContextFn = ({ argumentsList }) => ({
-      argumentsList,
+      argumentsList
     });
 
     const setAdviceContextFn = ({ argumentsList }) => {
       const [value] = argumentsList;
       return {
-        value,
+        value
       };
     };
 
     const getAdviceTryCatchFinallyContextFn = (objectParam) =>
       Object.prototype.hasOwnProperty.call(objectParam, "returnValue")
         ? {
-            value: objectParam.returnValue,
+            value: objectParam.returnValue
           }
         : {};
     const callAdviceTryCatchFinallyContextFn = ({
@@ -93,19 +93,19 @@ export const decoratorFactory = (decoratorArgs) => ({
         ? {
             argumentsList,
             effectiveArgumentsList: applyContext.effectiveArgumentsList,
-            returnValue: objectParam.returnValue,
+            returnValue: objectParam.returnValue
           }
         : {
             argumentsList,
-            effectiveArgumentsList: applyContext.effectiveArgumentsList,
+            effectiveArgumentsList: applyContext.effectiveArgumentsList
           };
     const setAdviceTryCatchFinallyContextFn = ({
       argumentsList,
-      applyContext,
+      applyContext
     }) => {
       const [originalValue] = argumentsList;
       const returnObj = {
-        originalValue,
+        originalValue
       };
       if (!isEmpty(applyContext.effectiveArgumentsList)) {
         const [value] = applyContext.effectiveArgumentsList;
@@ -127,7 +127,7 @@ export const decoratorFactory = (decoratorArgs) => ({
           const thisArg = applyContext.thisArg;
           const effectiveValue = applyContext.effectiveTarget.call(thisArg);
           return effectiveValue;
-        },
+        }
       }),
 
       beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeGet,
@@ -136,7 +136,7 @@ export const decoratorFactory = (decoratorArgs) => ({
 
       afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterGet,
       afterAdviceAnnotationContext: ({ returnValue }) => ({
-        value: returnValue,
+        value: returnValue
       }),
 
       onCatchAdviceAnnotationContext: getAdviceTryCatchFinallyContextFn,
@@ -161,11 +161,11 @@ export const decoratorFactory = (decoratorArgs) => ({
             afterAdviceAnnotationContext: ({
               argumentsList,
               applyContext,
-              returnValue,
+              returnValue
             }) => ({
               argumentsList,
               effectiveArgumentsList: applyContext.effectiveArgumentsList,
-              returnValue,
+              returnValue
             }),
 
             onCatchAdviceAnnotationContext: callAdviceTryCatchFinallyContextFn,
@@ -183,7 +183,7 @@ export const decoratorFactory = (decoratorArgs) => ({
                     const {
                       minInterval,
                       maxInterval,
-                      interval,
+                      interval
                     } = annotationParamsObj;
                     const jitter = new IntervalJitter(
                       () => {
@@ -199,14 +199,14 @@ export const decoratorFactory = (decoratorArgs) => ({
                             applyContext.hasEffectivelyPerformedUnderlyingOperation,
                           effectiveArgumentsList:
                             applyContext.effectiveArgumentsList,
-                          promise: returnValue,
+                          promise: returnValue
                         };
                         advice(context);
                       },
                       {
                         minInterval,
                         maxInterval,
-                        interval,
+                        interval
                       }
                     );
                     jitters.push(jitter);
@@ -233,7 +233,7 @@ export const decoratorFactory = (decoratorArgs) => ({
                           applyContext.hasEffectivelyPerformedUnderlyingOperation,
                         effectiveArgumentsList:
                           applyContext.effectiveArgumentsList,
-                        value,
+                        value
                       };
                       advice(context);
                     });
@@ -256,7 +256,7 @@ export const decoratorFactory = (decoratorArgs) => ({
                           applyContext.hasEffectivelyPerformedUnderlyingOperation,
                         effectiveArgumentsList:
                           applyContext.effectiveArgumentsList,
-                        reason,
+                        reason
                       };
                       advice(context);
                     });
@@ -264,11 +264,11 @@ export const decoratorFactory = (decoratorArgs) => ({
                   });
               }
               return returnValue;
-            },
+            }
           });
         }
         return returnValue;
-      },
+      }
     });
 
     const setAppliedPigretto = applyPigretto({
@@ -288,7 +288,7 @@ export const decoratorFactory = (decoratorArgs) => ({
             ].call(thisArg);
             return previousValue;
           },
-          originalValue: value,
+          originalValue: value
         };
       },
 
@@ -303,7 +303,7 @@ export const decoratorFactory = (decoratorArgs) => ({
       afterAdviceAnnotationContext: ({ applyContext }) => {
         const [value] = applyContext.effectiveArgumentsList;
         return {
-          value,
+          value
         };
       },
       afterAnnotationContextDeleteProps: ["previousValue"],
@@ -311,13 +311,13 @@ export const decoratorFactory = (decoratorArgs) => ({
       onCatchAdviceAnnotationContext: setAdviceTryCatchFinallyContextFn,
       onFinallyAdviceAnnotationContext: setAdviceTryCatchFinallyContextFn,
 
-      decoratorArgs,
+      decoratorArgs
     });
 
     return {
       ...descriptor,
       get: getAppliedPigretto,
-      set: setAppliedPigretto,
+      set: setAppliedPigretto
     };
   },
 
@@ -329,7 +329,7 @@ export const decoratorFactory = (decoratorArgs) => ({
       if (newDescriptorMerge) {
         descriptor = {
           ...descriptor,
-          ...newDescriptorMerge,
+          ...newDescriptorMerge
         };
       }
     });
@@ -372,7 +372,7 @@ export const decoratorFactory = (decoratorArgs) => ({
     );
     const decoratorType = this.getDecoratorType({
       decoratorArgs,
-      descriptorKeysMap,
+      descriptorKeysMap
     });
 
     if (decoratorType) {
@@ -382,7 +382,7 @@ export const decoratorFactory = (decoratorArgs) => ({
           this.executeTargetClassAnnotations({
             Class,
             tag,
-            tagParams,
+            tagParams
           })
         );
         return tagDecoratorReturnValue;
@@ -390,7 +390,7 @@ export const decoratorFactory = (decoratorArgs) => ({
 
       descriptor = this.getDescriptor(decoratorArgs);
       tagDecoratorReturnValue = this.getInitialTagDecoratorResultValue({
-        decoratorArgs,
+        decoratorArgs
       });
 
       const isPropertyOrMethodDecoratorType =
@@ -402,12 +402,12 @@ export const decoratorFactory = (decoratorArgs) => ({
         if (!this.isAccessorDescriptor({ descriptorKeysMap })) {
           const {
             descriptor: accessorDescriptor,
-            tagDecoratorReturnValue: newTagDecoratorReturnValue,
+            tagDecoratorReturnValue: newTagDecoratorReturnValue
           } = this.getAccessorDescriptorFromNonAccessorDescriptor({
             descriptor,
             descriptorKeysMap,
             key,
-            tagDecoratorReturnValue,
+            tagDecoratorReturnValue
           });
           descriptor = accessorDescriptor;
           if (newTagDecoratorReturnValue) {
@@ -417,13 +417,13 @@ export const decoratorFactory = (decoratorArgs) => ({
           if (!descriptorKeysMap.get) {
             descriptor = {
               ...descriptor,
-              get: lazyPropGet(key),
+              get: lazyPropGet(key)
             };
           }
           if (!descriptorKeysMap.set) {
             descriptor = {
               ...descriptor,
-              set: lazyPropSet(key),
+              set: lazyPropSet(key)
             };
           }
         }
@@ -431,7 +431,7 @@ export const decoratorFactory = (decoratorArgs) => ({
           descriptor,
           tag,
           tagParams,
-          key,
+          key
         });
 
         // Assuming a decorator type has matched here.
@@ -441,7 +441,7 @@ export const decoratorFactory = (decoratorArgs) => ({
         descriptor = this.executeMetaAnnotations({
           tag,
           tagParams,
-          descriptor,
+          descriptor
         });
       } else {
         matched = false;
@@ -469,26 +469,26 @@ export const decoratorFactory = (decoratorArgs) => ({
 
     tagDecoratorReturnValue = this.getFinalTagDecoratorReturnValue({
       descriptor,
-      tagDecoratorReturnValue,
+      tagDecoratorReturnValue
     });
     return tagDecoratorReturnValue;
   },
 
   newAspectData: () => ({
-    id: uniqueId(AOPLA_ASPECT_ID_PREFIX),
+    id: uniqueId(AOPLA_ASPECT_ID_PREFIX)
   }),
 
   preregisterAnnotation: function ({
     tag,
     annotationKey,
-    annotationParamsObj = {},
+    annotationParamsObj = {}
   }) {
     const adviceName = this.getKey(decoratorArgs);
     return this.preregisterAnnotationReturnValue({
       targetClassResultValue: this.withTargetClass(decoratorArgs, (Aspect) => {
         if (!Aspect[AOPLA_ASPECT_DATA_PROP]) {
           defineProperty(Aspect, AOPLA_ASPECT_DATA_PROP, {
-            value: this.newAspectData(),
+            value: this.newAspectData()
           });
         }
         const aspectId = Aspect[AOPLA_ASPECT_DATA_PROP].id;
@@ -497,9 +497,9 @@ export const decoratorFactory = (decoratorArgs) => ({
           tag,
           annotationKey,
           adviceName,
-          annotationParamsObj,
+          annotationParamsObj
         });
-      }),
+      })
     });
-  },
+  }
 });

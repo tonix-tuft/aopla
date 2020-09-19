@@ -28,7 +28,7 @@ import { uniqueId, defineProperty } from "js-utl";
 import {
   AOPLA_TAG_ID_PREFIX,
   AOPLA_TAG_DATA_PROP,
-  AOPLA_TAG_INNER_FN,
+  AOPLA_TAG_INNER_FN
 } from "../constants";
 
 /**
@@ -48,11 +48,11 @@ export default class Tag extends CallableInstance {
     defineProperty(self, AOPLA_TAG_DATA_PROP, {
       value: Object.assign(self[AOPLA_TAG_DATA_PROP] || {}, {
         id: uniqueId(AOPLA_TAG_ID_PREFIX),
-        label,
-      }),
+        label
+      })
     });
     defineProperty(self, AOPLA_TAG_INNER_FN, {
-      value: innerFn.bind(self),
+      value: innerFn.bind(self)
     });
   }
 

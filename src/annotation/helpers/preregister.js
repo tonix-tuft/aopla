@@ -39,14 +39,14 @@ import Tag from "../../tag/Tag";
 export default function preregister({
   tag,
   annotationKey,
-  annotationParamsObj = {},
+  annotationParamsObj = {}
 }) {
   return function (...decoratorArgs) {
     const decoratorFactory = factory(decoratorArgs);
     return decoratorFactory.preregisterAnnotation({
       tag,
       annotationKey,
-      annotationParamsObj,
+      annotationParamsObj
     });
   };
 }
