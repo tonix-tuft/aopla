@@ -24,6 +24,12 @@ import {
   Tag17,
   Tag18,
   Tag19,
+  Tag21,
+  Tag22,
+  Tag23,
+  Tag24,
+  Tag25,
+  Tag26,
 } from "../aop/tags";
 
 // @ClassTag1
@@ -203,6 +209,27 @@ class SomeService {
   static someStaticMethod2(...args) {
     console.log("SomeService.someStaticMethod2()", { thisArg: this, args });
     return "SomeService.someStaticMethod2() return value";
+  }
+
+  @Tag21
+  someInstanceMethod3 = (...args) => {
+    console.log("SomeService.someInstanceMethod3()", { thisArg: this, args });
+    return "SomeService.someInstanceMethod3() return value";
+  };
+
+  @Tag22
+  @Tag23
+  somePrototypeMethod3(...args) {
+    console.log("SomeService.somePrototypeMethod3()", { thisArg: this, args });
+    return "SomeService.somePrototypeMethod3() return value";
+  }
+
+  @Tag24
+  @Tag25
+  @Tag26
+  static someStaticMethod3(...args) {
+    console.log("SomeService.someStaticMethod3()", { thisArg: this, args });
+    return "SomeService.someStaticMethod3() return value";
   }
 
   // @StaticPropTag3

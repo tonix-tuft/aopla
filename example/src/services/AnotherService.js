@@ -15,11 +15,18 @@ import {
   Tag19,
   Tag2,
   Tag3,
-  Tag4,
   Tag5,
   Tag6,
   Tag9,
   Tag20,
+  Tag21,
+  Tag22,
+  Tag23,
+  Tag24,
+  Tag25,
+  Tag26,
+  Tag27,
+  Tag4
 } from "../aop/tags";
 
 @ClassTag1
@@ -29,7 +36,7 @@ class AnotherService {
     return (...args) => {
       console.log("AnotherService.someStaticMethod2()", {
         thisArg: this,
-        args,
+        args
       });
       return "AnotherService.someStaticMethod2() return value";
     };
@@ -44,7 +51,7 @@ class AnotherService {
   somePrototypeMethod1(...args) {
     console.log("AnotherService.somePrototypeMethod1()", {
       thisArg: this,
-      args,
+      args
     });
     return "AnotherService.somePrototypeMethod1() return value";
   }
@@ -55,10 +62,10 @@ class AnotherService {
   static async someStaticMethodReturningARejectedPromise1(...args) {
     console.log("AnotherService.someStaticMethodReturningARejectedPromise1()", {
       thisArg: this,
-      args,
+      args
     });
     const reason = {
-      "AnotherService.someStaticMethodReturningARejectedPromise1()": args,
+      "AnotherService.someStaticMethodReturningARejectedPromise1()": args
     };
     throw reason;
   }
@@ -67,7 +74,7 @@ class AnotherService {
   static someStaticMethodThrowingAnError1(...args) {
     console.log("AnotherService.someStaticMethodThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     throw new Error("AnotherService.someStaticMethodThrowingAnError1() error");
   }
@@ -76,7 +83,7 @@ class AnotherService {
   someInstanceMethodNotThrowingAnError1 = (...args) => {
     console.log("AnotherService.someInstanceMethodNotThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     return "AnotherService.someInstanceMethodNotThrowingAnError1() return value";
   };
@@ -85,7 +92,7 @@ class AnotherService {
   somePrototypeMethodNotThrowingAnError1(...args) {
     console.log("AnotherService.somePrototypeMethodNotThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     return "AnotherService.somePrototypeMethodNotThrowingAnError1() return value";
   }
@@ -94,7 +101,7 @@ class AnotherService {
   static someStaticMethodNotThrowingAnError1(...args) {
     console.log("AnotherService.someStaticMethodNotThrowingAnError1()", {
       thisArg: this,
-      args,
+      args
     });
     return "AnotherService.someStaticMethodNotThrowingAnError1() return value";
   }
@@ -104,11 +111,39 @@ class AnotherService {
   somePrototypeMethodThrowingAnError2(...args) {
     console.log("AnotherService.somePrototypeMethodThrowingAnError2()", {
       thisArg: this,
-      args,
+      args
     });
     throw new Error(
       "AnotherService.somePrototypeMethodThrowingAnError2() error"
     );
+  }
+
+  @Tag21
+  @Tag22
+  @Tag23
+  @Tag24
+  someInstanceMethod3 = (...args) => {
+    console.log("AnotherService.someInstanceMethod3()", {
+      thisArg: this,
+      args
+    });
+    return "AnotherService.someInstanceMethod3() return value";
+  };
+
+  @Tag25
+  somePrototypeMethod3(...args) {
+    console.log("AnotherService.somePrototypeMethod3()", {
+      thisArg: this,
+      args
+    });
+    return "AnotherService.somePrototypeMethod3() return value";
+  }
+
+  @Tag26
+  @Tag27
+  static someStaticMethod3(...args) {
+    console.log("AnotherService.someStaticMethod3()", { thisArg: this, args });
+    return "AnotherService.someStaticMethod3() return value";
   }
 
   // @PropTag1

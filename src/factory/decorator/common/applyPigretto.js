@@ -24,10 +24,10 @@
  */
 
 import pigretto, { applyRule, apply, get } from "pigretto";
-import { chain, isUndefined, completeObjectAssign } from "js-utl";
+import { chain, isUndefined, completeObjectAssign, isArray } from "js-utl";
 import {
   AOPLA_TAG_DATA_PROP,
-  AOPLA_ANNOTATION_KEY_MAP,
+  AOPLA_ANNOTATION_KEY_MAP
 } from "../../../constants";
 import AOPla from "../../../AOPla";
 
@@ -39,7 +39,7 @@ const pigrettoContext = ({ shadowObj, applyContext, ref = {} }) => {
     argumentsList: true,
     effectiveArgumentsList: true,
     hasPerformedUnderlyingOperation: true,
-    hasEffectivelyPerformedUnderlyingOperation: true,
+    hasEffectivelyPerformedUnderlyingOperation: true
   };
   return pigretto(shadowObj, [
     [
@@ -60,8 +60,8 @@ const pigrettoContext = ({ shadowObj, applyContext, ref = {} }) => {
         }
         const value = proceed();
         return value;
-      }),
-    ],
+      })
+    ]
   ]);
 };
 
@@ -103,7 +103,7 @@ const beforeAfterCatchBlockFn = ({ eRef, baseContext, tag }) => (exception) => {
   let e = exception;
   eRef.e = e;
   const context = completeObjectAssign({}, baseContext, {
-    e: exception,
+    e: exception
   });
   const annotationKey = AOPLA_ANNOTATION_KEY_MAP.onCatch;
   let isThereAnOnCatchAdvice = false;
@@ -129,7 +129,7 @@ const beforeAfterCatchBlockFn = ({ eRef, baseContext, tag }) => (exception) => {
  * @type {Function}
  */
 const isValidOnFinallyAdviceFn = (adviceAnnotationKey) => ({
-  annotationParamsObj: { annotationKeyMap },
+  annotationParamsObj: { annotationKeyMap }
 }) => !!annotationKeyMap[adviceAnnotationKey];
 
 /**
@@ -139,13 +139,13 @@ const beforeAfterFinallyBlockFn = ({
   eRef,
   baseContext,
   tag,
-  adviceAnnotationKey,
+  adviceAnnotationKey
 }) => () => {
   const { e } = eRef;
   let context = baseContext;
   if (e !== noObject) {
     context = completeObjectAssign({}, baseContext, {
-      e,
+      e
     });
   }
   let atLeastOneAdviceHasReturned = false;
@@ -153,7 +153,7 @@ const beforeAfterFinallyBlockFn = ({
   AOPla.mapAdvices({
     tag,
     annotationKey,
-    isValidAdviceFn: isValidOnFinallyAdviceFn(adviceAnnotationKey),
+    isValidAdviceFn: isValidOnFinallyAdviceFn(adviceAnnotationKey)
   })((advice) => {
     const returnValue = advice(context);
     if (!isUndefined(returnValue)) {
@@ -193,7 +193,7 @@ export const applyPigretto = ({
 
   decoratorArgs,
   thisArgFn = void 0,
-  returnValueFn = ({ returnValue }) => returnValue,
+  returnValueFn = ({ returnValue }) => returnValue
 } = {}) => {
   let contextMerge = {};
   const ref = {};
@@ -216,25 +216,25 @@ export const applyPigretto = ({
         //
         contextMerge = annotationContext({
           applyContext: this,
-          argumentsList,
+          argumentsList
         });
         const baseContext = completeObjectAssign(
           {},
           contextMerge,
           beforeAdviceAnnotationContext({
             argumentsList,
-            applyContext: this,
+            applyContext: this
           }),
           {
             thisArg: thisArgFn ? thisArgFn() : this.thisArg,
             property,
             tag,
-            tagParams,
+            tagParams
           }
         );
 
         const eRef = {
-          e: noObject,
+          e: noObject
         };
         withTryCatchFinally({
           tryBlock: () => {
@@ -249,8 +249,8 @@ export const applyPigretto = ({
             eRef,
             baseContext,
             tag,
-            adviceAnnotationKey: beforeAdviceAnnotationKey,
-          }),
+            adviceAnnotationKey: beforeAdviceAnnotationKey
+          })
         });
       })
       .flatAround(function (proceed) {
@@ -264,7 +264,7 @@ export const applyPigretto = ({
             tryBlock: () => {
               const aroundAdvicesMiddlewares = AOPla.mapAdvices({
                 tag,
-                annotationKey: aroundAdviceAnnotationKey,
+                annotationKey: aroundAdviceAnnotationKey
               })((advice) => (argumentsList, next) => {
                 let currentAnnotationHasProceeded;
                 let currentAnnotationProceedReturnValue = void 0;
@@ -284,11 +284,17 @@ export const applyPigretto = ({
                     );
                     return currentAnnotationProceedReturnValue;
                   }
-                  if (args.length > 0) {
+                  if (args.length === 1) {
+                    let [firstArg] = args;
+                    if (!isArray(firstArg)) {
+                      firstArg = [firstArg];
+                    }
+                    argumentsList = firstArg;
+                  } else if (args.length > 0) {
                     argumentsList = args;
                   }
                   currentAnnotationHasProceeded = true;
-                  currentAnnotationProceedReturnValue = next(argumentsList);
+                  currentAnnotationProceedReturnValue = next(...argumentsList);
                   return currentAnnotationProceedReturnValue;
                 };
 
@@ -310,20 +316,20 @@ export const applyPigretto = ({
                   {},
                   contextMerge,
                   aroundAdviceAnnotationContext({
-                    argumentsList,
+                    argumentsList
                   }),
                   {
                     tag,
                     tagParams,
                     thisArg: thisArgFn ? thisArgFn() : applyContext.thisArg,
                     property,
-                    proceed: AOPlaProceed,
+                    proceed: AOPlaProceed
                   }
                 );
                 const context = pigrettoContext({
                   shadowObj,
                   applyContext,
-                  ref,
+                  ref
                 });
                 const returnValue = advice(context);
                 return returnValue;
@@ -338,7 +344,7 @@ export const applyPigretto = ({
               returnValue = returnValueFn({
                 returnValue,
                 applyContext,
-                argumentsList,
+                argumentsList
               });
               return returnValue;
             },
@@ -349,11 +355,11 @@ export const applyPigretto = ({
                 property,
                 tag,
                 tagParams,
-                e,
+                e
               };
               const objectParam = {
                 argumentsList,
-                applyContext: this,
+                applyContext: this
               };
               if (returnValue !== noObject) {
                 objectParam.returnValue = returnValue;
@@ -372,7 +378,7 @@ export const applyPigretto = ({
                 const context = pigrettoContext({
                   shadowObj,
                   applyContext,
-                  ref,
+                  ref
                 });
                 try {
                   returnValue = advice(context);
@@ -395,11 +401,11 @@ export const applyPigretto = ({
                 thisArg: thisArgFn ? thisArgFn() : this.thisArg,
                 property,
                 tag,
-                tagParams,
+                tagParams
               };
               const objectParam = {
                 argumentsList,
-                applyContext: this,
+                applyContext: this
               };
               if (returnValue !== noObject) {
                 objectParam.returnValue = returnValue;
@@ -414,7 +420,7 @@ export const applyPigretto = ({
                 annotationKey,
                 isValidAdviceFn: isValidOnFinallyAdviceFn(
                   aroundAdviceAnnotationKey
-                ),
+                )
               })((advice) => {
                 const shadowObj = completeObjectAssign(
                   {},
@@ -425,7 +431,7 @@ export const applyPigretto = ({
                 const context = pigrettoContext({
                   shadowObj,
                   applyContext,
-                  ref,
+                  ref
                 });
                 returnValue = advice(context);
                 if (!isUndefined(returnValue)) {
@@ -437,7 +443,7 @@ export const applyPigretto = ({
               if (atLeastOneAdviceHasReturned) {
                 return new FinallyReturn(returnValue);
               }
-            },
+            }
           });
           return returnValue;
         };
@@ -464,7 +470,7 @@ export const applyPigretto = ({
             afterAdviceAnnotationContext({
               argumentsList,
               returnValue, // For @afterCall
-              applyContext: this, // For @afterCall: applyContext.effectiveArgumentsList
+              applyContext: this // For @afterCall: applyContext.effectiveArgumentsList
             }),
             {
               thisArg: thisArgFn ? thisArgFn() : this.thisArg,
@@ -474,7 +480,7 @@ export const applyPigretto = ({
               hasPerformedUnderlyingOperation: this
                 .hasPerformedUnderlyingOperation,
               hasEffectivelyPerformedUnderlyingOperation: this
-                .hasEffectivelyPerformedUnderlyingOperation,
+                .hasEffectivelyPerformedUnderlyingOperation
             }
           );
           afterAnnotationContextDeleteProps.map((prop) => {
@@ -482,7 +488,7 @@ export const applyPigretto = ({
           });
 
           const eRef = {
-            e: noObject,
+            e: noObject
           };
           withTryCatchFinally({
             tryBlock: () => {
@@ -497,10 +503,10 @@ export const applyPigretto = ({
               eRef,
               baseContext,
               tag,
-              adviceAnnotationKey: afterAdviceAnnotationKey,
-            }),
+              adviceAnnotationKey: afterAdviceAnnotationKey
+            })
           });
         };
-      }),
+      })
   });
 };

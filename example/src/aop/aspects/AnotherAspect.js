@@ -10,6 +10,7 @@ import {
   onCatch,
   onFinally,
   beforeCall,
+  aroundCall
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -26,9 +27,10 @@ import {
   Tag18,
   Tag2,
   Tag20,
+  Tag21,
   Tag3,
   Tag7,
-  Tag9,
+  Tag9
 } from "../tags";
 
 console.log("importing AnotherAspect");
@@ -39,7 +41,7 @@ class AnotherAspect {
     const { thisArg } = paramsObj;
     console.warn("AnotherAspect.afterCallingMethodWithTag2()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }
@@ -49,7 +51,7 @@ class AnotherAspect {
     const { thisArg } = paramsObj;
     console.warn("AnotherAspect.afterCallingMethodWithTag3()", paramsObj, {
       "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
     // ...
   }
@@ -161,6 +163,24 @@ class AnotherAspect {
       paramsObj
     );
     // ...
+  }
+
+  @aroundCall(Tag21)
+  aroundCallingMethodWithTag20(paramsObj) {
+    console.warn(
+      "AnotherAspect.aroundCallingMethodWithTag20() around before",
+      paramsObj
+    );
+    // ...
+    // const returnValue = paramsObj.proceed(["A", "B", "C"]);
+    // const returnValue = paramsObj.proceed("D", "E", "F");
+    const returnValue = paramsObj.proceed();
+    console.warn(
+      "AnotherAspect.aroundCallingMethodWithTag20() around after",
+      paramsObj
+    );
+    // ...
+    return returnValue;
   }
 }
 
