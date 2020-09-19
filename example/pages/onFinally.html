@@ -12,6 +12,26 @@
       var returnValue = someService.someInstanceMethod2("a", "b", "c");
       console.log(returnValue);
       console.log("==========================================================");
+
+      try {
+        var returnValue = anotherService.somePrototypeMethodThrowingAnError2(
+          "d",
+          "e",
+          "f"
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod2("g", "h", "i");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = AnotherService.someStaticMethod2("l", "m", "n");
+      console.log(returnValue);
+      console.log("==========================================================");
     </script>
   </body>
 </html>

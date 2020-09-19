@@ -11,16 +11,30 @@ import {
   Tag14,
   Tag15,
   Tag16,
+  Tag18,
+  Tag19,
   Tag2,
   Tag3,
   Tag4,
   Tag5,
   Tag6,
   Tag9,
+  Tag20,
 } from "../aop/tags";
 
 @ClassTag1
 class AnotherService {
+  @Tag20
+  static get someStaticMethod2() {
+    return (...args) => {
+      console.log("AnotherService.someStaticMethod2()", {
+        thisArg: this,
+        args,
+      });
+      return "AnotherService.someStaticMethod2() return value";
+    };
+  }
+
   @Tag1
   @Tag2({ abc: 123, def: [1, 2, 3] })
   @Tag3
@@ -83,6 +97,18 @@ class AnotherService {
       args,
     });
     return "AnotherService.someStaticMethodNotThrowingAnError1() return value";
+  }
+
+  @Tag18
+  @Tag19
+  somePrototypeMethodThrowingAnError2(...args) {
+    console.log("AnotherService.somePrototypeMethodThrowingAnError2()", {
+      thisArg: this,
+      args,
+    });
+    throw new Error(
+      "AnotherService.somePrototypeMethodThrowingAnError2() error"
+    );
   }
 
   // @PropTag1

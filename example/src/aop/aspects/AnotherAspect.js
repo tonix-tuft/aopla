@@ -25,6 +25,7 @@ import {
   Tag17,
   Tag18,
   Tag2,
+  Tag20,
   Tag3,
   Tag7,
   Tag9,
@@ -138,7 +139,7 @@ class AnotherAspect {
     return (
       paramsObj.returnValue ||
       paramsObj.value ||
-      "AnotherAspect.anotherOnFinallyFromMethodWithTag17() default return value"
+      "AnotherAspect.anotherOnFinallyFromMethodWithTag17() return value"
     );
   }
 
@@ -149,8 +150,17 @@ class AnotherAspect {
     return (
       paramsObj.returnValue ||
       paramsObj.value ||
-      "AnotherAspect.onFinallyFromMethodWithTag18() default return value"
+      "AnotherAspect.onFinallyFromMethodWithTag18() return value"
     );
+  }
+
+  @onFinally(Tag20, { afterGet })
+  onFinallyAfterGettingPropertyWithTag20(paramsObj) {
+    console.warn(
+      "AnotherAspect.onFinallyAfterGettingPropertyWithTag20()",
+      paramsObj
+    );
+    // ...
   }
 }
 

@@ -39,6 +39,7 @@ import {
   Tag14,
   Tag17,
   Tag18,
+  Tag20,
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -138,7 +139,7 @@ class SomeAspect {
     return (
       paramsObj.returnValue ||
       paramsObj.value ||
-      "SomeAspect.onFinallyFromMethodWithTag17() default return value"
+      "SomeAspect.onFinallyFromMethodWithTag17() return value"
     );
   }
 
@@ -149,7 +150,7 @@ class SomeAspect {
     return (
       paramsObj.returnValue ||
       paramsObj.value ||
-      "SomeAspect.anotherOnFinallyFromMethodWithTag17() default return value"
+      "SomeAspect.anotherOnFinallyFromMethodWithTag17() return value"
     );
   }
 
@@ -160,8 +161,19 @@ class SomeAspect {
     return (
       paramsObj.returnValue ||
       paramsObj.value ||
-      "SomeAspect.onFinallyFromMethodWithTag18() default return value"
+      "SomeAspect.onFinallyFromMethodWithTag18() return value"
     );
+  }
+
+  @onFinally(Tag20, { aroundCall })
+  onFinallyAfterCallingMethodWithTag20(paramsObj) {
+    console.warn(
+      "SomeAspect.onFinallyAfterCallingMethodWithTag20()",
+      paramsObj
+    );
+    // ...
+    return void 0; // This is considered as if the finally block didn't return anything.
+    // return null; // This would override the return value.
   }
 }
 

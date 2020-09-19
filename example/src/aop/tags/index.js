@@ -20,6 +20,7 @@ export const Tag16 = tag("Tag16");
 export const Tag17 = tag("Tag17");
 export const Tag18 = tag("Tag18");
 export const Tag19 = tag("Tag19");
+export const Tag20 = tag("Tag20");
 export const PropTag1 = tag("PropTag1");
 export const PropTag2 = tag("PropTag2");
 export const PropTag3 = tag("PropTag3");

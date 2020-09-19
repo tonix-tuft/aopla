@@ -23,6 +23,7 @@ import {
   Tag13,
   Tag17,
   Tag18,
+  Tag19,
 } from "../aop/tags";
 
 // @ClassTag1
@@ -197,6 +198,12 @@ class SomeService {
     console.log("SomeService.someInstanceMethod2()", { thisArg: this, args });
     return "SomeService.someInstanceMethod2() return value";
   };
+
+  @Tag19
+  static someStaticMethod2(...args) {
+    console.log("SomeService.someStaticMethod2()", { thisArg: this, args });
+    return "SomeService.someStaticMethod2() return value";
+  }
 
   // @StaticPropTag3
   // get anotherStaticProp() {

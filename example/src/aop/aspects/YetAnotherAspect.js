@@ -9,6 +9,7 @@ import {
   afterSet,
   onCatch,
   onFinally,
+  aroundCall,
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -28,6 +29,7 @@ import {
   Tag16,
   Tag12,
   Tag17,
+  Tag19,
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -174,17 +176,29 @@ class YetAnotherAspect {
   }
 
   @onFinally(Tag17, { afterCall })
-  anotherOnFinallyFromMethodWithTag17(paramsObj) {
-    console.warn(
-      "YetAnotherAspect.anotherOnFinallyFromMethodWithTag17()",
-      paramsObj
-    );
+  onFinallyFromMethodWithTag17(paramsObj) {
+    console.warn("YetAnotherAspect.onFinallyFromMethodWithTag17()", paramsObj);
     // ...
     return (
       paramsObj.returnValue ||
       paramsObj.value ||
-      "YetAnotherAspect.anotherOnFinallyFromMethodWithTag17() default return value"
+      "YetAnotherAspect.onFinallyFromMethodWithTag17() return value"
     );
+  }
+
+  @onFinally(Tag19, { aroundCall })
+  onFinallyFromMethodWithTag19(paramsObj) {
+    console.warn("YetAnotherAspect.onFinallyFromMethodWithTag19()", paramsObj);
+    // ...
+    // return null; // Try to uncomment this line while commenting the lines below.
+    return void 0; // Try to uncomment this line while commenting the line above and the lines below.
+    /*
+    return (
+      paramsObj.returnValue ||
+      paramsObj.value ||
+      "YetAnotherAspect.onFinallyFromMethodWithTag19() return value"
+    );
+    //*/
   }
 }
 
