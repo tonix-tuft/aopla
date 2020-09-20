@@ -28,6 +28,7 @@ import {
   Tag2,
   Tag20,
   Tag21,
+  Tag24,
   Tag3,
   Tag7,
   Tag9
@@ -166,20 +167,82 @@ class AnotherAspect {
   }
 
   @aroundCall(Tag21)
-  aroundCallingMethodWithTag20(paramsObj) {
-    console.warn(
-      "AnotherAspect.aroundCallingMethodWithTag20() around before",
-      paramsObj
-    );
-    // ...
-    // const returnValue = paramsObj.proceed(["A", "B", "C"]);
-    // const returnValue = paramsObj.proceed("D", "E", "F");
+  aroundCallingMethodWithTag21(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "AnotherAspect.aroundCallingMethodWithTag21() around before",
+        paramsObj
+      );
+      // ...
+    }
     const returnValue = paramsObj.proceed();
-    console.warn(
-      "AnotherAspect.aroundCallingMethodWithTag20() around after",
-      paramsObj
-    );
-    // ...
+    {
+      const {
+        argumentsList,
+        effectiveArgumentsList,
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      } = paramsObj;
+      // around after
+      console.warn(
+        "AnotherAspect.aroundCallingMethodWithTag21() around after",
+        paramsObj,
+        {
+          argumentsList,
+          effectiveArgumentsList,
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          ...rest
+        },
+        {
+          returnValue
+        }
+      );
+      // ...
+    }
+
+    return returnValue;
+  }
+
+  @aroundCall(Tag24)
+  aroundCallingMethodWithTag24(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "AnotherAspect.aroundCallingMethodWithTag24() around before",
+        paramsObj
+      );
+      // ...
+    }
+    const returnValue = paramsObj.proceed();
+    {
+      const {
+        argumentsList,
+        effectiveArgumentsList,
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      } = paramsObj;
+      // around after
+      console.warn(
+        "AnotherAspect.aroundCallingMethodWithTag24() around after",
+        paramsObj,
+        {
+          argumentsList,
+          effectiveArgumentsList,
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          ...rest
+        },
+        {
+          returnValue
+        }
+      );
+      // ...
+    }
+
     return returnValue;
   }
 }

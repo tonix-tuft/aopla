@@ -351,7 +351,7 @@ export const applyPigretto = ({
             catchBlock: (exception) => {
               e = exception;
               const baseContext = {
-                thisArg: thisArgFn ? thisArgFn() : this.thisArg,
+                thisArg: thisArgFn ? thisArgFn() : applyContext.thisArg,
                 property,
                 tag,
                 tagParams,
@@ -359,7 +359,7 @@ export const applyPigretto = ({
               };
               const objectParam = {
                 argumentsList,
-                applyContext: this
+                applyContext
               };
               if (returnValue !== noObject) {
                 objectParam.returnValue = returnValue;
@@ -398,14 +398,14 @@ export const applyPigretto = ({
             },
             finallyBlock: () => {
               const baseContext = {
-                thisArg: thisArgFn ? thisArgFn() : this.thisArg,
+                thisArg: thisArgFn ? thisArgFn() : applyContext.thisArg,
                 property,
                 tag,
                 tagParams
               };
               const objectParam = {
                 argumentsList,
-                applyContext: this
+                applyContext
               };
               if (returnValue !== noObject) {
                 objectParam.returnValue = returnValue;

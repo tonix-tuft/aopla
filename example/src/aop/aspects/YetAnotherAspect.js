@@ -29,7 +29,8 @@ import {
   Tag16,
   Tag12,
   Tag17,
-  Tag19
+  Tag19,
+  Tag26
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -199,6 +200,50 @@ class YetAnotherAspect {
       "YetAnotherAspect.onFinallyFromMethodWithTag19() return value"
     );
     //*/
+  }
+
+  @aroundCall(Tag26)
+  aroundCallingMethodWithTag26(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "YetAnotherAspect.aroundCallingMethodWithTag26() around before",
+        paramsObj
+      );
+      // ...
+    }
+    console.log(
+      "YetAnotherAspect.aroundCallingMethodWithTag26() not proceeding and returning 123"
+    );
+    return 123;
+    // const returnValue = paramsObj.proceed();
+    // {
+    //   const {
+    //     argumentsList,
+    //     effectiveArgumentsList,
+    //     hasPerformedUnderlyingOperation,
+    //     hasEffectivelyPerformedUnderlyingOperation,
+    //     ...rest
+    //   } = paramsObj;
+    //   // around after
+    //   console.warn(
+    //     "YetAnotherAspect.aroundCallingMethodWithTag26() around after",
+    //     paramsObj,
+    //     {
+    //       argumentsList,
+    //       effectiveArgumentsList,
+    //       hasPerformedUnderlyingOperation,
+    //       hasEffectivelyPerformedUnderlyingOperation,
+    //       ...rest
+    //     },
+    //     {
+    //       returnValue
+    //     }
+    //   );
+    //   // ...
+    // }
+
+    // return returnValue;
   }
 }
 

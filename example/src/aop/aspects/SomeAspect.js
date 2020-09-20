@@ -39,7 +39,11 @@ import {
   Tag14,
   Tag17,
   Tag18,
-  Tag20
+  Tag20,
+  Tag22,
+  Tag23,
+  Tag25,
+  Tag27
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -174,6 +178,166 @@ class SomeAspect {
     // ...
     return void 0; // This is considered as if the finally block didn't return anything.
     // return null; // This would override the return value.
+  }
+
+  @aroundCall(Tag22)
+  aroundCallingMethodWithTag22(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag22() around before",
+        paramsObj
+      );
+      // ...
+    }
+    const returnValue = paramsObj.proceed();
+    {
+      const {
+        argumentsList,
+        effectiveArgumentsList,
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      } = paramsObj;
+      // around after
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag22() around after",
+        paramsObj,
+        {
+          argumentsList,
+          effectiveArgumentsList,
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          ...rest
+        },
+        {
+          returnValue
+        }
+      );
+      // ...
+    }
+
+    return returnValue;
+  }
+
+  @aroundCall(Tag23)
+  aroundCallingMethodWithTag23(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag23() around before",
+        paramsObj
+      );
+      // ...
+    }
+    const returnValue = paramsObj.proceed();
+    {
+      const {
+        argumentsList,
+        effectiveArgumentsList,
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      } = paramsObj;
+      // around after
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag23() around after",
+        paramsObj,
+        {
+          argumentsList,
+          effectiveArgumentsList,
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          ...rest
+        },
+        {
+          returnValue
+        }
+      );
+      // ...
+    }
+
+    return returnValue;
+  }
+
+  @aroundCall(Tag25)
+  aroundCallingMethodWithTag25(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag25() around before",
+        paramsObj
+      );
+      // ...
+    }
+    const returnValue = paramsObj.proceed();
+    {
+      const {
+        argumentsList,
+        effectiveArgumentsList,
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      } = paramsObj;
+      // around after
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag25() around after",
+        paramsObj,
+        {
+          argumentsList,
+          effectiveArgumentsList,
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          ...rest
+        },
+        {
+          returnValue
+        }
+      );
+      // ...
+    }
+
+    return returnValue;
+  }
+
+  @aroundCall(Tag27)
+  aroundCallingMethodWithTag27(paramsObj) {
+    {
+      // around before
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag27() around before",
+        paramsObj
+      );
+      // ...
+    }
+    const returnValue = paramsObj.proceed();
+    {
+      const {
+        argumentsList,
+        effectiveArgumentsList,
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      } = paramsObj;
+      // around after
+      console.warn(
+        "SomeAspect.aroundCallingMethodWithTag27() around after",
+        paramsObj,
+        {
+          argumentsList,
+          effectiveArgumentsList,
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          ...rest
+        },
+        {
+          returnValue
+        }
+      );
+      // ...
+    }
+
+    return returnValue;
   }
 }
 

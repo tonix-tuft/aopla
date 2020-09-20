@@ -29,7 +29,8 @@ import {
   Tag23,
   Tag24,
   Tag25,
-  Tag26
+  Tag26,
+  Tag27
 } from "../aop/tags";
 
 // @ClassTag1
@@ -227,6 +228,7 @@ class SomeService {
   @Tag24
   @Tag25
   @Tag26
+  @Tag27
   static someStaticMethod3(...args) {
     console.log("SomeService.someStaticMethod3()", { thisArg: this, args });
     return "SomeService.someStaticMethod3() return value";

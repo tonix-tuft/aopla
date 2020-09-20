@@ -71,7 +71,7 @@
     "immutable-linked-ordered-map": "^1.17.0",
     "interval-jitter": "^1.8.1",
     "js-utl": "^4.31.0",
-    "pigretto": "^3.8.0"
+    "pigretto": "^3.9.1"
   },
   "files": [
     "dist",
