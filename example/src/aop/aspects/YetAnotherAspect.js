@@ -9,7 +9,8 @@ import {
   afterSet,
   onCatch,
   onFinally,
-  aroundCall
+  aroundCall,
+  aroundGet
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -30,7 +31,10 @@ import {
   Tag12,
   Tag17,
   Tag19,
-  Tag26
+  Tag26,
+  PropTag4,
+  PropTag6,
+  PropTag7
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -244,6 +248,101 @@ class YetAnotherAspect {
     // }
 
     // return returnValue;
+  }
+
+  @aroundGet(PropTag4)
+  aroundGettingPropertyWithPropTag4(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.aroundGettingPropertyWithPropTag4() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation,
+      ...rest
+    } = paramsObj;
+    console.warn(
+      "YetAnotherAspect.aroundGettingPropertyWithPropTag4() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      }
+    );
+    return value;
+  }
+
+  @aroundGet(PropTag4)
+  anotherAroundGettingPropertyWithPropTag4(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.anotherAroundGettingPropertyWithPropTag4() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation,
+      ...rest
+    } = paramsObj;
+    console.warn(
+      "YetAnotherAspect.anotherAroundGettingPropertyWithPropTag4() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      }
+    );
+    return value;
+  }
+
+  @aroundGet(PropTag6)
+  aroundGettingPropertyWithPropTag6(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.aroundGettingPropertyWithPropTag6() around before",
+      paramsObj
+    );
+    // const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation,
+      ...rest
+    } = paramsObj;
+    console.warn(
+      "YetAnotherAspect.aroundGettingPropertyWithPropTag6() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      }
+    );
+    // return value;
+    return 999;
+  }
+
+  @aroundGet(PropTag7)
+  aroundGettingPropertyWithPropTag7(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.aroundGettingPropertyWithPropTag7() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation
+    } = paramsObj;
+    console.warn(
+      "YetAnotherAspect.aroundGettingPropertyWithPropTag7() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      }
+    );
+    return value;
   }
 }
 

@@ -1,6 +1,7 @@
 import { tag, withParams } from "aopla";
 
 export const ClassTag1 = tag("ClassTag1");
+
 export const Tag1 = tag("Tag1");
 export const Tag2 = tag("Tag2", withParams);
 export const Tag3 = tag("Tag3");
@@ -28,10 +29,18 @@ export const Tag24 = tag("Tag24");
 export const Tag25 = tag("Tag25");
 export const Tag26 = tag("Tag26");
 export const Tag27 = tag("Tag27");
+
 export const PropTag1 = tag("PropTag1");
 export const PropTag2 = tag("PropTag2");
 export const PropTag3 = tag("PropTag3");
+export const PropTag4 = tag("PropTag4");
+export const PropTag5 = tag("PropTag5");
+export const PropTag6 = tag("PropTag6");
+export const PropTag7 = tag("PropTag7");
+export const PropTag8 = tag("PropTag8");
+
 export const StaticPropTag1 = tag("StaticPropTag1");
 export const StaticPropTag2 = tag("StaticPropTag2");
 export const StaticPropTag3 = tag("StaticPropTag3");
+
 export const Cacheable = tag("Cacheable");

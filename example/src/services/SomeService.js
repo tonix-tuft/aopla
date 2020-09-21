@@ -5,6 +5,11 @@ import {
   PropTag1,
   PropTag2,
   PropTag3,
+  PropTag4,
+  PropTag5,
+  PropTag6,
+  PropTag7,
+  PropTag8,
   Tag1,
   Tag2,
   Tag3,
@@ -56,6 +61,26 @@ class SomeService {
   set anotherProp1(value) {
     console.log(`set SomeService.anotherProp1 = ${value}`);
     this.anotherProp1Value = value;
+  }
+
+  @PropTag4
+  @PropTag5
+  @PropTag6
+  prop2 = 456;
+
+  @PropTag7
+  @PropTag8
+  static staticProp2 = this.someStaticMethod123();
+
+  @PropTag7
+  @PropTag8
+  get anotherProp2() {
+    console.log(`get SomeService.anotherProp2`);
+    return this.anotherProp2Value || "Default value";
+  }
+  set anotherProp2(value) {
+    console.log(`set SomeService.anotherProp2 = ${value}`);
+    this.anotherProp2Value = value;
   }
 
   @Tag1
@@ -238,9 +263,9 @@ class SomeService {
   /**
    * Sample cache.
    */
-  cache = void 0;
+  // cache = void 0;
 
-  cacheInterval = void 0;
+  // cacheInterval = void 0;
 
   /**
    * Sample method which performs a heavy computation, each time caching the result for subsequent calls

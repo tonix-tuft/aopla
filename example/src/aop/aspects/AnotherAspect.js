@@ -10,13 +10,16 @@ import {
   onCatch,
   onFinally,
   beforeCall,
-  aroundCall
+  aroundCall,
+  aroundGet
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
   PropTag1,
   PropTag2,
   PropTag3,
+  PropTag4,
+  PropTag8,
   StaticPropTag2,
   Tag1,
   Tag10,
@@ -244,6 +247,52 @@ class AnotherAspect {
     }
 
     return returnValue;
+  }
+
+  @aroundGet(PropTag4)
+  aroundGettingPropertyWithPropTag4(paramsObj) {
+    console.warn(
+      "AnotherAspect.aroundGettingPropertyWithPropTag4() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation,
+      ...rest
+    } = paramsObj;
+    console.warn(
+      "AnotherAspect.aroundGettingPropertyWithPropTag4() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      }
+    );
+    return value;
+  }
+
+  @aroundGet(PropTag8)
+  aroundGettingPropertyWithPropTag8(paramsObj) {
+    console.warn(
+      "AnotherAspect.aroundGettingPropertyWithPropTag8() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation
+    } = paramsObj;
+    console.warn(
+      "AnotherAspect.aroundGettingPropertyWithPropTag8() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      }
+    );
+    return value;
   }
 }
 

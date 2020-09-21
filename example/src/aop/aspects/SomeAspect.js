@@ -43,7 +43,9 @@ import {
   Tag22,
   Tag23,
   Tag25,
-  Tag27
+  Tag27,
+  PropTag5,
+  PropTag7
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -338,6 +340,102 @@ class SomeAspect {
     }
 
     return returnValue;
+  }
+
+  @aroundGet(PropTag5)
+  aroundGettingPropertyWithPropTag5(paramsObj) {
+    console.warn(
+      "SomeAspect.aroundGettingPropertyWithPropTag5() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation,
+      ...rest
+    } = paramsObj;
+    console.warn(
+      "SomeAspect.aroundGettingPropertyWithPropTag5() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      }
+    );
+    return value;
+  }
+
+  @aroundGet(PropTag5)
+  anotherAroundGettingPropertyWithPropTag5(paramsObj) {
+    console.warn(
+      "SomeAspect.anotherAroundGettingPropertyWithPropTag5() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation,
+      ...rest
+    } = paramsObj;
+    console.warn(
+      "SomeAspect.anotherAroundGettingPropertyWithPropTag5() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation,
+        ...rest
+      }
+    );
+    return value;
+  }
+
+  @aroundGet(PropTag5)
+  yetAnotherAroundGettingPropertyWithPropTag5(paramsObj) {
+    console.warn(
+      "SomeAspect.yetAnotherAroundGettingPropertyWithPropTag5() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    console.log(value);
+    return 890;
+    // const {
+    //   hasPerformedUnderlyingOperation,
+    //   hasEffectivelyPerformedUnderlyingOperation,
+    //   ...rest
+    // } = paramsObj;
+    // console.warn(
+    //   "SomeAspect.yetAnotherAroundGettingPropertyWithPropTag5() around after",
+    //   paramsObj,
+    //   {
+    //     hasPerformedUnderlyingOperation,
+    //     hasEffectivelyPerformedUnderlyingOperation,
+    //     ...rest
+    //   }
+    // );
+    // return value;
+  }
+
+  @aroundGet(PropTag7)
+  aroundGettingPropertyWithPropTag7(paramsObj) {
+    console.warn(
+      "SomeAspect.aroundGettingPropertyWithPropTag7() around before",
+      paramsObj
+    );
+    const value = paramsObj.proceed();
+    const {
+      hasPerformedUnderlyingOperation,
+      hasEffectivelyPerformedUnderlyingOperation
+    } = paramsObj;
+    console.warn(
+      "SomeAspect.aroundGettingPropertyWithPropTag7() around after",
+      paramsObj,
+      {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      }
+    );
+    return value;
   }
 }
 
