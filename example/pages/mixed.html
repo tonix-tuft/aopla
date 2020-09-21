@@ -6,6 +6,469 @@
   </head>
   <body>
     <script src="../dist/aopla-example.js"></script>
-    <script></script>
+    <script>
+      console.log(
+        "@afterCall =========================================================="
+      );
+
+      var returnValue = someService.someInstanceMethod1("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = someService.somePrototypeMethod1("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod1("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = anotherService.somePrototypeMethod1(1, 2, 3, 4, 5);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      console.log(
+        "@afterFulfillment =========================================================="
+      );
+
+      someService
+        .someInstanceMethodReturningAPromise1("a", "b", "c")
+        .then((value) => {
+          console.log(value);
+          console.log(
+            "=========================================================="
+          );
+        });
+      console.log("==========================================================");
+
+      someService
+        .somePrototypeMethodReturningAPromise1(1, 2, 3)
+        .then((value) => {
+          console.log(value);
+          console.log(
+            "=========================================================="
+          );
+        });
+      console.log("==========================================================");
+
+      SomeService.someStaticMethodReturningAPromise1(4, 5, 6).then((value) => {
+        console.log(value);
+        console.log(
+          "=========================================================="
+        );
+      });
+      console.log("==========================================================");
+
+      console.log(
+        "@afterGet =========================================================="
+      );
+
+      var value = someService.prop1;
+      console.log(value);
+      console.log("==========================================================");
+
+      var value = SomeService.staticProp1;
+      console.log(value);
+      console.log("==========================================================");
+
+      var value = someService.anotherProp1;
+      console.log(value);
+      console.log("==========================================================");
+
+      console.log(
+        "@afterRejection =========================================================="
+      );
+
+      someService
+        .someInstanceMethodReturningARejectedPromise1("a", "b", "c")
+        .catch((reason) => {
+          console.error(reason);
+          console.log(
+            "=========================================================="
+          );
+        });
+      console.log("==========================================================");
+
+      someService
+        .somePrototypeMethodReturningARejectedPromise1(1, 2, 3)
+        .catch((reason) => {
+          console.error(reason);
+          console.log(
+            "=========================================================="
+          );
+        });
+      console.log("==========================================================");
+
+      SomeService.someStaticMethodReturningARejectedPromise1(4, 5, 6).catch(
+        (reason) => {
+          console.error(reason);
+          console.log(
+            "=========================================================="
+          );
+        }
+      );
+      console.log("==========================================================");
+
+      AnotherService.someStaticMethodReturningARejectedPromise1(
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ).catch((reason) => {
+        console.error(reason);
+        console.log(
+          "=========================================================="
+        );
+      });
+      console.log("==========================================================");
+
+      console.log(
+        "@afterSet =========================================================="
+      );
+
+      console.log(someService.prop1);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.prop1 = 456;
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.prop1);
+      console.log("==========================================================");
+
+      console.log(SomeService.staticProp1);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      SomeService.staticProp1 = "New value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(SomeService.staticProp1);
+      console.log("==========================================================");
+
+      console.log(someService.anotherProp1);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.anotherProp1 = "Some value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.anotherProp1);
+      console.log("==========================================================");
+
+      console.log(
+        "@aroundCall =========================================================="
+      );
+
+      var returnValue = someService.someInstanceMethod3(1, 2, 3);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = someService.somePrototypeMethod3(4, 5, 6);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod3(7, 8, 9);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = anotherService.someInstanceMethod3(10, 11, 12);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = anotherService.somePrototypeMethod3(10, 11, 12);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = AnotherService.someStaticMethod3(10, 11, 12);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      console.log(
+        "@aroundGet =========================================================="
+      );
+
+      var value = someService.prop2;
+      console.log(value);
+      console.log("==========================================================");
+
+      var value = SomeService.staticProp2;
+      console.log(value);
+      console.log("==========================================================");
+
+      var value = someService.anotherProp2;
+      console.log(value);
+      console.log("==========================================================");
+
+      console.log(
+        "@aroundSet =========================================================="
+      );
+
+      console.log(someService.prop2);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.prop2 = 654;
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.prop2);
+      console.log("==========================================================");
+
+      console.log(SomeService.staticProp2);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      SomeService.staticProp2 = "New value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(SomeService.staticProp2);
+      console.log("==========================================================");
+
+      console.log(someService.anotherProp2);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.anotherProp2 = "Some value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.anotherProp2);
+      console.log("==========================================================");
+
+      console.log(
+        "@beforeCall =========================================================="
+      );
+
+      var returnValue = someService.someInstanceMethod4("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = someService.somePrototypeMethod4("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod4("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = anotherService.somePrototypeMethod4(1, 2, 3, 4, 5);
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      console.log(
+        "@beforeGet =========================================================="
+      );
+
+      var value = someService.prop3;
+      console.log(value);
+      console.log("==========================================================");
+
+      var value = SomeService.staticProp3;
+      console.log(value);
+      console.log("==========================================================");
+
+      var value = someService.anotherProp3;
+      console.log(value);
+      console.log("==========================================================");
+
+      console.log(
+        "@beforeSet =========================================================="
+      );
+
+      console.log(someService.prop3);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.prop3 = 456;
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.prop3);
+      console.log("==========================================================");
+
+      console.log(SomeService.staticProp3);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      SomeService.staticProp3 = "New value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(SomeService.staticProp3);
+      console.log("==========================================================");
+
+      console.log(someService.anotherProp3);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.anotherProp3 = "Some value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.anotherProp3);
+      console.log("==========================================================");
+
+      console.log(
+        "caching =========================================================="
+      );
+
+      (async () => {
+        const someService = new SomeService();
+
+        // Cache miss.
+        await someService
+          .performHeavyComputation()
+          .then(() => console.log(`Heavy computation completed.`));
+        // Cache hit.
+        await someService
+          .performHeavyComputation()
+          .then(() => console.log(`Heavy computation completed.`));
+
+        // Waiting TTL expiration.
+        await new Promise((resolve) => setTimeout(resolve, 6000));
+
+        // Cache miss.
+        await someService
+          .performHeavyComputation()
+          .then(() => console.log(`Heavy computation completed.`));
+        // Cache hit.
+        await someService
+          .performHeavyComputation()
+          .then(() => console.log(`Heavy computation completed.`));
+      })();
+      console.log("==========================================================");
+
+      console.log(
+        "@onCatch =========================================================="
+      );
+
+      try {
+        var returnValue = someService.someInstanceMethodThrowingAnError1(
+          "a",
+          "b",
+          "c"
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      var returnValue = someService.anotherInstanceMethodThrowingAnError1(
+        "d",
+        "e",
+        "f"
+      );
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      try {
+        var returnValue = someService.yetAnotherInstanceMethodThrowingAnError1(
+          "g",
+          "h",
+          "i"
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = someService.somePrototypeMethodThrowingAnError1(
+          1,
+          2,
+          3
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = AnotherService.someStaticMethodThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = anotherService.someInstanceMethodNotThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = anotherService.somePrototypeMethodNotThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      try {
+        var returnValue = AnotherService.someStaticMethodNotThrowingAnError1(
+          4,
+          5,
+          6
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      console.log(
+        "@onFinally =========================================================="
+      );
+
+      var returnValue = someService.someInstanceMethod2("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      try {
+        var returnValue = anotherService.somePrototypeMethodThrowingAnError2(
+          "d",
+          "e",
+          "f"
+        );
+        console.log(returnValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod2("g", "h", "i");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = AnotherService.someStaticMethod2("l", "m", "n");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      console.log(
+        "@targetClass =========================================================="
+      );
+
+      console.log(
+        { someService, SomeService },
+        { anotherService, AnotherService }
+      );
+      console.log("==========================================================");
+
+      (async () => {
+        console.log(
+          "@whilePending =========================================================="
+        );
+
+        await someService.timeoutPromise();
+        console.log(
+          "=========================================================="
+        );
+
+        await anotherService.timeoutPromise();
+        console.log(
+          "=========================================================="
+        );
+
+        await someService.timeoutPromise(1000);
+        console.log(
+          "=========================================================="
+        );
+
+        await anotherService.timeoutPromise(3500);
+        console.log(
+          "=========================================================="
+        );
+      })();
+    </script>
   </body>
 </html>
