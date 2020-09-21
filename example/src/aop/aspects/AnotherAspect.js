@@ -13,11 +13,12 @@ import {
   aroundCall,
   aroundGet,
   aroundSet,
-  beforeSet
+  beforeSet,
+  meta,
+  targetClass
 } from "aopla";
-import AnotherService from "../../services/AnotherService";
-import SomeService from "../../services/SomeService";
 import {
+  ClassTag1,
   PropTag1,
   PropTag12,
   PropTag13,
@@ -47,21 +48,13 @@ console.log("importing AnotherAspect");
 class AnotherAspect {
   @afterCall(Tag2)
   afterCallingMethodWithTag2(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("AnotherAspect.afterCallingMethodWithTag2()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("AnotherAspect.afterCallingMethodWithTag2()", paramsObj);
     // ...
   }
 
   @afterCall(Tag3)
   afterCallingMethodWithTag3(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("AnotherAspect.afterCallingMethodWithTag3()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("AnotherAspect.afterCallingMethodWithTag3()", paramsObj);
     // ...
   }
 
@@ -345,13 +338,7 @@ class AnotherAspect {
 
   @beforeCall(Tag29)
   beforeCallingMethodWithTag29(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("AnotherAspect.beforeCallingMethodWithTag29()", paramsObj, {
-      "thisArg === SomeService":
-        thisArg === SomeService || thisArg === AnotherService,
-      "thisArg instanceof SomeService":
-        thisArg instanceof SomeService || thisArg instanceof AnotherService
-    });
+    console.warn("AnotherAspect.beforeCallingMethodWithTag29()", paramsObj);
     // ...
   }
 
@@ -380,6 +367,37 @@ class AnotherAspect {
       paramsObj
     );
     // ...
+  }
+
+  // @meta(Tag3)
+  // metaForPropertyDescriptorWithTag3(paramsObj) {
+  //   console.warn(
+  //     "AnotherAspect.metaForPropertyDescriptorWithTag3()",
+  //     paramsObj
+  //   );
+  //   // ...
+  //   // paramsObj.descriptor.enumerable = true;
+  // }
+
+  // @meta(PropTag3)
+  // metaForPropertyDescriptorWithPropTag3(paramsObj) {
+  //   console.warn(
+  //     "AnotherAspect.metaForPropertyDescriptorWithPropTag3()",
+  //     paramsObj
+  //   );
+  //   // ...
+  //   // paramsObj.descriptor.enumerable = false;
+  // }
+
+  @targetClass(ClassTag1)
+  targetClassTag1({ Class }) {
+    const SubClass = class extends Class {
+      constructor(...args) {
+        super(...args);
+        this.instanceProperty = 456;
+      }
+    };
+    return SubClass;
   }
 }
 

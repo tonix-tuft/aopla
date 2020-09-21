@@ -21,7 +21,6 @@ import {
   Tag9,
   StaticPropTag1,
   StaticPropTag2,
-  StaticPropTag3,
   Tag11,
   Tag10,
   Tag12,
@@ -48,7 +47,7 @@ import {
   PropTag13
 } from "../aop/tags";
 
-// @ClassTag1
+@ClassTag1
 class SomeService {
   @PropTag1
   prop1 = 123;

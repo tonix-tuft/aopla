@@ -340,10 +340,10 @@ export const decoratorFactory = (decoratorArgs) => ({
     };
   },
 
-  executeMetaAnnotations: function ({ tag, tagParams, descriptor }) {
+  executeMetaAnnotations: function ({ tag, tagParams, descriptor, key }) {
     const annotationKey = AOPLA_ANNOTATION_KEY_MAP.meta;
     AOPla.mapAdvices({ tag, annotationKey })((advice) => {
-      const context = { tag, tagParams, descriptor };
+      const context = { tag, tagParams, descriptor, property: key };
       const newDescriptorMerge = advice(context);
       if (newDescriptorMerge) {
         descriptor = {
@@ -460,7 +460,8 @@ export const decoratorFactory = (decoratorArgs) => ({
         descriptor = this.executeMetaAnnotations({
           tag,
           tagParams,
-          descriptor
+          descriptor,
+          key
         });
       } else {
         matched = false;

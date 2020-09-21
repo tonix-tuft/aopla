@@ -2,8 +2,6 @@
 /* eslint-disable no-console */
 import {
   ClassTag1,
-  PropTag1,
-  PropTag2,
   Tag1,
   Tag10,
   Tag11,

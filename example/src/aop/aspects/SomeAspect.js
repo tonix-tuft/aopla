@@ -18,7 +18,6 @@ import {
   targetClass,
   onFinally
 } from "aopla";
-import SomeService from "../../services/SomeService";
 import {
   Tag1,
   Tag2,
@@ -55,21 +54,13 @@ console.log("importing SomeAspect");
 class SomeAspect {
   @afterCall(Tag1)
   afterCallingMethodWithTag1(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("SomeAspect.afterCallingMethodWithTag1()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("SomeAspect.afterCallingMethodWithTag1()", paramsObj);
     // ...
   }
 
   @afterCall(Tag2)
   afterCallingMethodWithTag2(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("SomeAspect.afterCallingMethodWithTag2()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("SomeAspect.afterCallingMethodWithTag2()", paramsObj);
     // ...
   }
 
@@ -568,21 +559,13 @@ class SomeAspect {
 
   @beforeCall(Tag28)
   beforeCallingMethodWithTag28(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("SomeAspect.beforeCallingMethodWithTag28()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("SomeAspect.beforeCallingMethodWithTag28()", paramsObj);
     // ...
   }
 
   @beforeCall(Tag29)
   beforeCallingMethodWithTag29(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("SomeAspect.beforeCallingMethodWithTag29()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("SomeAspect.beforeCallingMethodWithTag29()", paramsObj);
     // ...
   }
 
@@ -611,6 +594,22 @@ class SomeAspect {
   beforeGettingPropertyWithPropTag11(paramsObj) {
     console.warn("SomeAspect.beforeGettingPropertyWithPropTag11()", paramsObj);
     // ...
+  }
+
+  // @meta(Tag1)
+  // metaForPropertyDescriptorWithTag1(paramsObj) {
+  //   console.warn("SomeAspect.metaForPropertyDescriptorWithTag1()", paramsObj);
+  //   // ...
+  //   return {
+  //     enumerable: true
+  //   };
+  // }
+
+  @targetClass(ClassTag1)
+  targetClassTag1({ Class }) {
+    const SubClass = class extends Class {};
+    SubClass.prototype.prototypeProp = 123;
+    return SubClass;
   }
 }
 

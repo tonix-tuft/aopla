@@ -15,7 +15,6 @@ import {
   beforeCall,
   beforeSet
 } from "aopla";
-import SomeService from "../../services/SomeService";
 import {
   PropTag1,
   PropTag2,
@@ -52,41 +51,25 @@ console.log("importing YetAnotherAspect");
 class YetAnotherAspect {
   @afterCall(Tag3)
   afterCallingMethodWithTag3(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag3()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag3()", paramsObj);
     // ...
   }
 
   @afterCall(Tag4)
   afterCallingMethodWithTag4(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag4()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag4()", paramsObj);
     // ...
   }
 
   @afterCall(Tag5)
   afterCallingMethodWithTag5(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag5()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag5()", paramsObj);
     // ...
   }
 
   @afterCall(Tag6)
   afterCallingMethodWithTag6(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("YetAnotherAspect.afterCallingMethodWithTag6()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("YetAnotherAspect.afterCallingMethodWithTag6()", paramsObj);
     // ...
   }
 
@@ -441,21 +424,13 @@ class YetAnotherAspect {
 
   @beforeCall(Tag30)
   beforeCallingMethodWithTag30(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("YetAnotherAspect.beforeCallingMethodWithTag30()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("YetAnotherAspect.beforeCallingMethodWithTag30()", paramsObj);
     // ...
   }
 
   @beforeCall(Tag31)
   beforeCallingMethodWithTag31(paramsObj) {
-    const { thisArg } = paramsObj;
-    console.warn("YetAnotherAspect.beforeCallingMethodWithTag31()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
-    });
+    console.warn("YetAnotherAspect.beforeCallingMethodWithTag31()", paramsObj);
     // ...
   }
 
