@@ -39,7 +39,8 @@ import {
   PropTag7,
   PropTag5,
   Tag30,
-  Tag31
+  Tag31,
+  PropTag12
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -452,6 +453,15 @@ class YetAnotherAspect {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
+    // ...
+  }
+
+  @beforeGet(PropTag12)
+  beforeGettingPropertyWithPropTag12(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.beforeGettingPropertyWithPropTag12()",
+      paramsObj
+    );
     // ...
   }
 }

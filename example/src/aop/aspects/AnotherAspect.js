@@ -14,9 +14,11 @@ import {
   aroundGet,
   aroundSet
 } from "aopla";
+import AnotherService from "../../services/AnotherService";
 import SomeService from "../../services/SomeService";
 import {
   PropTag1,
+  PropTag13,
   PropTag2,
   PropTag3,
   PropTag4,
@@ -345,9 +347,20 @@ class AnotherAspect {
   beforeCallingMethodWithTag29(paramsObj) {
     const { thisArg } = paramsObj;
     console.warn("AnotherAspect.beforeCallingMethodWithTag29()", paramsObj, {
-      "thisArg === SomeService": thisArg === SomeService,
-      "thisArg instanceof SomeService": thisArg instanceof SomeService
+      "thisArg === SomeService":
+        thisArg === SomeService || thisArg === AnotherService,
+      "thisArg instanceof SomeService":
+        thisArg instanceof SomeService || thisArg instanceof AnotherService
     });
+    // ...
+  }
+
+  @beforeGet(PropTag13)
+  beforeGettingPropertyWithPropTag13(paramsObj) {
+    console.warn(
+      "AnotherAspect.beforeGettingPropertyWithPropTag13()",
+      paramsObj
+    );
     // ...
   }
 }

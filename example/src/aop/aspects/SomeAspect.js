@@ -49,7 +49,10 @@ import {
   PropTag4,
   PropTag8,
   Tag28,
-  Tag29
+  Tag29,
+  PropTag9,
+  PropTag10,
+  PropTag11
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -586,6 +589,33 @@ class SomeAspect {
       "thisArg === SomeService": thisArg === SomeService,
       "thisArg instanceof SomeService": thisArg instanceof SomeService
     });
+    // ...
+  }
+
+  @beforeGet(PropTag9)
+  beforeGettingPropertyWithPropTag9(paramsObj) {
+    console.warn("SomeAspect.beforeGettingPropertyWithPropTag9()", paramsObj);
+    // ...
+  }
+
+  @beforeGet(PropTag10)
+  beforeGettingPropertyWithPropTag10(paramsObj) {
+    console.warn("SomeAspect.beforeGettingPropertyWithPropTag10()", paramsObj);
+    // ...
+  }
+
+  @beforeGet(PropTag10)
+  anotherBeforeGettingPropertyWithPropTag10(paramsObj) {
+    console.warn(
+      "SomeAspect.anotherBeforeGettingPropertyWithPropTag10()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @beforeGet(PropTag11)
+  beforeGettingPropertyWithPropTag11(paramsObj) {
+    console.warn("SomeAspect.beforeGettingPropertyWithPropTag11()", paramsObj);
     // ...
   }
 }

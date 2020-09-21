@@ -40,7 +40,12 @@ import {
   Tag31,
   Cacheable,
   Tag28,
-  Tag29
+  Tag29,
+  PropTag9,
+  PropTag10,
+  PropTag11,
+  PropTag12,
+  PropTag13
 } from "../aop/tags";
 
 // @ClassTag1
@@ -71,7 +76,8 @@ class SomeService {
   @PropTag5
   @PropTag6
   prop2 = 456;
-  // Uncomment the next getter to see the difference between `effectiveValue` vs. `effectiveUnderlyingValue`.
+  // Uncomment the next getter to see the difference between `effectiveValue` and `effectiveUnderlyingValue`
+  // when using the @aroundSet annotation.
   // get prop2() {
   //   return 777;
   // }
@@ -334,6 +340,26 @@ class SomeService {
   static someStaticMethod4(...args) {
     console.log("SomeService.someStaticMethod4()", { thisArg: this, args });
     return "SomeService.someStaticMethod4() return value";
+  }
+
+  @PropTag9
+  @PropTag10
+  @PropTag11
+  prop3 = 789;
+
+  @PropTag12
+  @PropTag13
+  static staticProp3 = this.someStaticMethod123();
+
+  @PropTag10
+  @PropTag13
+  get anotherProp3() {
+    console.log(`get SomeService.anotherProp2`);
+    return this.anotherProp2Value || "Default value";
+  }
+  set anotherProp3(value) {
+    console.log(`set SomeService.anotherProp2 = ${value}`);
+    this.anotherProp2Value = value;
   }
 }
 
