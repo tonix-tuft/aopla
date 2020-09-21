@@ -67,6 +67,10 @@ class SomeService {
   @PropTag5
   @PropTag6
   prop2 = 456;
+  // Uncomment the next getter to see the difference between `effectiveValue` vs. `effectiveUnderlyingValue`.
+  // get prop2() {
+  //   return 777;
+  // }
 
   @PropTag7
   @PropTag8

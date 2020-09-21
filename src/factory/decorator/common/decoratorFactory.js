@@ -71,13 +71,6 @@ export const decoratorFactory = (decoratorArgs) => ({
       argumentsList
     });
 
-    const setAdviceContextFn = ({ argumentsList }) => {
-      const [value] = argumentsList;
-      return {
-        value
-      };
-    };
-
     const getAdviceTryCatchFinallyContextFn = (objectParam) =>
       Object.prototype.hasOwnProperty.call(objectParam, "returnValue")
         ? {
@@ -293,10 +286,36 @@ export const decoratorFactory = (decoratorArgs) => ({
       },
 
       beforeAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.beforeSet,
-      beforeAdviceAnnotationContext: setAdviceContextFn,
+      beforeAdviceAnnotationContext: ({ argumentsList }) => {
+        const [value] = argumentsList;
+        return {
+          value
+        };
+      },
 
       aroundAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.aroundSet,
-      aroundAdviceAnnotationContext: setAdviceContextFn,
+      aroundAdviceAnnotationContext: ({ argumentsList, applyContext }) => {
+        const [value] = argumentsList;
+        return {
+          value,
+          get effectiveValue() {
+            return (
+              applyContext.effectiveArgumentsList &&
+              applyContext.effectiveArgumentsList[0]
+            );
+          },
+          get effectiveUnderlyingValue() {
+            if (!applyContext.effectiveArgumentsList) {
+              return void 0;
+            }
+            const thisArg = applyContext.thisArg;
+            const effectiveUnderlyingValue = getAppliedPigretto[
+              PIGRETTO_EFFECTIVE_TARGET_PROP
+            ].call(thisArg);
+            return effectiveUnderlyingValue;
+          }
+        };
+      },
       aroundAfterAnnotationContextDeletePropsMap: { previousValue: true },
 
       afterAdviceAnnotationKey: AOPLA_ANNOTATION_KEY_MAP.afterSet,

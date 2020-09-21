@@ -45,7 +45,9 @@ import {
   Tag25,
   Tag27,
   PropTag5,
-  PropTag7
+  PropTag7,
+  PropTag4,
+  PropTag8
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -360,6 +362,7 @@ class SomeAspect {
       {
         hasPerformedUnderlyingOperation,
         hasEffectivelyPerformedUnderlyingOperation,
+        value,
         ...rest
       }
     );
@@ -384,6 +387,7 @@ class SomeAspect {
       {
         hasPerformedUnderlyingOperation,
         hasEffectivelyPerformedUnderlyingOperation,
+        value,
         ...rest
       }
     );
@@ -432,10 +436,135 @@ class SomeAspect {
       paramsObj,
       {
         hasPerformedUnderlyingOperation,
-        hasEffectivelyPerformedUnderlyingOperation
+        hasEffectivelyPerformedUnderlyingOperation,
+        value
       }
     );
     return value;
+  }
+
+  @aroundSet(PropTag4)
+  aroundSettingPropertyWithPropTag4(paramsObj) {
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "SomeAspect.aroundSettingPropertyWithPropTag4() around before",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+    paramsObj.proceed(444);
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "SomeAspect.aroundSettingPropertyWithPropTag4() around after",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+  }
+
+  @aroundSet(PropTag4)
+  anotherAroundSettingPropertyWithPropTag4(paramsObj) {
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "SomeAspect.anotherAroundSettingPropertyWithPropTag4() around before",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+    // paramsObj.proceed(333);
+    paramsObj.proceed([333]); // Same as above.
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "SomeAspect.anotherAroundSettingPropertyWithPropTag4() around after",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+  }
+
+  @aroundSet(PropTag8)
+  aroundSettingPropertyWithPropTag8(paramsObj) {
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "SomeAspect.aroundSettingPropertyWithPropTag8() around before",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          // previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+    paramsObj.proceed();
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "SomeAspect.aroundSettingPropertyWithPropTag8() around after",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue
+          // effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
   }
 }
 

@@ -11,7 +11,8 @@ import {
   onFinally,
   beforeCall,
   aroundCall,
-  aroundGet
+  aroundGet,
+  aroundSet
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -19,6 +20,7 @@ import {
   PropTag2,
   PropTag3,
   PropTag4,
+  PropTag7,
   PropTag8,
   StaticPropTag2,
   Tag1,
@@ -267,6 +269,7 @@ class AnotherAspect {
       {
         hasPerformedUnderlyingOperation,
         hasEffectivelyPerformedUnderlyingOperation,
+        value,
         ...rest
       }
     );
@@ -289,10 +292,52 @@ class AnotherAspect {
       paramsObj,
       {
         hasPerformedUnderlyingOperation,
-        hasEffectivelyPerformedUnderlyingOperation
+        hasEffectivelyPerformedUnderlyingOperation,
+        value
       }
     );
     return value;
+  }
+
+  @aroundSet(PropTag7)
+  aroundSettingPropertyWithPropTag7(paramsObj) {
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "AnotherAspect.aroundSettingPropertyWithPropTag7() around before",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+    paramsObj.proceed();
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "AnotherAspect.aroundSettingPropertyWithPropTag7() around after",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
   }
 }
 

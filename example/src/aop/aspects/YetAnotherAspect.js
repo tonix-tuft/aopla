@@ -10,7 +10,8 @@ import {
   onCatch,
   onFinally,
   aroundCall,
-  aroundGet
+  aroundGet,
+  aroundSet
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -34,7 +35,8 @@ import {
   Tag26,
   PropTag4,
   PropTag6,
-  PropTag7
+  PropTag7,
+  PropTag5
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -268,6 +270,7 @@ class YetAnotherAspect {
       {
         hasPerformedUnderlyingOperation,
         hasEffectivelyPerformedUnderlyingOperation,
+        value,
         ...rest
       }
     );
@@ -292,6 +295,7 @@ class YetAnotherAspect {
       {
         hasPerformedUnderlyingOperation,
         hasEffectivelyPerformedUnderlyingOperation,
+        value,
         ...rest
       }
     );
@@ -339,10 +343,93 @@ class YetAnotherAspect {
       paramsObj,
       {
         hasPerformedUnderlyingOperation,
-        hasEffectivelyPerformedUnderlyingOperation
+        hasEffectivelyPerformedUnderlyingOperation,
+        value
       }
     );
     return value;
+  }
+
+  @aroundSet(PropTag5)
+  aroundSettingPropertyWithPropTag5(paramsObj) {
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "YetAnotherAspect.aroundSettingPropertyWithPropTag5() around before",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+    paramsObj.proceed();
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "YetAnotherAspect.aroundSettingPropertyWithPropTag5() around after",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+  }
+
+  @aroundSet(PropTag6)
+  aroundSettingPropertyWithPropTag6(paramsObj) {
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "YetAnotherAspect.aroundSettingPropertyWithPropTag6() around before",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
+    paramsObj.proceed();
+    {
+      const {
+        hasPerformedUnderlyingOperation,
+        hasEffectivelyPerformedUnderlyingOperation
+      } = paramsObj;
+      console.warn(
+        "YetAnotherAspect.aroundSettingPropertyWithPropTag6() around after",
+        paramsObj,
+        {
+          hasPerformedUnderlyingOperation,
+          hasEffectivelyPerformedUnderlyingOperation,
+          previousValue: paramsObj.previousValue,
+          value: paramsObj.value,
+          effectiveValue: paramsObj.effectiveValue,
+          effectiveUnderlyingValue: paramsObj.effectiveUnderlyingValue
+        }
+      );
+    }
   }
 }
 

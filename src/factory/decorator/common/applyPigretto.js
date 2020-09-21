@@ -316,7 +316,8 @@ export const applyPigretto = ({
                   {},
                   contextMerge,
                   aroundAdviceAnnotationContext({
-                    argumentsList
+                    argumentsList,
+                    applyContext
                   }),
                   {
                     tag,
