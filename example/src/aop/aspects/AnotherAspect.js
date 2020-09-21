@@ -34,6 +34,7 @@ import {
   Tag20,
   Tag21,
   Tag24,
+  Tag29,
   Tag3,
   Tag7,
   Tag9
@@ -338,6 +339,16 @@ class AnotherAspect {
         }
       );
     }
+  }
+
+  @beforeCall(Tag29)
+  beforeCallingMethodWithTag29(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("AnotherAspect.beforeCallingMethodWithTag29()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
+    });
+    // ...
   }
 }
 

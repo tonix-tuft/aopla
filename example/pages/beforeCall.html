@@ -6,6 +6,24 @@
   </head>
   <body>
     <script src="../dist/aopla-example.js"></script>
-    <script></script>
+    <script>
+      console.log("==========================================================");
+
+      var returnValue = someService.someInstanceMethod4("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = someService.somePrototypeMethod4("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = SomeService.someStaticMethod4("a", "b", "c");
+      console.log(returnValue);
+      console.log("==========================================================");
+
+      var returnValue = anotherService.somePrototypeMethod4(1, 2, 3, 4, 5);
+      console.log(returnValue);
+      console.log("==========================================================");
+    </script>
   </body>
 </html>

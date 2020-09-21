@@ -36,7 +36,11 @@ import {
   Tag25,
   Tag26,
   Tag27,
-  Cacheable
+  Tag30,
+  Tag31,
+  Cacheable,
+  Tag28,
+  Tag29
 } from "../aop/tags";
 
 // @ClassTag1
@@ -308,34 +312,29 @@ class SomeService {
     );
   }
 
-  // @StaticPropTag3
-  // get anotherStaticProp() {
-  //   return this.anotherStaticPropValue;
-  // }
+  @Tag28
+  @Tag30
+  @Tag31
+  someInstanceMethod4 = (...args) => {
+    console.log("SomeService.someInstanceMethod4()", { thisArg: this, args });
+    return "SomeService.someInstanceMethod4() return value";
+  };
 
-  // set anotherStaticProp(value) {
-  //   this.anotherStaticPropValue = value;
-  // }
+  @Tag28
+  @Tag29
+  somePrototypeMethod4(...args) {
+    console.log("SomeService.somePrototypeMethod4()", { thisArg: this, args });
+    return "SomeService.somePrototypeMethod4() return value";
+  }
 
-  // @Tag1 // AOPlaTag2
-  // @Tag2({ abc: 123, def: [1, 2, 3] }) // tag(withParams) // AOPlaTag3
-  // @Tag3 // AOPlaTag4
-  // @Tag4 // AOPlaTag5
-  // @Tag5 // AOPlaTag6
-  // @Tag6 // AOPlaTag7
-  // someMethod() {
-  //   // ...
-  //   // eslint-disable-next-line no-console
-  //   console.log("SomeService.someMethod()");
-  // }
-
-  // @Tag7
-  // @Tag8
-  // static someStaticMethod() {
-  //   // ...
-  //   // eslint-disable-next-line no-console
-  //   console.log("SomeService.someStaticMethod()");
-  // }
+  @Tag28
+  @Tag29
+  @Tag30
+  @Tag31
+  static someStaticMethod4(...args) {
+    console.log("SomeService.someStaticMethod4()", { thisArg: this, args });
+    return "SomeService.someStaticMethod4() return value";
+  }
 }
 
 export default SomeService;

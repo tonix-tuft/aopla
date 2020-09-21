@@ -11,7 +11,8 @@ import {
   onFinally,
   aroundCall,
   aroundGet,
-  aroundSet
+  aroundSet,
+  beforeCall
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
@@ -36,7 +37,9 @@ import {
   PropTag4,
   PropTag6,
   PropTag7,
-  PropTag5
+  PropTag5,
+  Tag30,
+  Tag31
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -430,6 +433,26 @@ class YetAnotherAspect {
         }
       );
     }
+  }
+
+  @beforeCall(Tag30)
+  beforeCallingMethodWithTag30(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("YetAnotherAspect.beforeCallingMethodWithTag30()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
+    });
+    // ...
+  }
+
+  @beforeCall(Tag31)
+  beforeCallingMethodWithTag31(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("YetAnotherAspect.beforeCallingMethodWithTag31()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
+    });
+    // ...
   }
 }
 

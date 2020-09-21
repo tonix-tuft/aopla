@@ -29,6 +29,10 @@ export const Tag24 = tag("Tag24");
 export const Tag25 = tag("Tag25");
 export const Tag26 = tag("Tag26");
 export const Tag27 = tag("Tag27");
+export const Tag28 = tag("Tag28");
+export const Tag29 = tag("Tag29");
+export const Tag30 = tag("Tag30");
+export const Tag31 = tag("Tag31");
 
 export const PropTag1 = tag("PropTag1");
 export const PropTag2 = tag("PropTag2");

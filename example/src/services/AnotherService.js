@@ -26,7 +26,8 @@ import {
   Tag25,
   Tag26,
   Tag27,
-  Tag4
+  Tag4,
+  Tag29
 } from "../aop/tags";
 
 @ClassTag1
@@ -146,19 +147,14 @@ class AnotherService {
     return "AnotherService.someStaticMethod3() return value";
   }
 
-  // @PropTag1
-  // prop = 123;
-
-  // @PropTag2 // Applies on the property itself (decorators on a property apply to the property itself, not to the single getter/setter).
-  // get anotherProp() {
-  //   return this.value;
-  // }
-
-  // set anotherProp(value) {
-  //   // eslint-disable-next-line no-console
-  //   console.log(`AnotherService - Setting anotherProp value to ${value}`);
-  //   this.value = value;
-  // }
+  @Tag29
+  somePrototypeMethod4(...args) {
+    console.log("AnotherService.somePrototypeMethod4()", {
+      thisArg: this,
+      args
+    });
+    return "AnotherService.somePrototypeMethod4() return value";
+  }
 }
 
 export default AnotherService;

@@ -47,7 +47,9 @@ import {
   PropTag5,
   PropTag7,
   PropTag4,
-  PropTag8
+  PropTag8,
+  Tag28,
+  Tag29
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -565,6 +567,26 @@ class SomeAspect {
         }
       );
     }
+  }
+
+  @beforeCall(Tag28)
+  beforeCallingMethodWithTag28(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("SomeAspect.beforeCallingMethodWithTag28()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
+    });
+    // ...
+  }
+
+  @beforeCall(Tag29)
+  beforeCallingMethodWithTag29(paramsObj) {
+    const { thisArg } = paramsObj;
+    console.warn("SomeAspect.beforeCallingMethodWithTag29()", paramsObj, {
+      "thisArg === SomeService": thisArg === SomeService,
+      "thisArg instanceof SomeService": thisArg instanceof SomeService
+    });
+    // ...
   }
 }
 
