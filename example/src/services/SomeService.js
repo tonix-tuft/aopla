@@ -44,7 +44,9 @@ import {
   PropTag10,
   PropTag11,
   PropTag12,
-  PropTag13
+  PropTag13,
+  Tag32,
+  Tag33
 } from "../aop/tags";
 
 @ClassTag1
@@ -359,6 +361,14 @@ class SomeService {
   set anotherProp3(value) {
     console.log(`set SomeService.anotherProp2 = ${value}`);
     this.anotherProp2Value = value;
+  }
+
+  @Tag32
+  @Tag33
+  async timeoutPromise(timeout = 8000) {
+    console.log("Pending promise...");
+    await new Promise((resolve) => setTimeout(resolve, timeout));
+    console.log("Promise resolved.");
   }
 }
 

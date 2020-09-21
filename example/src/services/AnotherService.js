@@ -25,7 +25,8 @@ import {
   Tag26,
   Tag27,
   Tag4,
-  Tag29
+  Tag29,
+  Tag34
 } from "../aop/tags";
 
 @ClassTag1
@@ -152,6 +153,13 @@ class AnotherService {
       args
     });
     return "AnotherService.somePrototypeMethod4() return value";
+  }
+
+  @Tag34
+  async timeoutPromise(timeout = 8000) {
+    console.log("Pending promise...");
+    await new Promise((resolve) => setTimeout(resolve, timeout));
+    console.log("Promise resolved.");
   }
 }
 

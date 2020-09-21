@@ -33,6 +33,9 @@ export const Tag28 = tag("Tag28");
 export const Tag29 = tag("Tag29");
 export const Tag30 = tag("Tag30");
 export const Tag31 = tag("Tag31");
+export const Tag32 = tag("Tag32");
+export const Tag33 = tag("Tag33");
+export const Tag34 = tag("Tag34");
 
 export const PropTag1 = tag("PropTag1");
 export const PropTag2 = tag("PropTag2");

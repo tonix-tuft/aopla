@@ -15,7 +15,8 @@ import {
   aroundSet,
   beforeSet,
   meta,
-  targetClass
+  targetClass,
+  whilePending
 } from "aopla";
 import {
   ClassTag1,
@@ -40,6 +41,7 @@ import {
   Tag24,
   Tag29,
   Tag3,
+  Tag33,
   Tag7
 } from "../tags";
 
@@ -398,6 +400,14 @@ class AnotherAspect {
       }
     };
     return SubClass;
+  }
+
+  @whilePending(Tag33, { interval: 800 })
+  whilePendingPromiseReturnedByMethodWithTag33(paramsObj) {
+    console.warn(
+      "AnotherAspect.whilePendingPromiseReturnedByMethodWithTag33()",
+      paramsObj
+    );
   }
 }
 

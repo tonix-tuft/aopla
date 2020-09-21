@@ -13,7 +13,8 @@ import {
   aroundGet,
   aroundSet,
   beforeCall,
-  beforeSet
+  beforeSet,
+  whilePending
 } from "aopla";
 import {
   PropTag1,
@@ -42,7 +43,8 @@ import {
   PropTag12,
   PropTag9,
   PropTag10,
-  PropTag11
+  PropTag11,
+  Tag34
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -468,6 +470,14 @@ class YetAnotherAspect {
       paramsObj
     );
     // ...
+  }
+
+  @whilePending(Tag34)
+  whilePendingPromiseReturnedByMethodWithTag34(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.whilePendingPromiseReturnedByMethodWithTag34()",
+      paramsObj
+    );
   }
 }
 

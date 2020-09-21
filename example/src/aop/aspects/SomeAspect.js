@@ -45,7 +45,8 @@ import {
   Tag29,
   PropTag9,
   PropTag10,
-  PropTag11
+  PropTag11,
+  Tag32
 } from "../tags";
 
 // eslint-disable-next-line no-console
@@ -610,6 +611,22 @@ class SomeAspect {
     const SubClass = class extends Class {};
     SubClass.prototype.prototypeProp = 123;
     return SubClass;
+  }
+
+  @whilePending(Tag32, { interval: 300 })
+  whilePendingPromiseReturnedByMethodWithTag32(paramsObj) {
+    console.warn(
+      "SomeAspect.whilePendingPromiseReturnedByMethodWithTag32()",
+      paramsObj
+    );
+  }
+
+  @whilePending(Tag32, { interval: 1500 })
+  anotherWhilePendingPromiseReturnedByMethodWithTag32(paramsObj) {
+    console.warn(
+      "SomeAspect.anotherWhilePendingPromiseReturnedByMethodWithTag32()",
+      paramsObj
+    );
   }
 }
 
