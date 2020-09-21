@@ -34,3 +34,4 @@ export const PropTag3 = tag("PropTag3");
 export const StaticPropTag1 = tag("StaticPropTag1");
 export const StaticPropTag2 = tag("StaticPropTag2");
 export const StaticPropTag3 = tag("StaticPropTag3");
+export const Cacheable = tag("Cacheable");

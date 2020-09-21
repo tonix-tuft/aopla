@@ -30,7 +30,8 @@ import {
   Tag24,
   Tag25,
   Tag26,
-  Tag27
+  Tag27,
+  Cacheable
 } from "../aop/tags";
 
 // @ClassTag1
@@ -232,6 +233,50 @@ class SomeService {
   static someStaticMethod3(...args) {
     console.log("SomeService.someStaticMethod3()", { thisArg: this, args });
     return "SomeService.someStaticMethod3() return value";
+  }
+
+  /**
+   * Sample cache.
+   */
+  cache = void 0;
+
+  cacheInterval = void 0;
+
+  /**
+   * Sample method which performs a heavy computation, each time caching the result for subsequent calls
+   * with a TTL (Time To Live) of 5 seconds.
+   */
+  // async performHeavyComputation() {
+  //   if (this.cache) {
+  //     // Cache hit:
+  //     console.log("Cache hit!");
+  //     await this.cache;
+  //     return;
+  //   }
+  //   // Cache miss:
+  //   console.log("Cache miss...");
+  //   await new Promise(
+  //     (resolve) => setTimeout(resolve, 8000) // Heavy computation timeout.
+  //   );
+  //   // Ugly cache management code mixed with business logic code.
+  //   console.log("Caching.");
+  //   this.cache = Promise.resolve();
+  //   this.cacheInterval && clearInterval(this.cacheInterval);
+  //   this.cacheInterval = setTimeout(() => {
+  //     // Invalidating the cache after 5 seconds.
+  //     console.log("Cache invalidation.");
+  //     this.cache = void 0;
+  //   }, 5000);
+  // }
+
+  /**
+   * Sample method which performs a heavy computation, stop, no other f**king fancy code.
+   */
+  @Cacheable // Tagging this method as cacheable.
+  async performHeavyComputation() {
+    await new Promise(
+      (resolve) => setTimeout(resolve, 8000) // Heavy computation timeout.
+    );
   }
 
   // @StaticPropTag3

@@ -1,12 +1,14 @@
 import AOPla from "aopla";
 import AnotherAspect from "./aspects/AnotherAspect";
+import CacheAspect from "./aspects/CacheAspect";
 import SomeAspect from "./aspects/SomeAspect";
 import YetAnotherAspect from "./aspects/YetAnotherAspect";
 
 AOPla.registerAspects(
   SomeAspect,
   AnotherAspect,
-  YetAnotherAspect
+  YetAnotherAspect,
+  CacheAspect
   // [
   //   SomeOtherAspect,
   //   () => {
