@@ -51,6 +51,11 @@ class AOPla {
   tagsMap = {};
 
   /**
+   * @type {boolean}
+   */
+  enabled = true;
+
+  /**
    * @private
    */
   ifAspectId(Aspect, callback) {
@@ -201,6 +206,24 @@ class AOPla {
   }
 
   /**
+   * Enables all the registered aspects.
+   *
+   * @return {undefined}
+   */
+  enable() {
+    this.enabled = true;
+  }
+
+  /**
+   * Disables all the registered aspects.
+   *
+   * @return {undefined}
+   */
+  disable() {
+    this.enabled = false;
+  }
+
+  /**
    * A higher order method to map all the advices of all the aspects registered so far
    * for the given tag and annotation key.
    *
@@ -214,40 +237,42 @@ class AOPla {
   mapAdvices({ tag, annotationKey, isValidAdviceFn = void 0 }) {
     return (adviceFn) => {
       const resultArray = [];
-      const tagId = tag[AOPLA_TAG_DATA_PROP].id;
-      if (this.tagsMap[tagId]) {
-        this.tagsMap[tagId].forEach((aspectId) => {
-          if (!aspectId) {
-            // This aspect has been unregistered, go on.
-            return;
-          }
-          const aspectMetadata = this.aspectsMap.get(aspectId);
-          if (aspectMetadata) {
-            const advicesMetadata =
-              aspectMetadata.subtree?.[tagId]?.[annotationKey];
-            if (!isEmpty(advicesMetadata)) {
-              advicesMetadata.map((adviceMetadata) => {
-                const { adviceName, annotationParamsObj } = adviceMetadata;
-                if (
-                  isValidAdviceFn &&
-                  !isValidAdviceFn({ adviceName, annotationParamsObj })
-                ) {
-                  return;
-                }
-                const advice = (adviceParamsObj) =>
-                  this.executeAspectAdvice({
-                    aspectMetadata,
-                    adviceName,
-                    adviceParamsObj
-                  });
-                resultArray[resultArray.length] = adviceFn(
-                  advice,
-                  annotationParamsObj
-                );
-              });
+      if (this.enabled) {
+        const tagId = tag[AOPLA_TAG_DATA_PROP].id;
+        if (this.tagsMap[tagId]) {
+          this.tagsMap[tagId].forEach((aspectId) => {
+            if (!aspectId) {
+              // This aspect has been unregistered, go on.
+              return;
             }
-          }
-        });
+            const aspectMetadata = this.aspectsMap.get(aspectId);
+            if (aspectMetadata) {
+              const advicesMetadata =
+                aspectMetadata.subtree?.[tagId]?.[annotationKey];
+              if (!isEmpty(advicesMetadata)) {
+                advicesMetadata.map((adviceMetadata) => {
+                  const { adviceName, annotationParamsObj } = adviceMetadata;
+                  if (
+                    isValidAdviceFn &&
+                    !isValidAdviceFn({ adviceName, annotationParamsObj })
+                  ) {
+                    return;
+                  }
+                  const advice = (adviceParamsObj) =>
+                    this.executeAspectAdvice({
+                      aspectMetadata,
+                      adviceName,
+                      adviceParamsObj
+                    });
+                  resultArray[resultArray.length] = adviceFn(
+                    advice,
+                    annotationParamsObj
+                  );
+                });
+              }
+            }
+          });
+        }
       }
       return resultArray;
     };
