@@ -6,6 +6,29 @@
   </head>
   <body>
     <script src="../dist/aopla-example.js"></script>
-    <script></script>
+    <script>
+      console.log("==========================================================");
+
+      console.log(someService.prop3);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.prop3 = 456;
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.prop3);
+      console.log("==========================================================");
+
+      console.log(SomeService.staticProp3);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      SomeService.staticProp3 = "New value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(SomeService.staticProp3);
+      console.log("==========================================================");
+
+      console.log(someService.anotherProp3);
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      someService.anotherProp3 = "Some value";
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(someService.anotherProp3);
+      console.log("==========================================================");
+    </script>
   </body>
 </html>

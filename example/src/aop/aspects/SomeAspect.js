@@ -16,22 +16,16 @@ import {
   onCatch,
   meta,
   targetClass,
-  onFinally,
-  AOPLA_TAG_DATA_PROP
+  onFinally
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
   Tag1,
   Tag2,
-  Tag3,
-  Tag4,
-  Tag5,
-  Tag6,
   ClassTag1,
   PropTag1,
   PropTag2,
   Tag7,
-  Tag8,
   Tag9,
   StaticPropTag1,
   PropTag3,

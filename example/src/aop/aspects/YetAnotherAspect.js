@@ -12,14 +12,14 @@ import {
   aroundCall,
   aroundGet,
   aroundSet,
-  beforeCall
+  beforeCall,
+  beforeSet
 } from "aopla";
 import SomeService from "../../services/SomeService";
 import {
   PropTag1,
   PropTag2,
   StaticPropTag1,
-  Tag2,
   Tag3,
   Tag4,
   Tag5,
@@ -40,7 +40,10 @@ import {
   PropTag5,
   Tag30,
   Tag31,
-  PropTag12
+  PropTag12,
+  PropTag9,
+  PropTag10,
+  PropTag11
 } from "../tags";
 import { isEmpty } from "js-utl";
 
@@ -460,6 +463,33 @@ class YetAnotherAspect {
   beforeGettingPropertyWithPropTag12(paramsObj) {
     console.warn(
       "YetAnotherAspect.beforeGettingPropertyWithPropTag12()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @beforeSet(PropTag9)
+  beforeSettingPropertyWithPropTag9(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.beforeSettingPropertyWithPropTag9()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @beforeSet(PropTag10)
+  beforeSettingPropertyWithPropTag10(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.beforeSettingPropertyWithPropTag10()",
+      paramsObj
+    );
+    // ...
+  }
+
+  @beforeSet(PropTag11)
+  beforeSettingPropertyWithPropTag11(paramsObj) {
+    console.warn(
+      "YetAnotherAspect.beforeSettingPropertyWithPropTag11()",
       paramsObj
     );
     // ...
