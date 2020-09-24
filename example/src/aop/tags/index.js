@@ -55,3 +55,4 @@ export const StaticPropTag1 = tag("StaticPropTag1");
 export const StaticPropTag2 = tag("StaticPropTag2");
 
 export const Cacheable = tag("Cacheable");
+export const Route = tag("Route", withParams);

@@ -50,6 +50,7 @@ import onFinally, {
 import meta from "./annotation/meta";
 import targetClass from "./annotation/targetClass";
 import { AOPLA_TAG_DATA_PROP } from "./constants";
+import metaTargetClass from "./annotation/metaTargetClass";
 
 [
   ["tag", tag],
@@ -67,6 +68,7 @@ import { AOPLA_TAG_DATA_PROP } from "./constants";
   ["afterFulfillment", afterFulfillment],
   ["afterRejection", afterRejection],
   ["meta", meta],
+  ["metaTargetClass", metaTargetClass],
   ["targetClass", targetClass],
   ["onCatch", onCatch],
   ["onFinally", onFinally],
@@ -95,6 +97,7 @@ export {
   afterFulfillment,
   afterRejection,
   meta,
+  metaTargetClass,
   targetClass,
   onCatch,
   onFinally,

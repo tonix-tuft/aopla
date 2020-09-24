@@ -120,9 +120,13 @@ export const stage2NonLegacyDecoratorFactory = () => ({
 
   getFinalTagDecoratorReturnValue: function ({
     descriptor,
-    tagDecoratorReturnValue
+    tagDecoratorReturnValue,
+    metaTargetClassReturnValue = {}
   }) {
     return {
+      ...(metaTargetClassReturnValue.finisher
+        ? { finisher: metaTargetClassReturnValue.finisher }
+        : {}),
       ...tagDecoratorReturnValue,
       descriptor: {
         ...tagDecoratorReturnValue.descriptor,

@@ -62,7 +62,10 @@ export const stage1LegacyDecoratorFactory = () => ({
   },
 
   withTargetClass: function (decoratorArgs, targetClassCallback) {
-    const [Class] = decoratorArgs;
+    let [Class] = decoratorArgs;
+    if (Object.prototype.hasOwnProperty.call(Class, "constructor")) {
+      Class = Class.constructor;
+    }
     return targetClassCallback(Class);
   },
 

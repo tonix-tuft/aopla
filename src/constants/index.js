@@ -68,6 +68,7 @@ export const AOPLA_ANNOTATION_KEY_MAP = {
   afterRejection: "@afterRejection",
 
   meta: "@meta",
+  metaTargetClass: "@metaTargetClass",
 
   targetClass: "@targetClass"
 };

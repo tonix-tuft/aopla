@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import AOPla from "aopla";
 import AnotherAspect from "./aspects/AnotherAspect";
 import CacheAspect from "./aspects/CacheAspect";
+import RoutingAspect from "./aspects/RoutingAspect";
 import SomeAspect from "./aspects/SomeAspect";
 import YetAnotherAspect from "./aspects/YetAnotherAspect";
 
@@ -9,6 +11,7 @@ AOPla.registerAspects(
   AnotherAspect,
   YetAnotherAspect,
   CacheAspect
+  // RoutingAspect
   // [
   //   SomeOtherAspect,
   //   () => {

@@ -355,12 +355,28 @@ export const decoratorFactory = (decoratorArgs) => ({
     return descriptor;
   },
 
+  executeMetaTargetClassAnnotations: function ({
+    tag,
+    tagParams,
+    descriptor,
+    key,
+    decoratorArgs
+  }) {
+    return this.withTargetClass(decoratorArgs, (Class) => {
+      const annotationKey = AOPLA_ANNOTATION_KEY_MAP.metaTargetClass;
+      AOPla.mapAdvices({ tag, annotationKey })((advice) => {
+        const context = { tag, tagParams, descriptor, property: key, Class };
+        advice(context);
+      });
+    });
+  },
+
   tagDecorator: function (tag, tagParams) {
     // Generic algorithm for AOPla tags.
 
     /*
      * stage-1 legacy
-     * 1. If class, execute @targetClass annotations immediately for the given tag DONE
+     * 1. If class, execute @targetClass annotations immediately for the given tag;
      * 2. If prop or method (instance, static, prototype method):
      *      - If static prop, descriptor has a `value` property or there is an `initializer`, or there is a `get`/`set` accessor descriptor;
      *      - If instance prop, there is no `value` but there is an `initializer`, or there is a `get`/`set` accessor descriptor;
@@ -368,12 +384,13 @@ export const decoratorFactory = (decoratorArgs) => ({
      *      - If prototype or static method, descriptor has a `value` which is a function;
      *    Change descriptor to accessor descriptor immediately before executing @meta annotations if not already an accessor descriptor.
      *    Then wrap the accessor descriptor and in the wrapping code determine whether the underlying prop is a method or not and change execution accordingly.
-     * 3. If prop or method, execute @meta annotations immediately with descriptor (remove eventual `initializer` from descriptor before passing descriptor to @meta annotations) DONE
+     * 3. If prop or method, execute @meta annotations immediately with descriptor;
+     * 4. If prop or method, execute @metaTargetClass annotations immediately with class and readonly descriptor.
      */
 
     /*
      * stage-2 non-legacy
-     * 1. If kind: "class", execute @targetClass annotations immediately for the given tag DONE
+     * 1. If kind: "class", execute @targetClass annotations immediately for the given tag;
      * 2. If prop (kind: "field") or method (instance, static, prototype method):
      *      - If static prop (placement: "static"), there is an `initializer`, or there is a `get`/`set` accessor descriptor;
      *      - If instance prop (placement: "own"), there is no `value` but there is an `initializer`, or there is a `get`/`set` accessor descriptor;
@@ -381,7 +398,8 @@ export const decoratorFactory = (decoratorArgs) => ({
      *      - If prototype or static method (kind: "method" with placement: "prototype" or "static"), descriptor has a `value` which is a function);
      *    Change descriptor to accessor descriptor immediately before executing @meta annotations if not already an accessor descriptor.
      *    Then wrap the accessor descriptor and in the wrapping code determine whether the underlying prop is a method or not and change execution accordingly.
-     * 3. If prop or method, execute @meta annotations immediately with descriptor DONE
+     * 3. If prop or method, execute @meta annotations immediately with descriptor.
+     * 4. If prop or method, execute @metaTargetClass annotations immediately with class and readonly descriptor.
      */
     let matched = false;
     let descriptor;
@@ -394,6 +412,7 @@ export const decoratorFactory = (decoratorArgs) => ({
       descriptorKeysMap
     });
 
+    let metaTargetClassReturnValue = void 0;
     if (decoratorType) {
       if (decoratorType === decoratorTypeEnum.CLASS) {
         // 1.
@@ -463,6 +482,15 @@ export const decoratorFactory = (decoratorArgs) => ({
           descriptor,
           key
         });
+
+        // 4.
+        metaTargetClassReturnValue = this.executeMetaTargetClassAnnotations({
+          tag,
+          tagParams,
+          descriptor,
+          key,
+          decoratorArgs
+        });
       } else {
         matched = false;
       }
@@ -489,7 +517,8 @@ export const decoratorFactory = (decoratorArgs) => ({
 
     tagDecoratorReturnValue = this.getFinalTagDecoratorReturnValue({
       descriptor,
-      tagDecoratorReturnValue
+      tagDecoratorReturnValue,
+      metaTargetClassReturnValue
     });
     return tagDecoratorReturnValue;
   },
