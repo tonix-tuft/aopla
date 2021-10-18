@@ -286,31 +286,31 @@ class SomeService {
    * Sample method which performs a heavy computation, each time caching the result for subsequent calls
    * with a TTL (Time To Live) of 5 seconds.
    */
-  // async performHeavyComputation() {
-  //   if (this.cache) {
-  //     // Cache hit:
-  //     console.log("Cache hit!");
-  //     await this.cache;
-  //     return;
-  //   }
-  //   // Cache miss:
-  //   console.log("Cache miss...");
-  //   await new Promise(
-  //     (resolve) => setTimeout(resolve, 8000) // Heavy computation timeout.
-  //   );
-  //   // Ugly cache management code mixed with business logic code.
-  //   console.log("Caching.");
-  //   this.cache = Promise.resolve();
-  //   this.cacheInterval && clearInterval(this.cacheInterval);
-  //   this.cacheInterval = setTimeout(() => {
-  //     // Invalidating the cache after 5 seconds.
-  //     console.log("Cache invalidation.");
-  //     this.cache = void 0;
-  //   }, 5000);
-  // }
+  async performHeavyComputationDirty() {
+    if (this.cache) {
+      // Cache hit:
+      console.log("Cache hit!");
+      await this.cache;
+      return;
+    }
+    // Cache miss:
+    console.log("Cache miss...");
+    await new Promise(
+      (resolve) => setTimeout(resolve, 8000) // Heavy computation timeout.
+    );
+    // Ugly cache management code mixed with business logic code.
+    console.log("Caching.");
+    this.cache = Promise.resolve();
+    this.cacheInterval && clearInterval(this.cacheInterval);
+    this.cacheInterval = setTimeout(() => {
+      // Invalidating the cache after 5 seconds.
+      console.log("Cache invalidation.");
+      this.cache = void 0;
+    }, 5000);
+  }
 
   /**
-   * Sample method which performs a heavy computation, stop, no other f**king fancy code.
+   * Sample method which performs a heavy computation, stop, no other fancy code.
    */
   @Cacheable // Tagging this method as cacheable.
   async performHeavyComputation() {
