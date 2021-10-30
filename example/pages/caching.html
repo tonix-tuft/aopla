@@ -32,8 +32,10 @@
         await someService
           .performHeavyComputation()
           .then(() => console.log(`Heavy computation completed.`));
+        console.log(
+          "=========================================================="
+        );
       })();
-      console.log("==========================================================");
     </script>
   </body>
 </html>

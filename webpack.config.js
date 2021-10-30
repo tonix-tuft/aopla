@@ -6,6 +6,7 @@ const srcEntryPoint = "index.js";
 const path = require("path");
 
 const TerserPlugin = require("terser-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 const env = process.env.WEBPACK_ENV;
 
 if (env === "build") {
@@ -17,6 +18,12 @@ if (env === "build") {
 var config = {
   entry: __dirname + "/src/" + srcEntryPoint,
   devtool: "source-map",
+  plugins: [
+    new ESLintPlugin({
+      extensions: [`js`, `jsx`],
+      exclude: [`/node_modules/`]
+    })
+  ],
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: outputFile,
@@ -25,7 +32,7 @@ var config = {
     globalObject:
       "(typeof self !== 'undefined' ? self : (typeof global !== 'undefined' ? global : this))",
     umdNamedDefine: true,
-    libraryExport: "default",
+    libraryExport: "default"
   },
   module: {
     rules: [
@@ -45,7 +52,7 @@ var config = {
                 //   { decoratorsBeforeExport: false },
                 // ],
                 "@babel/plugin-proposal-object-rest-spread",
-                ["@babel/plugin-proposal-class-properties", { loose: true }], // if using @babel/plugin-proposal-decorators with "legacy": true.
+                ["@babel/plugin-proposal-class-properties", { loose: true }] // if using @babel/plugin-proposal-decorators with "legacy": true.
                 // "@babel/plugin-proposal-class-properties",
                 // [
                 //   "@babel/plugin-transform-runtime",
@@ -54,21 +61,16 @@ var config = {
                 //     "regenerator": true
                 //   }
                 // ]
-              ],
-            },
-          ],
-        },
-      },
-      {
-        test: /(\.jsx|\.js)$/,
-        loader: "eslint-loader",
-        exclude: /node_modules/,
-      },
-    ],
+              ]
+            }
+          ]
+        }
+      }
+    ]
   },
   resolve: {
-    extensions: [".js"],
-  },
+    extensions: [".js"]
+  }
 };
 
 if (env === "build") {
@@ -79,11 +81,11 @@ if (env === "build") {
         parallel: true,
         terserOptions: {
           output: {
-            comments: false,
-          },
-        },
-      }),
-    ],
+            comments: false
+          }
+        }
+      })
+    ]
   };
   config.mode = "production";
   config.devtool = false;
